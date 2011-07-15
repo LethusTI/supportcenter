@@ -1,0 +1,22 @@
+{{ formset.management_form }}
+<table class="{{ self.field.class_name }}" border="0" cellpadding="0" cellspacing="5">
+  <thead>
+    <tr align="left">
+      {% for field in formset.forms.0 %}
+      <th>{{ field.label }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for form in formset.forms %}
+    <tr id="{{ form.prefix }}-row" align="left">
+      {% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+      {% for field in form %}
+      <td>{{ field.errors.as_ul }} {{ field }}</td>
+      {% endfor %}
+      <td></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
