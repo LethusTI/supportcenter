@@ -9,9 +9,13 @@ class FormWidget(Widget):
     field = None
     
     def value_from_datadict(self, data, files, name):
-        return self.get_form(data, prefix=name)
+        return self.get_form(data=data, prefix=name)
     
     def get_form(self, *args, **kwargs):
+        
+        if self.field.form_kwargs:
+            kwargs.update(self.field.form_kwargs)
+
         return self.field.form_class(*args, **kwargs)
 
     def render(self, name, value, attrs=None):
@@ -42,7 +46,9 @@ class FormField(Field):
 
     def __init__(self, form, class_name=None,
                  template_name=None,
-                 validate=True, **kwargs):
+                 validate=True,
+                 form_kwargs=None,
+                 **kwargs):
         
         super(FormField, self).__init__(**kwargs)
 
@@ -54,6 +60,7 @@ class FormField(Field):
 
         self.validate = validate
         self.form_class = form
+        self.form_kwargs = form_kwargs
         self.widget.field = self
     
     def to_python(self, form):
