@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from social.tools.responses.json import JSONResponse
+from lethusbox.django.responses.json import JSONResponse
 from django.contrib import messages
 from django.views.generic.base import View
 

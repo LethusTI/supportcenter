@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from social.tools.responses.base import *
-from social.tools.responses.list import *
-from social.tools.responses.json import *
-from social.tools.responses.massaction import MassAction
+from lethusbox.django.responses.base import *
+from lethusbox.django.responses.list import *
+from lethusbox.django.responses.json import *
+from lethusbox.django.responses.massaction import MassAction
+
 from django.views.generic.edit import BaseDeleteView, ProcessFormView
 from django.views.generic.detail import BaseDetailView
 from django.views.generic.base import TemplateView
@@ -15,6 +16,7 @@ from django.views.generic import TemplateView
 from django.forms import ValidationError
 from django import forms
 from django.contrib import messages
+
 from mongotools.views import (MongoSingleObjectTemplateResponseMixin,
                               MongoSingleObjectMixin)
 
