@@ -47,7 +47,7 @@
                 if (row.is('TR')) {
                     // If the forms are laid out in table rows, insert
                     // the remove button into the last table cell:
-                    row.children(':last').append('<a class="' + options.deleteCssClass +'" href="javascript:void(0)"><img src="/media/img/icon/trash.png" class="tooltip" title="Remover Item" /></a>');
+                    row.children(':last').append('<a class="' + options.deleteCssClass +'" href="javascript:void(0)"><img src="/static/img/icon/trash.png" class="tooltip" title="Remover Item" /></a>');
                 } else if (row.is('UL') || row.is('OL')) {
                     // If they're laid out as an ordered/unordered list,
                     // insert an <li> after the last list item:
@@ -55,7 +55,7 @@
                 } else {
                     // Otherwise, just insert the remove button as the
                     // last child element of the form's container:
-                    row.append('<a class="' + options.deleteCssClass + '" href="javascript:void(0)"><img src="/media/img/icon/trash.png" title="Remover Item" class="tooltip"></a>');
+                    row.append('<a class="' + options.deleteCssClass + '" href="javascript:void(0)"><img src="/static/img/icon/trash.png" title="Remover Item" class="tooltip"></a>');
                 }
                 row.find('a.' + options.deleteCssClass).click(function() {
                     var row = $(this).parents('.' + options.formCssClass),
