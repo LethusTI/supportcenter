@@ -204,7 +204,7 @@ $.extend($.validator, {
 		rules: {},
 		errorClass: "error",
 		validClass: "valid",
-		errorElement: "div",
+		errorElement: "label",
 		focusInvalid: true,
 		errorContainer: $( [] ),
 		errorLabelContainer: $( [] ),
@@ -631,13 +631,13 @@ $.extend($.validator, {
 				label.removeClass().addClass( this.settings.errorClass );
 
 				// check if we have a generated label, replace the message then
-				label.attr("generated") && label.html("<em></em><p>" + message + "</p>");
+				label.attr("generated") && label.html(message);
 			} else {
 				// create label
 				label = $("<" + this.settings.errorElement + "/>")
 					.attr({"for":  this.idOrName(element), generated: true})
 					.addClass(this.settings.errorClass)
-					.html("<em></em><p>" + message + "</p>" || "");
+					.html(message || "");
 				if ( this.settings.wrapper ) {
 					// make sure the element is visible, even in IE
 					// actually showing the wrapped element is handled elsewhere
