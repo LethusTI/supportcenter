@@ -47,7 +47,6 @@
                         row.push(0);
                 }
                 table.addRow(row);
-                console.info(row);
             }
 
             this.draw(table);
