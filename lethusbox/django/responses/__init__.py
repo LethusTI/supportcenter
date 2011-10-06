@@ -10,7 +10,7 @@ from django.views.generic.edit import BaseDeleteView, ProcessFormView
 from django.views.generic.detail import BaseDetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.generic import TemplateView
 from django.forms import ValidationError
@@ -73,17 +73,13 @@ class HFormView(MongoSingleObjectTemplateResponseMixin,
             self.request.user.register_historic(self.object,
                                                 self.historic_action)
     def final_reponse(self):
-        if self.close_dialog:
-            return CloseDialog()
-        else:
-            return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(self.get_success_url())
 
     def form_valid(self, form):
         # Permissao de salvar
         if hasattr(self, "save_permission"):
             if not self.request.user.has_perm(self.save_permission):
-                return render_to_response('access_denied.html', locals(),
-                                          context_instance=RequestContext(self.request))
+                return render(self.request, 'access_denied.html', locals())
 
         self.object = form.save()
 
@@ -108,8 +104,6 @@ class HttpRedirectException(Exception):
     utilizada para redirecionar no meio de um processo interrompido
     """
     pass
-
-CloseDialog = lambda: render_to_response('master/close_dialog.snippet.html')
 
 class ManagementForm(forms.Form):
     current_step = forms.CharField(widget=forms.HiddenInput)
@@ -148,10 +142,24 @@ class WizardView(TemplateView):
         if continue_step and continue_step.isdigit():
             step = self.steps[int(continue_step)]
 
-            if hasattr(step, 'allow_continue') and step.allow_continue:
+            if getattr(step, 'allow_continue', False):
                 self.current_step = int(continue_step)
+
+
+        # Edição de um campo
+        edit_step = self.request.GET.get('edit', None)
+        if edit_step and edit_step.isdigit():
+            step = self.steps[int(edit_step)]
+
+            if getattr(step, 'allow_edit', False):
+                self.current_step = int(edit_step)
         
         self.object = self.get_object() #busca por um objeto não salvo
+
+        #Valida o edit
+        if edit_step:
+            if not self.get_form_instance():
+                self.current_step = 0
 
         if action == 'cancel' and self.allow_cancel:
             self.object.delete()

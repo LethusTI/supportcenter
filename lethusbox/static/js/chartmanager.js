@@ -8,7 +8,7 @@
         this.options = options
         var charts = {};
         this.info = {};
-        var self = this;
+        var me = this;
 
         _loadDataCB = function (data) {
             obj.accordion('destroy');
@@ -29,11 +29,12 @@
                 var cElem = $('<div id="'+id+'" title="'+field.title+'" class="chart"></div>');
                 cElem.appendTo(parent);
                
-                charts[id] = $(cElem).chartDrawer({'container': self});
+                charts[id] = $(cElem).chartDrawer({'container': me});
                 charts[id].load(field.values);
             }
             _loadInfo = function (key, node, parent) {
-                self.info = node.data;
+                console.info(node);
+                me.info = node.data;
             }
             _loadNode = function (key, node, parent) {
                 if (node.type == 'container')

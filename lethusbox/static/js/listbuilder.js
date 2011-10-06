@@ -235,6 +235,21 @@
 		});
 	    }
 
+            data = elem.find('thead th.right');
+            if (data) {
+                var cols = [];
+		
+		data.each(function (i, col) {
+		    // preenche uma list com todas essas colunas
+		    cols[cols.length] = ths.index(col);
+		});
+
+		aoColumnDefs.push({
+                    "sClass": "right",
+		    "aTargets": cols
+		});
+            }
+
 	    data = elem.find('thead th.email');
 	    if (data) {
 		var cols = [];

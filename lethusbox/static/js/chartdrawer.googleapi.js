@@ -1,4 +1,12 @@
 (function($){
+    var TANGO_COLORS = ['#a40000',
+                        '#8f5902', '#4e9a06', '#204a87', '#5c3566',
+                        '#75507b', '#cc0000', '#c4a000', '#ce5c00',
+                        '#f57900', '#c17d11', '#73d216', '#3465a4',
+                        '#729fcf', '#ad7fa8', '#ef2929', '#edd400',
+                        '#fce94f', '#fcaf3e', '#e9b96e', '#8ae234',
+                        ]
+
     var ChartDrawer = function(elem, options)
     {
 	/*
@@ -13,7 +21,7 @@
                 _chart = new google.visualization.PieChart(document.getElementById(id));
 
             _chart.draw(table, {width: 420, height: 240, title: $(elem).attr('title'),
-                              colors: ['#cc0000', '#73d216', '#75507b', '#edd400', '#f57900', '#3465a4']});
+                              colors: TANGO_COLORS});
         }
         this.load = function (data) {
             var table = new google.visualization.DataTable();
