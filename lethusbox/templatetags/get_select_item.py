@@ -11,12 +11,20 @@ def get_radio_item(d, idx):
     
     if isinstance(idx, basestring):
         pos = 0
-        
+        found = False
+
         for key, l in d.field.choices:
             if key == idx:
-                idx = pos
+                found=True
                 break
+
             pos += 1
+
+        if found:
+            idx = pos
+        else:
+            return ""
+            
 
     return widget.get_renderer(d.html_name, d.value(), attrs, ())[idx]
 
