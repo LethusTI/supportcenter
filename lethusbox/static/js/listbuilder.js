@@ -169,6 +169,7 @@
 	    serverSide: true,
 	    filterSuport: true,
             scrollY: 500,
+            iDisplayLength: 10,
             paginate: true,
             lengthChange: true,
 	}, options || {});
@@ -314,6 +315,7 @@
 		"bJQueryUI": true,
 		"sScrollY": obj.settings.scrollY,
 		"sPaginationType": "full_numbers",
+		"iDisplayLength": obj.settings.iDisplayLength,
 		"bServerSide": obj.settings.serverSide,
 		"bFilter": obj.settings.filterSuport,
                 "bLengthChange": obj.settings.lengthChange,

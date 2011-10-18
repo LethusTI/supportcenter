@@ -196,6 +196,18 @@ class WizardView(TemplateView):
 
         if form.is_valid():
             self.save_step(form)
+
+            # usado para pular passos
+            if hasattr(form, 'next_step'):
+                n = form.next_step()
+                
+                if n:
+                    if n.startswith('+'):
+                        self.current_step += int(n[1:])
+                    elif n.startswith('-'):
+                        self.current_step -= int(n[1:])
+                    elif n == 'finish':
+                        return self.render_done(form, **kwargs)
             
             if hasattr(form, 'get_success_url') and self.allow_redirect:
                 return HttpResponseRedirect(form.get_success_url(self.object))
