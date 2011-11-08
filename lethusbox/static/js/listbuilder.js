@@ -51,169 +51,243 @@
 
     var ToolBar = function(element, list)
     {
-	/*
+        /*
 	  classe utilizada para gerenciar a barra de tarefas de uma lista
 	*/
-	var elem = $(element);
-	var obj = this;
-	var list = list;
 
-	var actionUrl = '.';
+        this._init(element, list)
+    }
 
-	// busca por todos buttons que possuem o attributo rev para setar como icone
-        elem.find(".button-icon").each(function (idx, obj) {
-            var icon = $(obj).attr('rev');
-            $(obj).button({ icons: {primary: icon}});
-        });
-	
-        $('.alone-action, .many-action').hide();
-
-	$("a.alone-action").click (function (e) {
-	    e.preventDefault();
-	    var url =  $(this).attr('href').replace('%d', list.getSeletedIds()[0]);
-
-	    if ($(this).hasClass('modal')) {
-		$("#dialog").ifdialog(url, {
-		    onClose: function (obj) {
-			list.reload();
-		    }
-		});
-	    } else {
-		window.location.href = url;
-	    }
-	    return false;
-	});
-
-	function onReloadCB(data) {
-	    if (data.error) {
+    ToolBar.prototype = {
+        "_init": function (element, list) {
+	    this.elem = $(element);
+	    this.list = list;
+            this.actionUrl = '.'
+            this._initWidgets();
+        },
+        "onReloadCB": function (data) {
+            if (data.error) {
 		$.message(data.error, 'error');
 		return;
 	    }
-	    list.reload();
-	}
+	    this.list.reload();
+        },
+        "_initWidgets": function() {
+            var me = this;
+            this.aloneActions = this.elem.find('.alone-action')
+            this.manyActions = this.elem.find('.many-action')
+
+            // busca por todos buttons que possuem o attributo rev para setar como icone
+            this.elem.find(".button-icon").each(function (idx, obj) {
+                var icon = $(obj).attr('rev');
+                $(obj).button({ icons: {primary: icon}});
+            });
 	
-        $('#post-delete').click(function (e) {
-	    ids = list.getSeletedIds();
-	    
-	    if (ids.length == 0) {
-		return
-	    }
+            this.aloneActions.hide()
+            this.manyActions.hide()
 
-	    if (ids.length == 1) {
-		var msg = "Tem certeza que deseja apagar esse registro ?"
-	    } else {
-		var msg = "Tem certeza que deseja apagar esses "+ids.length+" registros ?";
-	    }
-	    
-	    $('#dialog-confirm').attr('title', "Aviso");
-	    $('#dialog-confirm #message').text(msg);
-	    $( "#dialog-confirm" ).dialog({
-		resizable: false,
-		height:160,
-		modal: true,
-		buttons: {
-		    "Cancelar": function() {
-			$( this ).dialog( "close" );
-		    },
-		    "Apagar": function() {
-			$( this ).dialog( "close" );
-			$.post(actionUrl,
-                               {'cmd': 'mass_delete', 'ids': ids},
-                               onReloadCB);
-		    }
-		}
+	    this.aloneActions.click (function (e) {
+                if ($(this).is('.ignore-autoconnect'))
+                    return
+
+	        e.preventDefault();
+	        var url =  $(this).attr('href').replace('%d', me.list.getSeletedIds()[0]);
+
+                
+	        if ($(this).hasClass('modal')) {
+		    $("#dialog").ifdialog(url, {
+		        onClose: function (obj) {
+			    list.reload();
+		        }
+		    });
+	        } else {
+		    window.location.href = url;
+	        }
+	        return false;
 	    });
-	});
 
-	$('#set-active').click (function (e) {
-	    e.preventDefault();
-	    ids = list.getSeletedIds();
+            this.elem.find('#post-delete').click(function (e) {
+	        ids = me.list.getSeletedIds();
+	        
+	        if (ids.length == 0) {
+		    return
+	        }
 
-	    if (ids.length == 0) {
-		return
-	    }
-
-	    $.post(actionUrl, {'cmd': 'set_active', 'ids': ids}, onReloadCB);
-	    return false;
-	});
-
-	$('#set-inactive').click (function (e) {
-	    e.preventDefault();
-	    ids = list.getSeletedIds();
-
-	    if (ids.length == 0) {
-		return
-	    }
-
-	    $.post(actionUrl, {'cmd': 'set_inactive', 'ids': ids}, onReloadCB);
-	    return false;
-	});
+	        if (ids.length == 1) {
+		    var msg = "Tem certeza que deseja apagar esse registro ?"
+	        } else {
+		    var msg = "Tem certeza que deseja apagar esses "+ids.length+" registros ?";
+	        }
+	        
+	        $('#dialog-confirm').attr('title', "Aviso");
+	        $('#dialog-confirm #message').text(msg);
+	        $( "#dialog-confirm" ).dialog({
+		    resizable: false,
+		    height:160,
+		    modal: true,
+		    buttons: {
+		        "Cancelar": function() {
+			    $( this ).dialog( "close" );
+		        },
+		        "Apagar": function() {
+			    $( this ).dialog( "close" );
+			    $.post(me.actionUrl,
+                                   {'cmd': 'mass_delete', 'ids': ids},
+                                   me.onReloadCB);
+		        }
+		    }
+	        });
+	    });
+            
+	    this.elem.find('#set-active').click (function (e) {
+	        e.preventDefault();
+	        ids = list.getSeletedIds();
+                
+	        if (ids.length == 0) {
+		    return
+	        }
+                
+	        $.post(me.actionUrl, {'cmd': 'set_active', 'ids': ids}, me.onReloadCB);
+	        return false;
+	    });
+            
+	    this.elem.find('#set-inactive').click (function (e) {
+	        e.preventDefault();
+	        ids = list.getSeletedIds();
+                
+	        if (ids.length == 0) {
+		    return
+	        }
+                
+	        $.post(me.actionUrl, {'cmd': 'set_inactive', 'ids': ids}, me.onReloadCB);
+	        return false;
+	    });
+        }
     }
 
     var ListBuilder = function(element, options)
     {
-	/*
-	  Gerador de Lista
-	  com paginação, toolbar e seachfilter
-	*/
-	var elem = $(element);
-	var obj = this;
+        this._init(element, options)
+    }
 
-	// Merge options with defaults
-	this.settings = $.extend({
-            form: null,
-            listFormat: [],
-            toolbar: "#toolbar",
-	    selectable: true,
-	    hiddenId: true,
-	    serverSide: true,
-	    filterSuport: true,
-            scrollY: 500,
-            iDisplayLength: 10,
-            paginate: true,
-            lengthChange: true,
-	}, options || {});
+    ListBuilder.prototype = {
+        "_init": function (elem, options) {
+            var me = this;
+            this.elem = $(elem);
+            
+            this.settings = $.extend({
+                form: null,
+                listFormat: [],
+                toolbar: "#toolbar",
+	        selectable: true,
+	        hiddenId: true,
+	        serverSide: true,
+	        filterSuport: true,
+                scrollY: 500,
+                iDisplayLength: 10,
+                paginate: true,
+                lengthChange: true,
+                ajaxSource: null,
+                showInfo: true,
+                multipleSelect: true
+	    }, options || {});
 
-	var gaiSelected =  []; //guarda os selecionados em cache
-        
-	this.reload = function () {
-	    obj.oTable.fnDraw();
-	    updateChecker();
-	}
+            this.gaiSelected = []; //guarda os selecionados em cache
 
-        this.getSeletedIds = function () {
+            $(this.settings['form']).submit(function (e) {
+	        e.preventDefault();
+	        me.reload();
+	        return false;
+	    });
+            
+	    $(this.settings['output']).click (function (e) {
+	        var params = $(me.settings['form']).serializeJSON();
+	        var url = $(me.settings['form']).attr('action');
+
+	        params['format'] = $(this).attr('rel');
+                
+	        // TODO: pegar sorting and filter do datatable
+	        window.location.href = url + '?'+ $.param(params);
+	        return false;
+	    });
+
+	    this.initWidgets(); // inicia o plugin
+	    this.toolbar = new ToolBar(this.settings.toolbar, this); // inicia o toolbar
+        },
+	"reload": function() {
+            this.oTable.fnDraw();
+            this.updateChecker();
+        },
+        "getSeletedIds": function () {
+            var me = this;
             /* funcao pública usada para coletar as rows selecionadas */
-	    objs = elem.find('tr.row_selected');
+	    objs = this.elem.find('tr.row_selected');
 	    ids = [];
 
             objs.each(function (i) {
-		ids[ids.length] = obj.oTable.fnGetData(objs[i])[0];
+		ids[ids.length] = me.oTable.fnGetData(objs[i])[0];
 	    });
 	    return ids;
-	}
-
-	function updateChecker() {
+	},
+        "updateChecker": function () {
 	    // atualiza os itens do toolbar
-	    var len = obj.getSeletedIds().length;
+	    var len = this.getSeletedIds().length;
 	    if (len<1) {
-		$('.alone-action').hide();
-		$('.many-action').hide();
+                this.toolbar.aloneActions.hide();
+                this.toolbar.manyActions.hide();
 	    } else if (len== 1) {
-		$('.alone-action').show();
-		$('.many-action').show();
+                this.toolbar.aloneActions.show();
+                this.toolbar.manyActions.show();
 	    }
 	    else {
-		$('.alone-action').hide();
-		$('.many-action').show();
+                this.toolbar.aloneActions.hide();
+                this.toolbar.manyActions.show();
 	    }
-	}
-
-	this.init = function () {
+	},
+	"destroy": function () {
+            // usada para destruir a lista
+	    if (this.oTable) {
+		this.oTable.fnDestroy();
+		this.oTable = null;
+	    }
+	    this.elem.find('tbody tr').empty();
+	},
+        "onSelectOne": function (fn) {
+            this.selectOneFn = fn;
+        },
+        "clear": function () {
+            this.gaiSelected = [];
+            this.oTable.fnClearTable();
+        },
+        "addRows": function (data) {
+            for (var _i=0; _i<data.length; _i++) {
+                this.oTable.fnAddData(data[_i]);
+            }
+        },
+        "addRow": function (data) {
+            this.oTable.fnAddData(data);
+        },
+        "_getRow": function (id) {
+            var nodes = this.oTable.fnGetNodes();
+            for (var _i=0; _i<nodes.length; _i++) {
+                if (this.oTable.fnGetData(nodes[_i])[0] == id)
+                    return nodes[_i];
+            }
+        },
+        "updateRow": function (id, data) {
+            row = this._getRow(id);
+            this.oTable.fnUpdate(data, row);
+        },
+        "initWidgets": function () {
 	    // configura os rendering para booleans e email
+            var me = this;
+            var elem = this.elem;
+            
 	    var aoColumnDefs = [];
 	    var aaSorting = [];
             var linkColumns = {};
 	    var classColumn = -1;
+
 	    ths = elem.find("thead th"); // todas colunas
 	    data = elem.find('thead th.boolean'); // colunas que sao do tipo boolean
 
@@ -313,15 +387,16 @@
 	    // configura o datatable
 	    var params = {
 		"bJQueryUI": true,
-		"sScrollY": obj.settings.scrollY,
+		"sScrollY": me.settings.scrollY,
 		"sPaginationType": "full_numbers",
-		"iDisplayLength": obj.settings.iDisplayLength,
-		"bServerSide": obj.settings.serverSide,
-		"bFilter": obj.settings.filterSuport,
-                "bLengthChange": obj.settings.lengthChange,
-                "bPaginate": obj.settings.paginate,
+		"iDisplayLength": me.settings.iDisplayLength,
+		"bServerSide": me.settings.serverSide,
+		"bFilter": me.settings.filterSuport,
+                "bLengthChange": me.settings.lengthChange,
+                "bPaginate": me.settings.paginate,
 		"aoColumnDefs": aoColumnDefs,
 		"aaSorting": aaSorting,
+                "bInfo": me.settings.showInfo,
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		    // atribui a coluna de classe
 		    if (classColumn > -1) {
@@ -329,7 +404,7 @@
 		    }
 
 		    // busca pelo cache de linhas selecionadas
-		    if ( jQuery.inArray(aData[0], gaiSelected) != -1 )
+		    if ( jQuery.inArray(aData[0], me.gaiSelected) != -1 )
 		    {
 			$(nRow).addClass('row_selected');
 		    }
@@ -355,17 +430,17 @@
 		    }
 		}
 	    };
-            if (obj.settings.serverSide) {
+            if (this.settings.serverSide) {
                 params["sAjaxSource"] =  ".";
                 params["fnServerData"] = function ( sSource, aoData, fnCallback ) {
 		    aoData.push( { "name": "format", "value": "data"});
 
-		    if (obj.settings.form) { // se tiver filtro usa-o
-		        aoData = $.merge(aoData, $(obj.settings.form).serializeArray());
+		    if (me.settings.form) { // se tiver filtro usa-o
+		        aoData = $.merge(aoData, $(me.settings.form).serializeArray());
 		    }
-
-		    if (obj.settings.getExtraData) { // função para pegar dados extra
-		        aoData = $.merge(aoData, obj.settings.getExtraData());
+                    
+		    if (me.settings.getExtraData) { // função para pegar dados extra
+		        aoData = $.merge(aoData, me.settings.getExtraData());
 		    }
 
 		    $.getJSON( sSource, aoData, function (json) {
@@ -381,37 +456,42 @@
 		    });
 	        };
             };
-	    obj.oTable = elem.dataTable(params).fnSetFilteringDelay();
+            if (this.settings.ajaxSource) {
+                params["sAjaxSource"] =  this.settings.ajaxSource;   
+            }
+            
+	    me.oTable = elem.dataTable(params).fnSetFilteringDelay();
 
 	    // esconder a coluna class
 	    if (classColumn > -1) {
-		obj.oTable.fnSetColumnVis(classColumn, false);
+		me.oTable.fnSetColumnVis(classColumn, false);
 	    }
 	    
-	    if (obj.settings.hiddenId)
-		obj.oTable.fnSetColumnVis(0, false); //esconde a coluna de ids
+	    if (me.settings.hiddenId)
+		me.oTable.fnSetColumnVis(0, false); //esconde a coluna de ids
 
             if (linkColumns) {
                 for (i in linkColumns)
-                    obj.oTable.fnSetColumnVis(linkColumns[i], false);
+                    me.oTable.fnSetColumnVis(linkColumns[i], false);
             }
             
 
 	    // Função de Clicicke
-	    if (obj.settings.selectable) {
+	    if (me.settings.selectable) {
 		elem.find('tbody tr').live('click', function (event) {
 		    event.preventDefault();
-		    var aData = obj.oTable.fnGetData( this );
+		    var aData = me.oTable.fnGetData( this );
 		    if (!aData)
 			return;
 		    
 		    var iId = aData[0];
 		    
-                    var index = jQuery.inArray(iId, gaiSelected);
+                    me.gaiSelected = [];
+                    var index = jQuery.inArray(iId, me.gaiSelected);
 		    if (index == -1 )
-			gaiSelected.push(iId);
+			me.gaiSelected.push(iId);
 		    else
-                        gaiSelected.splice(index, 1);
+                        me.gaiSelected.splice(index, 1);
 		    
 		    if (!event) { var event = window.event; }
 		    var target = event.target ? event.target : event.srcElement;
@@ -420,11 +500,15 @@
 			return;
 		    }
 
-		    if (!event.ctrlKey) {
+		    if ((!me.settings.multipleSelect)||(!event.ctrlKey)) {
 			elem.find('tbody tr.row_selected').removeClass('row_selected');
 		    }
 		    $(this).toggleClass('row_selected');
-		    updateChecker();
+		    me.updateChecker();
+
+                    if ((me.getSeletedIds().length == 1)&&(me.selectOneFn))
+                        me.selectOneFn(aData);
+
 		    return false;
 		}).live('dblclick', function (event) {
 		    event.preventDefault()
@@ -433,14 +517,7 @@
 		});
 	    }
 
-	    // usada para destruir a lista
-	    obj.destroy = function () {
-		if (obj.oTable) {
-		    obj.oTable.fnDestroy();
-		    obj.oTable = null;
-		}
-		elem.find('tbody tr').empty();
-	    }
+	    
 
 	    // append toolbar2
 	    
@@ -459,26 +536,7 @@
 	    });
 	}
 
-	$(obj.settings['form']).submit(function (e) {
-	    e.preventDefault();
-	    obj.reload();
-	    return false;
-	});
-
-	$(obj.settings['output']).click (function (e) {
-
-	    var params = $(obj.settings['form']).serializeJSON();
-	    var url = $(obj.settings['form']).attr('action');
-
-	    params['format'] = $(this).attr('rel');
-
-	    // TODO: pegar sorting and filter do datatable
-	    window.location.href = url + '?'+ $.param(params);
-	    return false;
-	});
-
-	obj.init(); // inicia o plugin
-	var toolbar = new ToolBar(obj.settings.toolbar, obj); // inicia o toolbar
+	
 
     };
 

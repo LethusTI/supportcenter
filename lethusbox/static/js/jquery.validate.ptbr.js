@@ -2,7 +2,9 @@
  * Translated default messages for the jQuery validation plugin.
  * Locale: PT_BR
  */
-jQuery.extend(jQuery.validator.messages, {
+
+(function($){
+    $.extend(jQuery.validator.messages, {
 	required: "<em/><p>Este campo &eacute; requerido.</p>",
 	remote: "<em/><p>Por favor, corrija este campo.</p>",
 	email: "<em/><p>Por favor, forne&ccedil;a um endere&ccedil;o eletr&ocirc;nico v&aacute;lido.</p>",
@@ -20,32 +22,31 @@ jQuery.extend(jQuery.validator.messages, {
 	range: jQuery.validator.format("<em/><p>Por favor, forne&ccedil;a um valor entre {0} e {1}.</p>"),
 	max: jQuery.validator.format("<em/><p>Por favor, forne&ccedil;a um valor menor ou igual a {0}.</p>"),
 	min: jQuery.validator.format("<em/><p>Por favor, forne&ccedil;a um valor maior ou igual a {0}.</p>")
-});
-/*
-jQuery.validator.addMethod(
-    "date",
-    function(value, element) {
-        // inicio de preenchimento
-        if (value == '__/__/____')
-            return true;
+    });
+    $.extend($.validator.methods, {
+	date: function(value, element) {
+            // inicio de preenchimento
+            if (value == '__/__/____')
+                return true;
+
+	    var check = false;
+	    var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+	    if( re.test(value)){
+	        var adata = value.split('/');
+	        var gg = parseInt(adata[0],10);
+	        var mm = parseInt(adata[1],10);
+	        var aaaa = parseInt(adata[2],10);
+	        var xdata = new Date(aaaa,mm-1,gg);
+	        if ( ( xdata.getFullYear() == aaaa ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == gg ) )
+		    check = true;
+	        else
+		    check = false;
+	    } else
+	        check = false;
+
+	    return this.optional(element) || check;
+	}
+    });
 
 
-	var check = false;
-	var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-	if( re.test(value)){
-	    var adata = value.split('/');
-	    var gg = parseInt(adata[0],10);
-	    var mm = parseInt(adata[1],10);
-	    var aaaa = parseInt(adata[2],10);
-	    var xdata = new Date(aaaa,mm-1,gg);
-	    if ( ( xdata.getFullYear() == aaaa ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == gg ) )
-		check = true;
-	    else
-		check = false;
-	} else
-	    check = false;
-
-	return check; //this.optional(element) || check;
-    },
-    "Por favor entre com uma data correta"
-);*/
+})(jQuery);

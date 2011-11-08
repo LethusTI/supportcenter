@@ -143,7 +143,7 @@ class DataTableResponseMixin(object):
 
         data['aaData'] = object_list
 
-        data['iTotalRecords'] = objs.count()
+        data['iTotalRecords'] = len(object_list) #objs.count()
         data['iTotalDisplayRecords'] =  self.all_objects.count()
 
         # para que as messagens do sistema sejam recebidas pelo listbuilder
