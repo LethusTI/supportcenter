@@ -1,7 +1,11 @@
+/*
+ * Widget de Combobox para atender as necessidades da Lethus
+ * Originalmente de: http://jqueryui.com/demos/autocomplete/#combobox
+ */
 (function( $ ) {
     $.widget( "ui.combobox", {
 	_create: function() {
-	    var self = this,
+	    var me = this,
 	    select = this.element.hide(),
 	    selected = select.children( ":selected" ),
 	    value = selected.val() ? selected.text() : "";
@@ -31,11 +35,9 @@
 		    },
 		    select: function( event, ui ) {
 			ui.item.option.selected = true;
-			self._trigger( "selected", event, {
+			me._trigger( "selected", event, {
 			    item: ui.item.option
 			});
-			if (self.options.onchange)
-			    self.options.onchange();
 		    },
 		    change: function( event, ui ) {
 			if ( !ui.item ) {
@@ -52,6 +54,9 @@
 				$( this ).val( "" );
 				select.val( "" );
 				input.data( "autocomplete" ).term = "";
+                                me._trigger("cleaned", event, {
+			            item: null
+			        });
 				return false;
 			    }
 			}
@@ -93,7 +98,31 @@
 		    input.focus();
 		});
 	},
+        reselect: function() {
+            /*
+              Recheck value of combobox and redraw
+             */
+            var selected = this.element.children(":selected"),
+	    value = selected.val() ? selected.text() : "";
+            this.input.val(value);
 
+            if (value)
+                this._trigger("selected", event, {
+		    item: value
+		});
+            else
+                this._trigger("cleaned", event, {
+		    item: null
+	        });
+        },
+        clear: function() {
+            this.element.val('');
+            this.input.val('');
+            this.element.empty();
+            this._trigger("cleaned", event, {
+		item: null
+	    });
+        },
 	destroy: function() {
 	    this.input.remove();
 	    this.button.remove();

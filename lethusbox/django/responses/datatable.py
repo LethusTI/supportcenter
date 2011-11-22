@@ -177,7 +177,7 @@ class DataTableResponseMixin(object):
         """
         filtra a queryset pela string recebida do cliente
         """
-        customSearch = self.request.GET.get('sSearch', '').encode('utf-8');
+        customSearch = self.request.GET.get('sSearch', '') #.encode('utf-8');
 
         if hasattr(self, 'get_filter_fields'):
             filter_fields = self.get_filter_fields()

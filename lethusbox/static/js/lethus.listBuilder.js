@@ -65,13 +65,7 @@
             this.actionUrl = '.'
             this._initWidgets();
         },
-        "onReloadCB": function (data) {
-            if (data.error) {
-		$.message(data.error, 'error');
-		return;
-	    }
-	    this.list.reload();
-        },
+        
         "_initWidgets": function() {
             var me = this;
             this.aloneActions = this.elem.find('.alone-action')
@@ -83,8 +77,8 @@
                 $(obj).button({ icons: {primary: icon}});
             });
 	
-            this.aloneActions.hide()
-            this.manyActions.hide()
+            this.aloneActions.hide();
+            this.manyActions.hide();
 
 	    this.aloneActions.click (function (e) {
                 if ($(this).is('.ignore-autoconnect'))
@@ -133,35 +127,15 @@
 			    $( this ).dialog( "close" );
 			    $.post(me.actionUrl,
                                    {'cmd': 'mass_delete', 'ids': ids},
-                                   me.onReloadCB);
+                                   function (data) {
+                                       me.list.onReloadCB(data)
+                                   });
 		        }
 		    }
 	        });
 	    });
             
-	    this.elem.find('#set-active').click (function (e) {
-	        e.preventDefault();
-	        ids = list.getSeletedIds();
-                
-	        if (ids.length == 0) {
-		    return
-	        }
-                
-	        $.post(me.actionUrl, {'cmd': 'set_active', 'ids': ids}, me.onReloadCB);
-	        return false;
-	    });
-            
-	    this.elem.find('#set-inactive').click (function (e) {
-	        e.preventDefault();
-	        ids = list.getSeletedIds();
-                
-	        if (ids.length == 0) {
-		    return
-	        }
-                
-	        $.post(me.actionUrl, {'cmd': 'set_inactive', 'ids': ids}, me.onReloadCB);
-	        return false;
-	    });
+	    
         }
     }
 
@@ -229,19 +203,48 @@
 	    });
 	    return ids;
 	},
+        "getRowSelected": function () {
+            return this.getSeletedIds()[0];
+        },
+        "_setVisAloneActions": function (vis) {
+            if (this.toolbar2) {
+                if (vis)
+                    this.toolbar2.find('.alone-action').show();
+                else
+                    this.toolbar2.find('.alone-action').hide();
+            }
+
+            if (vis)
+                this.toolbar.aloneActions.show();
+            else
+                this.toolbar.aloneActions.hide();
+        },
+        "_setVisManyActions": function (vis) {
+            if (this.toolbar2) {
+                if (vis)
+                    this.toolbar2.find('.many-action').show();
+                else
+                    this.toolbar2.find('.many-action').hide();
+            }
+
+            if (vis)
+                this.toolbar.manyActions.show();
+            else
+                this.toolbar.manyActions.hide();
+        },
         "updateChecker": function () {
 	    // atualiza os itens do toolbar
 	    var len = this.getSeletedIds().length;
 	    if (len<1) {
-                this.toolbar.aloneActions.hide();
-                this.toolbar.manyActions.hide();
+                this._setVisAloneActions(false);
+                this._setVisManyActions(false);
 	    } else if (len== 1) {
-                this.toolbar.aloneActions.show();
-                this.toolbar.manyActions.show();
+                this._setVisAloneActions(true);
+                this._setVisManyActions(true);
 	    }
 	    else {
-                this.toolbar.aloneActions.hide();
-                this.toolbar.manyActions.show();
+                this._setVisAloneActions(false);
+                this._setVisManyActions(true);
 	    }
 	},
 	"destroy": function () {
@@ -254,6 +257,13 @@
 	},
         "onSelectOne": function (fn) {
             this.selectOneFn = fn;
+        },
+        "onReloadCB": function (data) {
+            if (data.error) {
+		$.message(data.error, 'error');
+		return;
+	    }
+	    this.reload();
         },
         "clear": function () {
             this.gaiSelected = [];
@@ -520,19 +530,49 @@
 	    
 
 	    // append toolbar2
-	    
-	    $('.fg-toolbar').first().append($('#toolbar2').remove());
+	    //TODO: use find, refatorar os set active
+	    me.toolbar2 = $('.fg-toolbar').first().append($('#toolbar2').remove());
 	    $('#select-all').click(function(e) {
 		e.preventDefault();
 		elem.find('tbody tr').addClass('row_selected');
-		updateChecker();
+		me.updateChecker();
 		return false;
 	    });
 	    
 	    $('#select-none').click(function(e) {
 		e.preventDefault();
 		elem.find('tbody tr.row_selected').removeClass('row_selected');
-		updateChecker();
+		me.updateChecker();
+	    });
+
+            me.toolbar2.find('#set-active').click (function (e) {
+	        e.preventDefault();
+	        ids = me.getSeletedIds();
+                
+	        if (ids.length == 0) {
+		    return
+	        }
+                
+	        $.post('.', {'cmd': 'set_active', 'ids': ids}, 
+                       function (data) {
+                           me.onReloadCB(data)
+                       });
+	        return false;
+	    });
+            
+	    me.toolbar2.find('#set-inactive').click (function (e) {
+	        e.preventDefault();
+	        ids = me.getSeletedIds();
+                
+	        if (ids.length == 0) {
+		    return
+	        }
+                
+	        $.post('.', {'cmd': 'set_inactive', 'ids': ids},
+                       function (data) {
+                           me.onReloadCB(data)
+                       });
+	        return false;
 	    });
 	}
 

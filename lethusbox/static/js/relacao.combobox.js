@@ -4,7 +4,7 @@
             sourceText: $( "<input type=\"text\" class=\"search-text\">" )
         },
 	_create: function() {
-	    var self = this,
+	    var me = this,
 	    select = this.element.hide(),
 	    selected = select.children( ":selected" ),
 	    value = selected.val() ? selected.text() : "";
@@ -33,11 +33,9 @@
 		    },
 		    select: function( event, ui ) {
 			ui.item.option.selected = true;
-			self._trigger( "selected", event, {
+			me._trigger( "selected", event, {
 			    item: ui.item.option
 			});
-			if (self.options.onchange)
-			    self.options.onchange();
 		    },
 		    change: function( event, ui ) {
 			if ( !ui.item ) {
@@ -54,42 +52,48 @@
 				//$( this ).val( "" );
 				select.val(null);
 				select.val('');
-				input.data( "autocomplete" ).term = "";
-				return false;
+                                me._trigger("cleaned", event, {
+			            item: null
+			        });
+
+                                var p = input.data("autocomplete");
+                                if (p) p.term = "";
+
+			        return false;
 			    }
-			}
+		        }
 		    }
 		})
-		.addClass( "ui-widget ui-widget-content ui-corner-left" );
+	        .addClass( "ui-widget ui-widget-content ui-corner-left" );
 
             if (value) {
                 input.val(value);
             }
 
 	    input.data( "autocomplete" )._renderItem = function( ul, item ) {
-		return $( "<li></li>" )
+	        return $( "<li></li>" )
 		    .data( "item.autocomplete", item )
 		    .append( "<a>" + item.label + "</a>" )
 		    .appendTo( ul );
 	    };
 
 	    this.button = $( "<button type='button'>&nbsp;</button>" )
-		.attr( "tabIndex", -1 )
-		.attr( "title", "Mostrar todos os itens" )
-		.insertAfter( input )
-		.button({
+	        .attr( "tabIndex", -1 )
+	        .attr( "title", "Mostrar todos os itens" )
+	        .insertAfter( input )
+	        .button({
 		    icons: {
-			primary: "ui-icon-triangle-1-s"
+		        primary: "ui-icon-triangle-1-s"
 		    },
 		    text: false
-		})
-		.removeClass( "ui-corner-all" )
-		.addClass( "ui-corner-right ui-button-icon" )
-		.click(function() {
+	        })
+	        .removeClass( "ui-corner-all" )
+	        .addClass( "ui-corner-right ui-button-icon" )
+	        .click(function() {
 		    // close if already visible
 		    if ( input.autocomplete( "widget" ).is( ":visible" ) ) {
-			input.autocomplete( "close" );
-			return;
+		        input.autocomplete( "close" );
+		        return;
 		    }
 
 		    // work around a bug (likely same cause as #5265)
@@ -98,8 +102,8 @@
 		    // pass empty string as value to search for, displaying all results
 		    input.autocomplete( "search", "" );
 		    input.focus();
-		});
-	},
+	        });
+        },
 
 	destroy: function() {
 	    this.input.removeClass("ui-widget ui-widget-content ui-corner-left");
