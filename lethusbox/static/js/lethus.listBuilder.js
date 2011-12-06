@@ -285,8 +285,12 @@
             }
         },
         "updateRow": function (id, data) {
-            row = this._getRow(id);
+            var row = this._getRow(id);
             this.oTable.fnUpdate(data, row);
+        },
+        "deleteRow": function (id) {
+            var row = this._getRow(id)
+            this.oTable.fnDeleteRow(row);
         },
         "initWidgets": function () {
 	    // configura os rendering para booleans e email

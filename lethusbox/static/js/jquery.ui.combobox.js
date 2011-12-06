@@ -107,11 +107,11 @@
             this.input.val(value);
 
             if (value)
-                this._trigger("selected", event, {
+                this._trigger("selected", {
 		    item: value
 		});
             else
-                this._trigger("cleaned", event, {
+                this._trigger("cleaned", {
 		    item: null
 	        });
         },
@@ -119,7 +119,7 @@
             this.element.val('');
             this.input.val('');
             this.element.empty();
-            this._trigger("cleaned", event, {
+            this._trigger("cleaned", {
 		item: null
 	    });
         },
