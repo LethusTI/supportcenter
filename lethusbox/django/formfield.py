@@ -4,6 +4,7 @@ from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
 from django.template import loader, Context
 from django.forms import ValidationError, BaseForm
+from django.conf import settings
 
 class FormWidget(Widget):
     field = None
@@ -34,8 +35,11 @@ class FormWidget(Widget):
             form = self.get_form(prefix=name, initial=value)
 
         t = loader.get_template(self.field.template_name)
-
-        return mark_safe(t.render(Context(locals())))
+        
+        data = {'form': form,
+                'STATIC_URL': settings.STATIC_URL}
+                
+        return mark_safe(t.render(Context(data)))
 
 
 class FormField(Field):

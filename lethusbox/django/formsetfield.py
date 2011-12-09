@@ -6,6 +6,7 @@ from django.forms.formsets import BaseFormSet, formset_factory
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django.template import loader, Context
+from django.conf import settings
 
 class AutoBaseFormSet(BaseFormSet):
     def total_form_count(self):
@@ -32,7 +33,10 @@ class FormsetWidget(Widget):
             formset = self.get_formset(prefix=name, initial=value)
 
         t = loader.get_template(self.field.template_name)
-        return mark_safe(t.render(Context(locals())))
+        data = {'formset': formset,
+                'STATIC_URL': settings.STATIC_URL}
+
+        return mark_safe(t.render(Context(data)))
 
 
 class FormsetField(Field):
