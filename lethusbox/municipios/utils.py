@@ -27,10 +27,10 @@ class Loader(object):
         mun.save()
 
         if created:
-            print "Atualizando municipio %s do estado %s" % (
+            print "Criando municipio %s do estado %s" % (
                 mun.nome, mun.uf_sigla)
         else:
-            print "Criando municipio %s do estado %s" % (
+            print "Atualizando municipio %s do estado %s" % (
                 mun.nome, mun.uf_sigla)
 
     def _load_uf(self, node):
@@ -43,9 +43,9 @@ class Loader(object):
         uf.save()
 
         if created:
-            print "Atualizando o estado %s" % uf.nome
-        else:
             print "Criando o estado %s" % uf.nome
+        else:
+            print "Atualizando o estado %s" % uf.nome
 
     def load(self):
         """

@@ -33,7 +33,9 @@ class FormsetWidget(Widget):
             formset = self.get_formset(prefix=name, initial=value)
 
         t = loader.get_template(self.field.template_name)
+
         data = {'formset': formset,
+                'class_name': self.field.class_name,
                 'STATIC_URL': settings.STATIC_URL}
 
         return mark_safe(t.render(Context(data)))

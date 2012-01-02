@@ -37,6 +37,7 @@ class FormWidget(Widget):
         t = loader.get_template(self.field.template_name)
         
         data = {'form': form,
+                'class_name': self.field.class_name,
                 'STATIC_URL': settings.STATIC_URL}
                 
         return mark_safe(t.render(Context(data)))
@@ -78,5 +79,5 @@ class FormField(Field):
 
         if form.is_valid():
             return self.to_python(form)
-        
-        raise ValidationError('Formulário Inválido')
+        else:
+            raise ValidationError('Formulário Inválido')

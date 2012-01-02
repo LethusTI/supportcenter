@@ -145,10 +145,11 @@ class WizardView(TemplateView):
             if getattr(step, 'allow_continue', False):
                 self.current_step = int(continue_step)
 
-
         # Edição de um campo
         edit_step = self.request.GET.get('edit', None)
-        if edit_step and edit_step.isdigit():
+        if (edit_step and edit_step.isdigit() and
+            int(edit_step)+1 <= len(self.steps)):
+                
             step = self.steps[int(edit_step)]
 
             if getattr(step, 'allow_edit', False):
@@ -225,7 +226,7 @@ class WizardView(TemplateView):
     def render_done(self, form, **kwargs):
         raise NotImplementedError
 
-    def save_step(self, form):
+    def save_step(self, form, commit=True):
         """
         salva uma etapa no documento não salvo
         """
@@ -235,7 +236,8 @@ class WizardView(TemplateView):
         if attr:
             setattr(self.object, attr, data)
 
-        self.object.save() #validate=False)
+        if commit:
+            self.object.save()
 
     def render(self, form=None, **kwargs):
         """
