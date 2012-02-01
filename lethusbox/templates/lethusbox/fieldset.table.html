@@ -1,0 +1,17 @@
+<div id="{{ class_name }}" class="fieldset-table">
+  <div class="control">
+    {{ formset.management_form }}
+  </div>
+  <div class="template">
+    {% with form=formset.form %}
+    {% include "master/form_snippet.html" %}
+    {% endwith %}
+  </div>
+  <div class="forms">
+    {% for form in formset.forms %}
+    <div id="{{ class_name }}-form-{{ forloop.counter0 }}" class="formset-form">
+      {% include "master/form_snippet.html" %}
+    </div>
+    {% endfor %}
+  </div>
+</div>

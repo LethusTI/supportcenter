@@ -1,0 +1,27 @@
+div.fieldset-table div.template, div.fieldset-table div.forms {display: none;}
+div.fieldset-table table {display: block; min-height: 80px; width: 400px;}
+div.fieldset-table table tbody {min-height: 80px;}
+div.fieldset-table table td.actions a {display: inline-block; }
+div.fieldset-dialog .field {margin: 0 0 12px 0; line-height: 20px; width: 280px;}
+div.fieldset-dialog input[type="text"], div.fieldset-dialog input[type="number"] {
+    display: block; margin: 4px 0 0 0; border: 1px solid #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15) inset;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15) inset; box-shadow:
+    -0 1px 2px rgba(0, 0, 0, .15) inset;
+    color: #424242;
+    font-family: Verdana, 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
+    font-size: 13px;
+    outline: none;
+    padding: 6px;
+    -moz-transition: border .3s linear, box-shadow .3s linear;
+    -webkit-transition: border .3s linear, -webkit-box-shadow .3s linear;}
+
+div.fieldset-dialog input[type="text"]:focus, div.fieldset-dialog input[type="number"]:focus {
+    border: 1px solid #80bfff;
+    -moz-box-shadow: 0 0 3px #80bfff, 0 1px 2px rgba(0, 0, 0, .15) inset;
+    -webkit-box-shadow: 0 0 3px #80bfff, 0 1px 2px rgba(0, 0, 0, .15) inset;
+    box-shadow: 0 0 3px #80bfff, 0 1px 2px rgba(0, 0, 0, .15) inset;
+}
