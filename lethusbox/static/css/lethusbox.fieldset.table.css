@@ -1,6 +1,7 @@
 div.fieldset-table div.template, div.fieldset-table div.forms {display: none;}
 div.fieldset-table table {display: block; min-height: 80px; width: 400px;}
 div.fieldset-table table tbody {min-height: 80px;}
+div.fieldset-table table td.actions {table-align: right; width: 30px;}
 div.fieldset-table table td.actions a {display: inline-block; }
 div.fieldset-dialog .field {margin: 0 0 12px 0; line-height: 20px; width: 280px;}
 div.fieldset-dialog input[type="text"], div.fieldset-dialog input[type="number"] {

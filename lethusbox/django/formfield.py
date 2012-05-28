@@ -13,7 +13,6 @@ class FormWidget(Widget):
         return self.get_form(data=data, prefix=name)
     
     def get_form(self, *args, **kwargs):
-        
         if self.field.form_kwargs:
             kwargs.update(self.field.form_kwargs)
 

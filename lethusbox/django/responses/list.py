@@ -5,6 +5,7 @@ from lethusbox.django.responses.datatable import DataTableResponseMixin
 from mongotools.views import MongoMultipleObjectMixin, ListView
 from django.template import RequestContext
 from lethusbox.django.output import render_to_csv, render_to_pdf
+from django.http import Http404
 
 class HybridListView(DataTableResponseMixin, ListView, MongoMultipleObjectMixin):
     """

@@ -1,6 +1,6 @@
 {{ formset.management_form }}
-<table class="{{ class_name }}">
-  <thead>
+<table class="{{ class_name }} ui-widget-content ui-corner-all">
+  <thead class="ui-widget-header">
     <tr align="left">
       {% for field in formset.forms.0 %}
       <th>{{ field.label }}</th>

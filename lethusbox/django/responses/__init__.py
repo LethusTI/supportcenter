@@ -159,7 +159,8 @@ class WizardView(TemplateView):
 
         #Valida o edit
         if edit_step:
-            if not self.get_form_instance():
+            if not self.get_form_instance() and not \
+                    getattr(step, 'force_edit', False):
                 self.current_step = 0
 
         if action == 'cancel' and self.allow_cancel:

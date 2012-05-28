@@ -3,6 +3,8 @@
  * 
  * Escrito por Wilson Jr (wpjunior@lethus.com.br)
  * 31/01/2012
+ *
+ *
  */
 
 (function ($) {
@@ -14,9 +16,11 @@
         constructor: FieldSetTable,
         ACTIONS_TEMPLATE: (
             '<td class="actions">'+
-                '<a href="#" class="edit"><span class="ui-icon ui-icon-pencil"></span></a>'+
-                '<a href="#" class="delete"><span class="ui-icon ui-icon-trash"></span></a>'+
+                '<a href="#" class="edit" title="Editar"><span class="ui-icon ui-icon-pencil"></span></a>'+
+                '<a href="#" class="delete" title="Remover"><span class="ui-icon ui-icon-trash"></span></a>'+
                 '</td>'),
+        childElementSelector: 'input,select,textarea,label',
+
         _init: function (elem, options) {
             var _this = this;
             this._elem = $(elem);
@@ -79,7 +83,7 @@
 
                 tr.find('a.delete').click(function (e) {
                     e.preventDefault();
-                    console.info('delete', id);
+                    _this._deleteItem(id);
                     return false;
                 });
             });
@@ -100,8 +104,7 @@
 
                         $(this).dialog('destroy');
                         _this._dialog.remove();
-                        _this._addForm(_this._dialog.find('form').clone().contents());
-
+                        _this._addForm(_this._cloneForm(_this._dialog.find('form')));
                     },
                     "Cancelar": function () {
                         $(this).dialog('destroy');
@@ -110,15 +113,26 @@
                 }
             });
         },
-        _addForm: function (contents) {
+        _cloneForm: function (form) {
+            var newForm = form.clone(true, true);
+ 
+            var selects = form.find('select');
+            newForm.find('select').each(function (i) {
+                $(this).val(selects.eq(i).val());
+            });
+
+            return newForm;
+        },
+        _addForm: function (form) {
             var _this = this;
 
             var ndx = parseInt(this.totalForms.val());
+            
             var elem = $('<div id="'+this._options.prefix+'-form-'+ndx+'" class="formset-form"></div>');
             elem.appendTo(this._elem.find('div.forms'));
-            contents.appendTo(elem);
+            form.contents().appendTo(elem);
 
-            elem.find('input').each(function (i, e) {
+            elem.find('input,select,textarea').each(function (i, e) {
                 var name = $(e).attr('name');
 
                 $(e).attr('name', _this._options.prefix+'-'+ndx+'-'+name);
@@ -132,7 +146,7 @@
         },
         _updateItem: function (id) {
             var _this = this;
-            var elem = this._elem.find('#'+this._options.prefix+'-form-'+id).clone().contents();
+            var elem = _this._cloneForm(this._elem.find('#'+this._options.prefix+'-form-'+id)).contents();
 
             this._dialog = $('<div class="fieldset-dialog"><form></form></div>');
             this._dialog.find('form').validate({errorElement: "div"});
@@ -146,7 +160,7 @@
                         if (!_this._dialog.find('form').valid())
                              return;
 
-                        var data = _this._dialog.find('form').clone().contents();
+                        var data = _this._cloneForm(_this._dialog.find('form')).contents();
                         $(this).dialog('destroy');
                         _this._dialog.remove();
                         
@@ -165,10 +179,51 @@
             form.appendTo(p);
 
             this._updateTable();
+        },
+        _deleteItem: function (id) {
+            this._elem.find('div.forms #'+this._options.prefix+'-form-'+id).remove();
+            var forms = this._elem.find('div.forms div.formset-form');
+            this.totalForms.val(forms.length);
+
+            for (var _i=0; _i<forms.length; _i++) {
+                this._updateFormIndex(forms.eq(_i), _i);
+            }
+
+            this._updateTable();
+        },
+        _updateFormIndex: function (form, ndx) {
+            var idRegex = new RegExp(this._options.prefix + '-(\\d+|__prefix__)-'),
+            replacement = this._options.prefix + '-' + ndx + '-';
+            
+            form.find(this.childElementSelector).each(function() {
+                var e = $(this);
+                if (e.attr("for"))
+                    e.attr("for", e.attr("for").replace(idRegex, replacement));
+
+                if (e.attr('id'))
+                    e.attr('id', e.attr('id').replace(idRegex, replacement));
+
+                if (e.attr('name'))
+                    e.attr('name', e.attr('name').replace(idRegex, replacement));
+            });
+
+            form.attr('id', this._options.prefix+'-form-'+ndx);
         }
     };
 
     $.fn.fieldSetTable = function (options) {
+        /*
+          Opções
+          {
+                prefix: //prefixo do fieldset
+                addTitle: //título do dialogo de adicionar novo item
+                updateTitle: //título do dialogo de editar item
+                tableAttrs: [], //lista de attributos que irão para a tabela 
+                tableTitles: [], //título dos atritutos que irão para a tabela
+                addButton: ,//título do butão de adicionar novo item
+                actionLabel: //título da coluna de ações
+           }
+         */
         var obj = new FieldSetTable(this, options);
         $(this).data('fieldset.table', obj);
     };
