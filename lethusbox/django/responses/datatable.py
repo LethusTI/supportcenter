@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-from pymongo.objectid import ObjectId
+from bson import ObjectId
 from django.contrib import messages
 from django.utils import simplejson as json
 from django import http
