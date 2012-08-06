@@ -10,10 +10,15 @@ from django.conf import settings
 
 class AutoBaseFormSet(BaseFormSet):
     def total_form_count(self):
-        if self.initial_form_count() > 0:
-            self.extra = 0
+        try:
+            if self.initial_form_count() > 0:
+                self.extra = 0
+
+            return super(AutoBaseFormSet, self).total_form_count()
+        except ValidationError:
+            return 0
         
-        return super(AutoBaseFormSet, self).total_form_count()
+        
 
 class FormsetWidget(Widget):
     field = None
