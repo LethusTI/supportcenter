@@ -8,8 +8,11 @@ from django.utils import simplejson as json
 from django import http
 from django.core.paginator import InvalidPage
 from mongoengine.queryset import Q
-from social.settings.default import DATETIME_FORMAT, DATE_FORMAT
+from django.conf import settings
 from django.utils.dateformat import format
+
+DATETIME_FORMAT = settings.DATETIME_FORMAT
+DATE_FORMAT = settings.DATE_FORMAT
 
 class DataTableResponseMixin(object):
     """

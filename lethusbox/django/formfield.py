@@ -19,7 +19,6 @@ class FormWidget(Widget):
         return self.field.form_class(*args, **kwargs)
 
     def render(self, name, value, attrs=None):
-        
         # in invalid form
         if isinstance(value, BaseForm):
             form = value
@@ -79,4 +78,4 @@ class FormField(Field):
         if form.is_valid():
             return self.to_python(form)
         else:
-            raise ValidationError('Formulário Inválido')
+            raise ValidationError('Formulário inválido')
