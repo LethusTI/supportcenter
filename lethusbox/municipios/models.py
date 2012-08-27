@@ -28,7 +28,7 @@ class UFBrasil(Document):
                          verbose_name=u"Região")
     
     meta = {'allow_inheritance': False,
-            'ordering': ['sigla'],
+            'ordering': ['nome'],
             'indexes': [
                {'fields': ['codigo']},
                {'fields': ['sigla']},
