@@ -399,7 +399,7 @@ ListBuilder.prototype = {
 		    if (oObj.aData[oObj.iDataColumn]) 
 			return '<i class="icon-ok"></i>';
 		    else
-			return '<i class="icon-cancel"></i>';
+			return '<i class="icon-remove"></i>';
 		},
 		"aTargets": cols
 	    });
