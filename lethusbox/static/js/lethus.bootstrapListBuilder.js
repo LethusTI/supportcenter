@@ -249,6 +249,14 @@ var ListBuilder = function(element, options)
 	return false;
     });
 
+    $(this.settings['output']).click (function (e) {
+
+	var url = $(me.settings['form']).attr('action');
+
+	window.location.href = url + '?'+ $(me.settings['form']).serialize()+'&format='+$(this).attr('rel');
+	return false;
+    });
+
     this.initWidgets(); // inicia o plugin
     this.toolbar = new ToolBar(this.settings.toolbar, this); // inicia o toolbar
 }
@@ -261,6 +269,9 @@ ListBuilder.prototype = {
          */
         this.oTable.fnDraw();
         this.updateChecker();
+    },
+    buildEmail: function (email) {
+        return "<a href=\"mailto:"+email+"\">"+email+"</a>";
     },
     getSeletedIds: function () {
         var me = this;
@@ -386,9 +397,9 @@ ListBuilder.prototype = {
 	    aoColumnDefs.push({
 		"fnRender": function ( oObj ) {
 		    if (oObj.aData[oObj.iDataColumn]) 
-			return '<span class="ui-icon ui-icon-check" />';
+			return '<i class="icon-ok"></i>';
 		    else
-			return '<span class="ui-icon ui-icon-close" />';
+			return '<i class="icon-cancel"></i>';
 		},
 		"aTargets": cols
 	    });
@@ -417,7 +428,7 @@ ListBuilder.prototype = {
 	    });
 	    aoColumnDefs.push({
 		"fnRender": function ( oObj ) {
-		    return $.buildEmail(oObj.aData[oObj.iDataColumn]);
+		    return me.buildEmail(oObj.aData[oObj.iDataColumn]);
 		},
 		"aTargets": cols
 	    });
@@ -471,7 +482,7 @@ ListBuilder.prototype = {
 	// configura o datatable
 	var params = {
 	    "sScrollY": me.settings.scrollY,
-	    "sPaginationType": "full_numbers",
+            "sPaginationType": "bootstrap",
 	    "iDisplayLength": me.settings.iDisplayLength,
 	    "bServerSide": me.settings.serverSide,
 	    "bFilter": me.settings.filterSuport,
