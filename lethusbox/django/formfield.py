@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*
+
+try:
+    from mongoengine.base import BaseDocument as BaseDocumentMongoengine
+except ImportError:
+    BaseDocumentMongoengine = None
+
 from django.forms.fields import Field
 from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
@@ -23,7 +29,7 @@ class FormWidget(Widget):
         if isinstance(value, BaseForm):
             form = value
 
-        elif hasattr(value, '_meta'):
+        elif BaseDocumentMongoengine and isinstance(value, BaseDocumentMongoengine):
             form = self.get_form(prefix=name, instance=value)
 
         elif value is None:

@@ -64,7 +64,7 @@ class MunicipioBrasil(Document):
                 'uf': self.uf_sigla}
 
 if not UFBrasil.objects.first() or not MunicipioBrasil.objects.first():
-    from utils import Loader
+    from .utils import Loader
     print "Carregando municipios e estados brasileiros"
     loader = Loader()
     loader.load()
