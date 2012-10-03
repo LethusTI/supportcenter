@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*
+
+try:
+    from mongoengine.base import BaseDocument as BaseDocumentMongoengine
+except ImportError:
+    BaseDocumentMongoengine = None
+
 from django.forms.forms import Form, BoundField
 from django.forms.fields import Field
 from django.forms.widgets import Widget
@@ -9,6 +15,24 @@ from django.template import loader, Context
 from django.conf import settings
 
 class AutoBaseFormSet(BaseFormSet):
+    def __init__(self, instances=[], *args, **kwargs):
+        self.instances = instances
+        super(AutoBaseFormSet, self).__init__(*args, **kwargs)
+
+    def initial_form_count(self):
+        """Returns the number of forms that are required in this FormSet."""
+        if not (self.data or self.files) and self.instances:
+            return len(self.instances)
+
+        return super(AutoBaseFormSet, self).initial_form_count()
+        
+    def _construct_form(self, i, **kwargs):
+        if self.instances:
+            if i < self.initial_form_count() and not kwargs.get('instance'):
+                kwargs['instance'] = self.instances[i]
+
+        return super(AutoBaseFormSet, self)._construct_form(i, **kwargs)
+        
     def total_form_count(self):
         try:
             if self.initial_form_count() > 0:
@@ -17,14 +41,12 @@ class AutoBaseFormSet(BaseFormSet):
             return super(AutoBaseFormSet, self).total_form_count()
         except ValidationError:
             return 0
-        
-        
 
 class FormsetWidget(Widget):
     field = None
     
     def value_from_datadict(self, data, files, name):
-        return self.get_formset(data, prefix=name)
+        return self.get_formset(data=data, prefix=name)
     
     def get_formset(self, *args, **kwargs):
         return self.field.formset_class(*args, **kwargs)
@@ -32,8 +54,15 @@ class FormsetWidget(Widget):
     def render(self, name, value, attrs=None):
         initial = value
 
+        if value and BaseDocumentMongoengine and isinstance(value, (list, tuple)):
+            is_document = all([isinstance(v, BaseDocumentMongoengine) for v in value])
+        else:
+            is_document = False
+
         if value and isinstance(value, BaseFormSet):
             formset = value
+        elif is_document:
+            formset = self.get_formset(prefix=name, instances=value)
         else:
             formset = self.get_formset(prefix=name, initial=value)
 
