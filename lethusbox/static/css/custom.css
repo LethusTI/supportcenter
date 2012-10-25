@@ -9,9 +9,9 @@ html, body {
 }
 
 #logo {
-    margin: 26px 0 5px 0;
+    margin: 30px 0 5px 0;
     padding-left: 45px;
-    background: url("../img/sofa.png") no-repeat scroll left top transparent;
+    background: url("../img/project.png") no-repeat scroll left top transparent;
 }
 
 /* MENU */
@@ -137,6 +137,7 @@ html, body {
 
 
 /* CUSTOMIZACOES */
+.container.header { margin-bottom: 5px; }
 .btn#add {
     margin-bottom: 10px;
 }
