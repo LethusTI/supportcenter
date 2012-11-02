@@ -13,6 +13,10 @@ html, body {
     padding-left: 45px;
     background: url("../img/project.png") no-repeat scroll left top transparent;
 }
+#logo small {
+    float: right;
+    font-size: 28px;
+}
 
 /* MENU */
 .subnav {
