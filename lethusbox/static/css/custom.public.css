@@ -1,3 +1,12 @@
+html, body {
+    height: 100%;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -4em;
+}
 #master {
     padding-top: 100px;
 }
@@ -11,13 +20,22 @@
 }
 
 /* RODAPE */
-#footer {
+.footer, .push {
+    height: 4em;
+}
+.footer {
+    margin-top: 15px;
     border-top: 1px solid #CCCCCC;
 }
-#footer .contato {
+.footer .span6 {
+    margin-left: 0px;
+    margin-top: 5px;
+}
+.footer .contato, .footer .copyright {
     margin-left: 20px;
 }
-#footer .help {
+.footer .ajuda, .footer .version {
     float: right;
     margin-right: 20px;
 }
+
