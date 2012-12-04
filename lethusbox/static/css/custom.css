@@ -109,6 +109,11 @@ html, body {
     position: absolute;
     top: -6px;
 }
+.dropdown-submenu .dropdown-menu:after, .dropdown-submenu .dropdown-menu:before {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
 .subnav .pull-right .dropdown-menu:after, .subnav .nav .dropdown-menu.pull-right:after {
     left: auto;
     right: 13px;
