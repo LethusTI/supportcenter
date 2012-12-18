@@ -165,3 +165,4 @@ h1 small {
 }
 .date { width: 90px; }
 div.field-checkbox label {display: inline;}
+.upper { text-transform:uppercase; }
