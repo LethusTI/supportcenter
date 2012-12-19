@@ -31,7 +31,5 @@ urlpatterns = patterns('',
     url('^settings/$', superuser_only(AdminSettingsView.as_view())),
 
     url(r'^unidades/', include("protocolo.unidades.urls")),
-
-    url('^setores/', include("protocolo.setores.urls")),
  
 )

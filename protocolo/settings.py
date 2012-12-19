@@ -109,7 +109,6 @@ INSTALLED_APPS = (
     'protocolo.common',
     'protocolo.unidades',
     'protocolo.accounts',
-    'protocolo.setores',
 )
 
 LOGGING = {
