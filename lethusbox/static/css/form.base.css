@@ -1,8 +1,0 @@
-div.form-modal label {margin: 0px; padding: 0px; outline: 0px; border: 0px; font-size: 100%; line-height: 20px; display: block;}
-div.form-modal input[type="text"] {padding: 6px; margin: 4px 0 0 0; display: inline-block;}
-div.form-modal input.search-text {width: initial !important; display: inline-block;}
-
-div.modal-field {
-    margin: 0 0 12px 0;
-    line-height: 20px;
-}
