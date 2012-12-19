@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Histórico de Ações Geral</title>
+    <style>
+      h1.title {color: #636C75; text-shadow: 0 1px 1px rgba(255, 255, 255, .5); font-size: 1.5em;}
+      th.title {font-weight: bold; font-size: 1.2em;}
+      tr.odd {background-color: #E2E4FF;}
+    </style>
+      
+  </head>
+  <body>
+    <h1 class="title">Histórico de Ações Geral</h1>
+     <table cellspacing="0" id="result_list">
+	<thead class="ui-corner-all">
+	  <tr>
+	    <th class="title" scope="col">Usuário</th>
+	    <th class="title" scope="col">Módulo</th>
+	    <th class="title" scope="col">Ação</th>
+	    <th class="title" scope="col">Objeto</th>
+	    <th class="title" scope="col">Horário</th>
+	  </tr>
+	</thead>
+	<tbody class="ui-corner-all">
+	  
+	  {% for obj in paginator.object_list %}
+	  <tr class="row ui-corner-all {% cycle 'odd' 'even' %}">
+	    <td>
+	      {{ obj.user }}
+	    </td><td>
+	      {{ obj.get_module_label }}
+	    </td><td>
+	      {{ obj.get_action_label }}
+	    </td><td>
+	      {% if obj.object %}
+	      {{ obj.object }}
+	      {% endif %}
+	    </td><td>
+	      {{ obj.dtime }}
+	    </td>
+	  </tr>
+	  {% endfor %}
+	</tbody>
+      </table>
+  </body>
+</html>

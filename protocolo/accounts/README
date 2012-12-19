@@ -1,0 +1,29 @@
+Documentação
+------------
+
+Modulo utilizado para gerenciar os funcionários (usuários e administradores) do sistema,
+arquivar o histório de ações de cada um, e também gerenciar permissões e acesso ao sistema.
+
+aquivos diferentes encontrados nesse módulo:
+
+- auth.py
+  backend originalmente copiada do mongoengine,
+  utilizada para autenticação customizada,
+  permite login usando email.
+
+- decorators.py
+  funções de decorators,
+  podemos restringir o acesso a uma determinada funções do sistema
+  usando permissões por usuário.
+
+- middleware.py
+  um midlleware utilizado para restrigir o
+  acesso a /admin/.* para apenas administradores do sistema,
+  também restrigir o acesso aos usuários inativos do sistema.
+
+- widgets.py
+  temos um widget para desenhar a tabela de permissões
+  
+managment
+  commands
+     createadmin.py -> comando usado para criar um administrador do sistema

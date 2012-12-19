@@ -1,0 +1,82 @@
+{% extends "master/base.html" %}
+
+{% block title %}Histórico de ações geral{% endblock %}
+
+{% block header %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/lethus.bootstrapListBuilder.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/lethus.bootstrapListBuilder.css" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-historyfilter.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/accounts.history.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/datepicker.css"/>
+<style type="text/css">
+  #diario input {width: 90px;}
+  #list {width: 850px; margin-left: 10px;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>
+    Histórico de ações geral
+  </h1>
+</div>
+
+<div id="filter" class="pull-left well">
+  <form id="filter-form" method="GET" action=".">
+	<h3>Período</h3>
+	<div id="diario">
+	  <p>
+	    <label>{{ filter_form.from_date.label }}:</label>
+	    {{ filter_form.from_date }}
+	  </p>
+	  <p>
+	    <label>{{ filter_form.to_date.label }}:</label>
+	    {{ filter_form.to_date }}
+	  </p>
+	</div>
+	<h3>Ação</h3>
+	<div id="modulo">
+	  <p>
+	    <label>{{ filter_form.module.label }}:</label>
+	    {{ filter_form.module }}
+	  </p>
+	</div>
+	<div id="action">
+	  <p>
+	    <label>{{ filter_form.action.label }}:</label>
+	    {{ filter_form.action }}
+	  </p>
+	</div>
+	
+  </form>
+</div>
+
+<div id="list" class="pull-left well">
+  <div id="toolbar" class="btn-group">
+	<a id="pdf" class="btn output" rel="pdf" href="#">
+      <i class="icon-print"></i> Exportar para PDF
+    </a>
+	<a id="csv" class="btn output" rel="csv"  href="#">
+      <i class="icon-list-alt"></i> Exportar para CSV
+    </a>
+  </div>
+  <table cellpadding="0" cellspacing="0" border="0" class="display table table-striped table-bordered" id="result">
+	<thead>
+	  <tr>
+	    <th scope="col">ID</th>
+	    <th scope="col">Usuário</th>
+	    <th scope="col">Módulo</th>
+	    <th scope="col">Ação</th>
+	    <th scope="col" class="link" rel="5">Objeto Link</th>
+	    <th scope="col">Objeto</th>
+	    <th scope="col" class="sort-desc">Horário</th>
+	  </tr>
+	</thead>
+	<tbody>
+	</tbody>
+  </table>
+</div>
+<br clear="all" />
+{% endblock %}

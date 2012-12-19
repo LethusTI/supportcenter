@@ -1,0 +1,16 @@
+{% include "master/message.error.html" %}
+{% csrf_token %}
+
+{% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+
+{% for field in form.visible_fields %}
+<div id="field-{{ field.name }}" class="field{% if field.errors %} perror{% endif %}{% if field.field.required %} required{% endif %}">
+ <label for="{{ field.auto_id }}">
+   {{ field.label }}  {% if field.field.required %}*{% endif %}
+ </label>
+ {{ field }}
+ {% if field.help_text %}
+ <span class="help-block">{{ field.help_text }}</span>
+ {% endif %}
+ </div>
+{% endfor %}

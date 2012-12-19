@@ -1,0 +1,73 @@
+{% extends "master/base.html" %}
+{% block title %}Alterar dados cadastrais{% endblock %}
+{% block header %}
+<script type="text/javascript">
+  $(document).ready(function (e) {
+      $("#form2").validate({
+          errorElement: "div",
+          rules: {
+	      id_password1: {
+	          required: true,
+		  minlength: 4
+              },
+              id_password2: {
+		  required: true,
+                  minlength: 4,
+                  equalTo: "#id_new_password1"
+              }
+          }
+      });
+  });
+</script>
+<style>
+.well { 
+    border-radius: 0px;
+    box-shadow: none;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="span6">
+        <div class="page-header">
+          <h1>
+            Alterar dados
+            <small>* são obrigatórios</small>
+          </h1>
+        </div>    
+        
+        <form id="form" novalidate action="/account/" method="POST" class="well pull-left">
+          <section id="main">
+            <div class="field">
+              <label for="id_username">Usuário</label> 
+              <input id="id_username" type="text" name="username" value="{{ object.username }}" disabled="disabled" maxlength="30">
+            </div>
+
+            {% include "master/form_snippet.html" %}
+            <p>
+              <input class="btn btn-success" type="submit" value="Salvar" class="green">
+              <input class="btn" type="button" value="Voltar" onclick="history.go(-1)">
+            </p>
+        </form>
+    </div>
+    <div class="span6">
+        <div class="page-header">
+          <h1>
+            Alterar senha
+            <small>* são obrigatórios</small>
+          </h1>
+        </div> 
+        {% if object %}
+        <form id="form2" action="/account/set_password/" method="POST" class="well pull-left">
+          {% csrf_token %}
+            {% with form=form2 %}
+            {% include "master/form_snippet.html" %}
+            {% endwith %}
+            <p>
+              <input type="submit" value="Alterar" class="btn btn-success" />
+            </p>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "master/base.html" %}
+{% block title %}{% if object %}Editando{% else %}Adicionando{% endif %} grupo{% endblock %}
+{% block content %}
+<div class="base fnormal fcenter">
+  <header id="header">
+    <hgroup>
+      <span id="icon"><img src="{{ STATIC_URL }}img/menu/medical.png" alt="Unidades"></span>
+      <span id="title">
+        <strong>
+          {% if object %}Editando{% else %}Adicionando{% endif %} grupo
+        </strong>
+      </span>
+      <span id="required">* são obrigatórios</span>
+    </hgroup>
+  </header>
+  <form action="."  id="form" method="post">
+    <div class="ftraco"></div>
+    <section id="main">
+
+      {% csrf_token %}
+      {% include "master/form_snippet.html" %}
+
+      <p>
+        <input type="submit" value="Salvar" class="green">
+        <input type="button" value="Voltar" onclick="history.go(-1)">
+        {% if object %}
+        <span class="fright">
+          <a class="button" href="{{ module_url }}/delete/{{ object.id }}/">Apagar</a>
+        </span>
+        {% endif %}
+      </p>
+    </section>
+</div>
+</form>
+
+{% endblock %}

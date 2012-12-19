@@ -1,0 +1,219 @@
+{% extends "master/base.html" %}
+{% block title %}{% if object %}Editando{% else %}Adicionando{% endif %} {% firstof tipo "Usuário" %}{% endblock %}
+
+{% load loadfield %}
+{% block header %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tab.pack.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}/js/jquery.tipTip.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}/js/unidade_profile.group.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tabs-horizontal.css" />
+
+<script type="text/javascript">
+  $(document).ready(function (e) {
+    $("#form2").validate({
+      errorElement: "div",
+      rules: {
+        old_password: {
+          required: true,
+        },
+        new_password1: {
+          required: true,
+          minlength: 4
+        },
+        new_password2: {
+          required: true,
+          minlength: 4,
+          equalTo: "#id_new_password1"
+        }
+      }
+    });
+
+    $('div#st_horizontal').slideTabs({  			
+      tabsScroll: true,
+      autoHeight: true,
+      buttonsFunction: 'click',
+      contentAnim: 'slideH',
+      contentAnimTime: 600,
+      contentEasing: 'easeInOutExpo',
+      orientation: 'horizontal',
+      tabsAnimTime: 300,	
+    });		
+  
+     $(".tooltip").tipTip({defaultPosition: "top"});
+ });
+</script>
+
+
+<style type="text/css">
+  td.choice {text-align: center; }
+  div.st_horizontal div.st_view_container  {height: 920px;}
+  .inline-formfield { width: 90%;}
+  .field {width: 600px;}
+  #field-funcoes ul {padding-left: 10px; list-style: none;}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="base flarge fcenter">
+  <header id="header">
+    <hgroup>
+      <span id="icon"><img src="{{ STATIC_URL }}img/menu/user.png" alt="usuario"></span>
+      <span id="title">
+        <strong>{% if object %}Editando{% else %}Adicionando{% endif %} {% firstof tipo "usuário" %}
+        </strong>
+      </span>
+      <span id="required">* são obrigatórios</span>
+    </hgroup>
+  </header>
+  <div class="ftraco"></div>
+  <section id="main">
+    <form id="form" method="POST">
+    <p class="btn-group">
+    <button type="submit" class="btn btn-primary">
+    	<i class="icon-ok icon-white"></i> Salvar
+    </button>
+    <button type="button" onclick="history.go(-1)" class="btn">
+	<i class="icon-arrow-left"></i> Voltar
+    </button>
+    </p>
+
+    {% include "master/message.error.html" %}
+    <div id="st_horizontal" class="st_horizontal">                        	                                                                                      
+      <div class="st_tabs_container">
+        <a href="#prev" class="st_prev"></a>
+        <a href="#next" class="st_next"></a>                                    					
+        <div class="st_slide_container">
+          <ul class="st_tabs">
+            <li><a href="#stv_content_1" rel="v_tab_1" class="st_tab st_tab_active">Dados básicos</a></li>
+            {% if form.doc %}<li><a href="#stv_content_2" rel="v_tab_2" class="st_tab">Documentos</a></li>{% endif %}
+            {% if form.permissions %}<li><a id="permissions-tab" href="#stv_content_3" rel="v_tab_3" class="st_tab">Permissões</a></li>{% endif %}
+            {% if form2 %}<li><a id="password-tab" href="#stv_content_4" rel="v_tab_4" class="st_tab">Alterar senha</a></li>{% endif %}
+          </ul>                
+        </div> <!-- /.st_slide_container -->                                                                                                  
+      </div> <!-- /.st_tabs_container -->                                
+
+      <div class="st_view_container">
+        
+        <div class="st_view">
+          
+            {% csrf_token %}
+            <div id="stv_content_1" class="st_tab_view">
+              <h2>Dados básicos </h2>
+              <div class="text">   
+                
+                {% with field=form.username %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+                
+                {% with field=form.first_name %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+                
+                {% with field=form.last_name %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+                
+                {% with field=form.email %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+                
+                {% with field=form.is_active %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+                
+                {% with field=form.unidade %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+                
+                {% with field=form.cargo %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+
+                {% with field=form.funcoes %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+
+                {% with field=form.vinculo %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+ 
+                {% with field=form.escolaridade %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+
+                {% if form.password1 %}
+                {% with field=form.password1 %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+
+                {% with field=form.password2 %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %} 
+                {% endif %}
+              </div>                            
+            </div>          
+            
+            {% if form.doc %}
+            <div id="stv_content_2" class="st_tab_view">
+              <h2>Documentos </h2>
+              <div class="text">  
+                {% with field=form.doc %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+              </div>                            
+            </div>            
+            {% endif %}
+
+            {% if form.permissions %}
+            <div id="stv_content_3" class="st_tab_view">
+              <h2>Permissões </h2>
+              <div class="text">
+                {% with field=form.grupo %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+
+                {% with field=form.grupo_flag %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+
+                {% with field=form.permissions %}
+                {% include "master/field_snippet.html" %}
+                {% endwith %}
+              </div>                            
+            </div>
+            {% endif %}
+          </form>
+    
+          
+          {% if form2 %}
+    
+            <div id="stv_content_4" class="st_tab_view">
+              <h2>Alterar senha </h2>
+              <div class="text">
+                <form id="form2" action="{{ module_url }}/{{ object.id}}/set_password/" method="POST">
+                  {% csrf_token %}
+                  {% with form=form2 %}
+                  {% include "master/form_snippet.html" %}
+                  <p>
+                    <input type="submit" value="Alterar senha" >
+                  </p>
+                  {% endwith %}
+                </form>
+              </div>                            
+            </div>  
+            {% endif %}
+        </div> <!-- /.st_view --> 
+      </div> <!-- /.st_view_container -->                                                    	            
+    </div> <!-- /#st_vertical -->                    
+    <!-- End HTML - Vertical tabs -->
+    
+    
+    <p class="clear">
+  </section>
+</div>
+</form>
+
+
+
+{% endblock %}

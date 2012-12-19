@@ -1,0 +1,23 @@
+{{ formset.management_form }}
+<table class="{{ class_name }} ui-widget-content ui-corner-all">
+  <thead class="ui-widget-header">
+    <tr align="left">
+      {% for field in formset.forms.0 %}
+      <th>{{ field.label }}</th>
+      {% endfor %}
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for form in formset.forms %}
+    <tr id="{{ form.prefix }}-row" align="left">
+      {% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+      {% for field in form %}
+      <td>{{ field.errors.as_ul }} {{ field }}</td>
+      {% endfor %}
+      <td></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

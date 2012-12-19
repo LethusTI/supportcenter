@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="{{STATIC_URL}}img/favicon.png" type="image/x-icon" />
+    <title>{% block title %}{% endblock %} Lethus Protocolo</title>
+    
+    {% block media %}
+    
+    {% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/custom.css"/>
+    {% endblock %}
+
+    {% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/underscore.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.validate.ptbr.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.maskedinput-1.3.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/custom.js"></script>
+    {% endblock %}
+
+    {{ form.media }}
+    {% endblock %}
+    {% block header %} {% endblock %}
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container header">
+        <div>
+          <h2 id="logo">Lethus Protocolo</h2>
+        </div>
+        <div id="menu" class="subnav">
+          <ul class="nav nav-pills">
+            <li><a href="/"><i style="opacity:0.8" class="icon-home"></i>Inicio</a></li>
+            {% if user.is_superuser %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Administração
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="/admin/setores/">Setores</a></li>
+                <li><a href="/admin/unidades/">Unidades</a></li>
+                <li class="divider"></li>
+                <li><a href="/admin/superusers/">Administradores</a></li>
+                <li><a href="/admin/users/">Usuários</a></li>
+                <li><a href="/admin/logs/">Histórico geral</a></li>
+                <li class="divider"></li>
+                <li><a href="/admin/settings/">Configurações gerais</a></li>
+	          </ul>
+            </li>
+            {% endif %}
+            <li class="pull-right dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i style="opacity:0.8" class="icon-user"></i>{{ user.first_name }}</a>
+              <ul class="dropdown-menu">
+		        <li><a href="/account/">Meus dados</a></li>
+		        <li class="divider"></li>
+		        <li><a href="/auth/logout/">Sair</a></li>
+	          </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          
+          {{ message|safe }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+        <div class="push"></div>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="footer">
+        <div class="span6">
+          <span class="copyright">
+            ©2012 Lethus
+          </span>
+          <span class="contato">
+            <a href="http://www.lethus.com.br/contato/" target="_blank">Contato</a>
+          </span>
+        </div>
+        <div class="span6">
+          <span class="version">
+            Versão: {{ VERSION }}
+          </span>
+          <span class="ajuda">
+            <a href="http://suporte.lethus.com.br/" target="_blank">Central de ajuda</a> 
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

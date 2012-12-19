@@ -1,0 +1,71 @@
+{% extends "master/base.html" %}
+{% block title %}Apagar {% firstof tipo "Usuário" %} {% endblock %}
+{% block content %}
+<form id="form" novalidate  method="POST">
+<div class="base flarge fleft">
+    <header id="header">
+        <hgroup>
+            <span id="icon"><img src="{{ STATIC_URL }}img/icon/user-delete.png" alt="usuario"></span>
+            <span id="title"><strong>Apagar {% firstof tipo "Usuário" %}</strong></span>
+        </hgroup>
+    </header>
+    <div class="ftraco"></div>
+    <section id="main">
+        <p>
+            <label for="id_username">Usuário:</label>  
+            <input type="text" name="username" disabled="disabled" value="{{ object.username }}" id="id_username">
+        </p>
+       {% if object.get_full_name %}
+        <p>
+            <label for="id_full_name">Nome</label>
+            <input type="text" name="full_name" disabled="disabled" value="{{ object.get_full_name }}" id="id_full_name">
+        </p>
+        {% endif %}
+        <p>
+             <label for="id_email">E-mail:</label>
+            {% if object.email %}
+            <a href="mailto:{{ object.email }}">{{ object.email }}</a>
+	  {% else %}
+<input type="text" name="email" disabled="disabled" value="Nenhum" id="id_email">
+	  
+	  {% endif %}
+        </p>
+
+{% if object.cliente and not request.user.cliente %}
+  <p>
+    <label for="id_cliente">Cliente:</label>
+    {% comment %}
+    request.profile_type == PROFILE_ADMIN	
+    {% endcomment %}
+    {% ifequal request.profile_type 1 %}
+    <a href="/admin/clientes/{{ object.cliente.id }}/">{{ object.cliente.nome }}</a>
+    {% else %}
+    <a href="/empresa/clientes/{{ object.cliente.id }}/">{{ object.cliente.nome }}</a>
+    {% endifequal %}
+  </p>
+  {% comment %}
+    request.profile_type == PROFILE_ADMIN	
+    {% endcomment %}
+    {% ifequal request.profile_type 1 %}
+  <p>
+    <label>Empresa Responsável:</label>
+    <a href="/admin/empresas/{{ object.cliente.empresa.id }}/">{{ object.cliente.empresa.nome }}</a>
+  </p>
+  {% endifequal %}
+  {% endif %}
+  {% if object.empresa and not request.user.empresa %}
+  <p>
+    <label>Empresa:</label>
+    <a href="/admin/empresas/{{ object.empresa.id }}/">{{ object.empresa.nome }}</a>
+  </p>
+  {% endif %}
+
+        <p>
+            <input type="button" value="Voltar" onclick="history.go(-1)" />
+            <input type="submit" value="Sim tenho certeza" class="red" />
+        </p>
+        
+      </section>
+</div>
+</form>     
+{% endblock %}

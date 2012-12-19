@@ -1,0 +1,78 @@
+{% extends "master/base_public.html" %}
+{% block head %}
+<style>
+h1.controlar {
+    padding: 20px 0px 10px;
+}
+h1.entrar {
+    padding: 30px 0px 10px;
+}
+.hero-unit {
+    padding: 20px;
+}
+.hero-unit p { 
+    font-size: 13px; 
+}
+#id_username, #id_password {
+    margin-left: -4px;
+}
+#btn_reset_pass {
+    margin-left: 60px;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="span8">
+    <h1 class="controlar">controlar</h1>
+    
+    <div class="hero-unit">
+      <p>
+        <strong>Lethus Saúde</strong> é o sistema para controle de posto de saúde, gerenciamento de pacientes, medicamentos, utilização de ambulancias. O sistema foi projetado para oferecer ao usuário uma experiência agradável na sua utilização.
+      </p>
+      <p>
+        Se encontrar dificuldades na utilização do Lethus Saúde é possível consultar no 
+        Support Center do produto que possue todas as instruções necessárias para a sua utilização.
+      </p>
+      <p>
+        <a class="btn btn-primary" href="http://suporte.lethus.com.br/knowledgebase-tags/saude/">Ajuda »</a>
+      </p>
+    </div>
+  </div>
+  <div class="span4">
+    <h1 class="entrar">entrar</h1>
+    <form id="form" method="post" enctype="multipart/form-data" action="." novalidate>
+      {% csrf_token %}
+      {% include "master/message.error.html" %}
+
+      <div class="control-group">
+	<label class="control-label" for="id_username">Usuário</label>
+	<div class="controls">
+	  <div class="input-prepend">
+	    <span class="add-on">
+	      <i class="icon-envelope"></i>
+	    </span>
+	    <input id="id_username" class="span3" name="username" type="text" />
+	  </div>
+	</div>
+      </div>
+      
+      <div class="control-group">
+	<label class="control-label" for="id_password">Senha</label>
+	<div class="controls">
+	  <div class="input-prepend">
+	    <span class="add-on">
+	      <i class="icon-lock"></i>
+	    </span>
+	    <input id="id_password" class="span3" name="password" type="password" />
+	  </div>
+	</div>
+      </div>
+      
+      <input type="submit" value="Entrar" class="btn btn-success">
+      <a href="/auth/password_reset/" id="reset_pass" class="btn btn-warning btn-mini">Esqueceu sua senha?</a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

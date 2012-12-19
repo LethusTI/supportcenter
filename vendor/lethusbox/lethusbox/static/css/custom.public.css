@@ -1,0 +1,41 @@
+html, body {
+    height: 100%;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -4em;
+}
+#master {
+    padding-top: 100px;
+}
+#logo {
+    margin-top: 36px;
+    padding-left: 45px;
+    background: url("../img/project.png") no-repeat scroll left top transparent;
+}
+.reset_pass {
+    margin-bottom: 50px;
+}
+
+/* RODAPE */
+.footer, .push {
+    height: 4em;
+}
+.footer {
+    margin-top: 15px;
+    border-top: 1px solid #CCCCCC;
+}
+.footer .span6 {
+    margin-left: 0px;
+    margin-top: 5px;
+}
+.footer .contato, .footer .copyright {
+    margin-left: 20px;
+}
+.footer .ajuda, .footer .version {
+    float: right;
+    margin-right: 20px;
+}
+

@@ -1,0 +1,4 @@
+"Histórico de Ações de {% firstof object.get_full_name object.username %}"
+"Módulo", "Ação", "Objeto", "Horário"
+{% for obj in paginator.object_list %}"{{ obj.get_module_label|addslashes }}", "{{ obj.get_action_label|addslashes }}", {% if obj.object %}"{{ obj.object|addslashes }}"{% endif %}, "{{ obj.dtime }}"
+{% endfor %}

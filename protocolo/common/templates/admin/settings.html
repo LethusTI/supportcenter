@@ -1,0 +1,76 @@
+{% extends "master/base.html" %}
+{% block title %}Alterar configurações{% endblock %}
+
+{% block header %}
+<script type="text/javascript">
+  $(document).ready(function (e) {
+      $('#id_integrate_social').change(function (e) {
+          if ($(this).is(':checked'))
+             $('#field-social_url').slideDown();
+          else
+             $('#field-social_url').slideUp();
+      }).trigger('change');
+      
+      $("#id_uf").combobox();
+  });
+</script>
+<style type="text/css">
+    input {width: 300px;}
+    #field-social_url {display: none;}
+    #id_cep {width: 80px;}
+    #id_endr {width: 400px;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Alterar configurações</h1>
+  <b><small>* são obrigatórios</small></b>
+</div>
+
+<div class="alert alert-info">
+  <p>Para que essas alterações sejam aplicadas é preciso reiniciar o serviço da aplicação no servidor.</p>
+</div>
+
+<form id="form" enctype="multipart/form-data" action="." method="POST">
+      {% csrf_token %}
+      {% with field=form.cidade %}
+      {% include "master/field_snippet.html" %}
+      {% endwith %}
+
+      {% with field=form.uf %}
+      {% include "master/field_snippet.html" %}
+      {% endwith %}
+
+      {% with field=form.cep %}
+      {% include "master/field_snippet.html" %}
+      {% endwith %}
+
+      {% with field=form.entidade %}
+      {% include "master/field_snippet.html" %}
+      {% endwith %}
+
+      {% with field=form.endr %}
+      {% include "master/field_snippet.html" %}
+      {% endwith %}
+
+      {% with field=form.sec_name %}
+      {% include "master/field_snippet.html" %}
+      {% endwith %}
+
+      <div id="field-brasao" class="field">
+        <label for="id_brasao">{{ form.brasao.label }}</label>
+        {% if brasao_atual %}
+          <label><i>Brasão atual:</i></label>
+          <img src="/image_constant/brasao.jpg" title="Para selecionar um novo brasão, selecione abaixo e clique em salvar."/><br>
+        {% endif %}
+        <img title="{{ form.brasao.help_text }}" src="/static/img/icon/help.png" class="tooltip help" />
+        <input type="file" name="brasao" id="id_brasao"><br><br>
+      </div>
+
+  <p>
+    <input type="submit" value="Salvar" class="btn btn-success">
+    <input type="button" value="Voltar" class="btn" onclick="history.go(-1)">
+  </p>
+</form>
+{% endblock %}
