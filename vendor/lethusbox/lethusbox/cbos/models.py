@@ -6,9 +6,15 @@ from mongoengine import *
 from mongoengine.queryset import QuerySet
 
 class OcupacaoQuerySet(QuerySet):
+    """
+    Queryset extendida, para uso em Ocupacao.objects
+    """
     def categoria(self, codigo_inicial, codigo_final=None):
         """
-        Filtro por categoria.
+        Filtro a queryset por um range de categorias
+        
+        * codigo_inicial: codigo da categoria inicial ou única;
+        * codigo_final: codigo final para o filtro;
         """
         if not codigo_final:
             codigo_final = codigo_inicial
@@ -24,6 +30,11 @@ class OcupacaoQuerySet(QuerySet):
 class Ocupacao(Document):
     """
     Representa uma ocupação
+    
+    atributos
+    
+    codigo: codigo da profissão regulamentada
+    nome: nome descritivo da profissão
     """
     codigo = IntField(
         verbose_name=u"Código",

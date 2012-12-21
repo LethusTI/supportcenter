@@ -1,0 +1,290 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Upgrading &mdash; LethusBox  documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="LethusBox  documentation" href="index.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="changelog.html" title="Changelog"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">LethusBox  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="upgrading">
+<h1>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="to-0-7">
+<h2>0.6 to 0.7<a class="headerlink" href="#to-0-7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cascade-saves">
+<h3>Cascade saves<a class="headerlink" href="#cascade-saves" title="Permalink to this headline">¶</a></h3>
+<p>Saves will raise a <cite>FutureWarning</cite> if they cascade and cascade hasn&#8217;t been set
+to True.  This is because in 0.8 it will default to False.  If you require
+cascading saves then either set it in the <cite>meta</cite> or pass
+via <cite>save</cite> eg</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># At the class level:</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;cascade&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+
+<span class="c"># Or in code:</span>
+<span class="n">my_document</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">cascade</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember: cascading saves <strong>do not</strong> cascade through lists.</p>
+</div>
+</div>
+<div class="section" id="referencefields">
+<h3>ReferenceFields<a class="headerlink" href="#referencefields" title="Permalink to this headline">¶</a></h3>
+<p>ReferenceFields now can store references as ObjectId strings instead of DBRefs.
+This will become the default in 0.8 and if <cite>dbref</cite> is not set a <cite>FutureWarning</cite>
+will be raised.</p>
+<p>To explicitly continue to use DBRefs change the <cite>dbref</cite> flag
+to True</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">ListField</span><span class="p">(</span><span class="n">ReferenceField</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="n">dbref</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>To migrate to using strings instead of DBRefs you will have to manually
+migrate</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Step 1 - Migrate the model definition</span>
+<span class="k">class</span> <span class="nc">Group</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">ReferenceField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">dbref</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">members</span> <span class="o">=</span> <span class="n">ListField</span><span class="p">(</span><span class="n">ReferenceField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">dbref</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
+
+<span class="c"># Step 2 - Migrate the data</span>
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="p">():</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">author</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">members</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">members</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="item-frequencies">
+<h3>item_frequencies<a class="headerlink" href="#item-frequencies" title="Permalink to this headline">¶</a></h3>
+<p>In the 0.6 series we added support for null / zero / false values in
+item_frequencies.  A side effect was to return keys in the value they are
+stored in rather than as string representations.  Your code may need to be
+updated to handle native types rather than strings keys for the results of
+item frequency queries.</p>
+</div>
+<div class="section" id="binaryfields">
+<h3>BinaryFields<a class="headerlink" href="#binaryfields" title="Permalink to this headline">¶</a></h3>
+<p>Binary fields have been updated so that they are native binary types.  If you
+previously were doing <cite>str</cite> comparisons with binary field values you will have
+to update and wrap the value in a <cite>str</cite>.</p>
+</div>
+</div>
+<div class="section" id="to-0-6">
+<h2>0.5 to 0.6<a class="headerlink" href="#to-0-6" title="Permalink to this headline">¶</a></h2>
+<p>Embedded Documents - if you had a <cite>pk</cite> field you will have to rename it from
+<cite>_id</cite> to <cite>pk</cite> as pk is no longer a property of Embedded Documents.</p>
+<p>Reverse Delete Rules in Embedded Documents, MapFields and DictFields now throw
+an InvalidDocument error as they aren&#8217;t currently supported.</p>
+<p>Document._get_subclasses - Is no longer used and the class method has been
+removed.</p>
+<p>Document.objects.with_id - now raises an InvalidQueryError if used with a
+filter.</p>
+<p>FutureWarning - A future warning has been added to all inherited classes that
+don&#8217;t define <cite>allow_inheritance</cite> in their meta.</p>
+<p>You may need to update pyMongo to 2.0 for use with Sharding.</p>
+</div>
+<div class="section" id="to-0-5">
+<h2>0.4 to 0.5<a class="headerlink" href="#to-0-5" title="Permalink to this headline">¶</a></h2>
+<p>There have been the following backwards incompatibilities from 0.4 to 0.5.  The
+main areas of changed are: choices in fields, map_reduce and collection names.</p>
+<div class="section" id="choice-options">
+<h3>Choice options:<a class="headerlink" href="#choice-options" title="Permalink to this headline">¶</a></h3>
+<p>Are now expected to be an iterable of tuples, with  the first element in each
+tuple being the actual value to be stored. The second element is the
+human-readable name for the option.</p>
+</div>
+<div class="section" id="pymongo-mongodb">
+<h3>PyMongo / MongoDB<a class="headerlink" href="#pymongo-mongodb" title="Permalink to this headline">¶</a></h3>
+<p>map reduce now requires pymongo 1.11+- The pymongo <cite>merge_output</cite> and
+<cite>reduce_output</cite> parameters, have been depreciated.</p>
+<p>More methods now use map_reduce as db.eval is not supported for sharding as
+such the following have been changed:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="xref py py-meth docutils literal"><span class="pre">sum()</span></tt></li>
+<li><tt class="xref py py-meth docutils literal"><span class="pre">average()</span></tt></li>
+<li><tt class="xref py py-meth docutils literal"><span class="pre">item_frequencies()</span></tt></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="default-collection-naming">
+<h3>Default collection naming<a class="headerlink" href="#default-collection-naming" title="Permalink to this headline">¶</a></h3>
+<p>Previously it was just lowercase, its now much more pythonic and readable as
+its lowercase and underscores, previously</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyAceDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">MyAceDocument</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s">&#39;collection&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">myacedocument</span>
+</pre></div>
+</div>
+<p>In 0.5 this will change to</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyAceDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">MyAceDocument</span><span class="o">.</span><span class="n">_get_collection_name</span><span class="p">()</span> <span class="o">==</span> <span class="n">my_ace_document</span>
+</pre></div>
+</div>
+<p>To upgrade use a Mixin class to set meta like so</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BaseMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;collection&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">MyAceDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">,</span> <span class="n">BaseMixin</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">MyAceDocument</span><span class="o">.</span><span class="n">_get_collection_name</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;myacedocument&quot;</span>
+</pre></div>
+</div>
+<p>Alternatively, you can rename your collections eg</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mongoengine.connection</span> <span class="kn">import</span> <span class="n">_get_db</span>
+<span class="kn">from</span> <span class="nn">mongoengine.base</span> <span class="kn">import</span> <span class="n">_document_registry</span>
+
+<span class="k">def</span> <span class="nf">rename_collections</span><span class="p">():</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">_get_db</span><span class="p">()</span>
+
+    <span class="n">failure</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">collection_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">_get_collection_name</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">_document_registry</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+    <span class="k">for</span> <span class="n">new_style_name</span> <span class="ow">in</span> <span class="n">collection_names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_style_name</span><span class="p">:</span>  <span class="c"># embedded documents don&#39;t have collections</span>
+            <span class="k">continue</span>
+        <span class="n">old_style_name</span> <span class="o">=</span> <span class="n">new_style_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">old_style_name</span> <span class="o">==</span> <span class="n">new_style_name</span><span class="p">:</span>
+            <span class="k">continue</span>  <span class="c"># Nothing to do</span>
+
+        <span class="n">existing</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">collection_names</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">old_style_name</span> <span class="ow">in</span> <span class="n">existing</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">new_style_name</span> <span class="ow">in</span> <span class="n">existing</span><span class="p">:</span>
+                <span class="n">failure</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">print</span> <span class="s">&quot;FAILED to rename: </span><span class="si">%s</span><span class="s"> to </span><span class="si">%s</span><span class="s"> (already exists)&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">old_style_name</span><span class="p">,</span> <span class="n">new_style_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">db</span><span class="p">[</span><span class="n">old_style_name</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">new_style_name</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;Renamed:  </span><span class="si">%s</span><span class="s"> to </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">old_style_name</span><span class="p">,</span>
+                                              <span class="n">new_style_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">failure</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Upgrading  collection names failed&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Upgraded collection names&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Upgrading</a><ul>
+<li><a class="reference internal" href="#to-0-7">0.6 to 0.7</a><ul>
+<li><a class="reference internal" href="#cascade-saves">Cascade saves</a></li>
+<li><a class="reference internal" href="#referencefields">ReferenceFields</a></li>
+<li><a class="reference internal" href="#item-frequencies">item_frequencies</a></li>
+<li><a class="reference internal" href="#binaryfields">BinaryFields</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#to-0-6">0.5 to 0.6</a></li>
+<li><a class="reference internal" href="#to-0-5">0.4 to 0.5</a><ul>
+<li><a class="reference internal" href="#choice-options">Choice options:</a></li>
+<li><a class="reference internal" href="#pymongo-mongodb">PyMongo / MongoDB</a></li>
+<li><a class="reference internal" href="#default-collection-naming">Default collection naming</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="changelog.html"
+                        title="previous chapter">Changelog</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/upgrade.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="changelog.html" title="Changelog"
+             >previous</a> |</li>
+        <li><a href="index.html">LethusBox  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Lethus Tecnologia da Informação.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

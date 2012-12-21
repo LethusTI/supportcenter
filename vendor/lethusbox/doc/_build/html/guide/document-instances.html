@@ -1,0 +1,224 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documents instances &mdash; LethusBox  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="LethusBox  documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Querying the database" href="querying.html" />
+    <link rel="prev" title="Defining documents" href="defining-documents.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="querying.html" title="Querying the database"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="defining-documents.html" title="Defining documents"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">User Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="documents-instances">
+<h1>Documents instances<a class="headerlink" href="#documents-instances" title="Permalink to this headline">¶</a></h1>
+<p>To create a new document object, create an instance of the relevant document
+class, providing values for its fields as its constructor keyword arguments.
+You may provide values for any of the fields on the document:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Test Page&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">title</span>
+<span class="go">&#39;Test Page&#39;</span>
+</pre></div>
+</div>
+<p>You may also assign values to the document&#8217;s fields using standard object
+attribute syntax:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Example Page&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">title</span>
+<span class="go">&#39;Example Page&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="saving-and-deleting-documents">
+<h2>Saving and deleting documents<a class="headerlink" href="#saving-and-deleting-documents" title="Permalink to this headline">¶</a></h2>
+<p>MongoEngine tracks changes to documents to provide efficient saving.  To save
+the document to the database, call the <tt class="xref py py-meth docutils literal"><span class="pre">save()</span></tt> method.
+If the document does not exist in the database, it will be created. If it does
+already exist, then any changes will be updated atomically.  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Test Page&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c"># Performs an insert</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;My Page&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c"># Performs an atomic set on the title field.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Changes to documents are tracked and on the whole perform <cite>set</cite> operations.</p>
+<ul class="last simple">
+<li><tt class="docutils literal"><span class="pre">list_field.pop(0)</span></tt> - <em>sets</em> the resulting list</li>
+<li><tt class="docutils literal"><span class="pre">del(list_field)</span></tt>   - <em>unsets</em> whole list</li>
+</ul>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="querying.html#guide-atomic-updates"><em>Atomic updates</em></a></p>
+</div>
+<div class="section" id="cascading-saves">
+<h3>Cascading Saves<a class="headerlink" href="#cascading-saves" title="Permalink to this headline">¶</a></h3>
+<p>If your document contains <tt class="xref py py-class docutils literal"><span class="pre">ReferenceField</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">GenericReferenceField</span></tt> objects, then by default the
+<tt class="xref py py-meth docutils literal"><span class="pre">save()</span></tt> method will automatically save any changes to
+those objects as well.  If this is not desired passing <tt class="xref py py-attr docutils literal"><span class="pre">cascade</span></tt> as False
+to the save method turns this feature off.</p>
+</div>
+<div class="section" id="deleting-documents">
+<h3>Deleting documents<a class="headerlink" href="#deleting-documents" title="Permalink to this headline">¶</a></h3>
+<p>To delete a document, call the <tt class="xref py py-meth docutils literal"><span class="pre">delete()</span></tt> method.
+Note that this will only work if the document exists in the database and has a
+valid <tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="document-ids">
+<h2>Document IDs<a class="headerlink" href="#document-ids" title="Permalink to this headline">¶</a></h2>
+<p>Each document in the database has a unique id. This may be accessed through the
+<tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> attribute on <tt class="xref py py-class docutils literal"><span class="pre">Document</span></tt> objects. Usually, the id
+will be generated automatically by the database server when the object is save,
+meaning that you may only access the <tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> field once a document has been
+saved:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Test Page&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">id</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">id</span>
+<span class="go">ObjectId(&#39;123456789abcdef000000000&#39;)</span>
+</pre></div>
+</div>
+<p>Alternatively, you may define one of your own fields to be the document&#8217;s
+&#8220;primary key&#8221; by providing <tt class="docutils literal"><span class="pre">primary_key=True</span></tt> as a keyword argument to a
+field&#8217;s constructor. Under the hood, MongoEngine will use this field as the
+<tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt>; in fact <tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> is actually aliased to your primary key field so
+you may still use <tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> to access the primary key if you want:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">email</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bob</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s">&#39;bob@example.com&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Bob&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bob</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bob</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bob</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s">&#39;bob@example.com&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>You can also access the document&#8217;s &#8220;primary key&#8221; using the <tt class="xref py py-attr docutils literal"><span class="pre">pk</span></tt> field; in
+is an alias to <tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Another Test Page&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">page</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">page</span><span class="o">.</span><span class="n">pk</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you define your own primary key field, the field implicitly becomes
+required, so a <tt class="xref py py-class docutils literal"><span class="pre">ValidationError</span></tt> will be thrown if
+you don&#8217;t provide it.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documents instances</a><ul>
+<li><a class="reference internal" href="#saving-and-deleting-documents">Saving and deleting documents</a><ul>
+<li><a class="reference internal" href="#cascading-saves">Cascading Saves</a></li>
+<li><a class="reference internal" href="#deleting-documents">Deleting documents</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#document-ids">Document IDs</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="defining-documents.html"
+                        title="previous chapter">Defining documents</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="querying.html"
+                        title="next chapter">Querying the database</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/guide/document-instances.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="querying.html" title="Querying the database"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="defining-documents.html" title="Defining documents"
+             >previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li>
+          <li><a href="index.html" >User Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Lethus Tecnologia da Informação.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

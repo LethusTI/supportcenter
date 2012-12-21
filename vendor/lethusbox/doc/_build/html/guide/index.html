@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>User Guide &mdash; LethusBox  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="LethusBox  documentation" href="../index.html" />
+    <link rel="next" title="Installing MongoEngine" href="installing.html" />
+    <link rel="prev" title="Tutorial" href="../tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="installing.html" title="Installing MongoEngine"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../tutorial.html" title="Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing MongoEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connecting.html">Connecting to MongoDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="connecting.html#replicasets">ReplicaSets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connecting.html#multiple-databases">Multiple Databases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="defining-documents.html">Defining documents</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="defining-documents.html#defining-a-document-s-schema">Defining a document&#8217;s schema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining-documents.html#dynamic-document-schemas">Dynamic document schemas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining-documents.html#fields">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining-documents.html#document-collections">Document collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining-documents.html#indexes">Indexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining-documents.html#ordering">Ordering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining-documents.html#shard-keys">Shard keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining-documents.html#document-inheritance">Document inheritance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="document-instances.html">Documents instances</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="document-instances.html#saving-and-deleting-documents">Saving and deleting documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="document-instances.html#document-ids">Document IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="querying.html">Querying the database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#filtering-queries">Filtering queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#query-operators">Query operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#limiting-and-skipping-results">Limiting and skipping results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#default-document-queries">Default Document queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#custom-querysets">Custom QuerySets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#aggregation">Aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#query-efficiency-and-performance">Query efficiency and performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#advanced-queries">Advanced queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#atomic-updates">Atomic updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying.html#server-side-javascript-execution">Server-side javascript execution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gridfs.html">GridFS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gridfs.html#writing">Writing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gridfs.html#retrieval">Retrieval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gridfs.html#streaming">Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gridfs.html#deletion">Deletion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gridfs.html#replacing-files">Replacing files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="signals.html#referencefields-and-signals">ReferenceFields and signals</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../tutorial.html"
+                        title="previous chapter">Tutorial</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="installing.html"
+                        title="next chapter">Installing MongoEngine</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/guide/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="installing.html" title="Installing MongoEngine"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../tutorial.html" title="Tutorial"
+             >previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Lethus Tecnologia da Informação.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

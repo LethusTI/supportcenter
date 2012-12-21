@@ -1,0 +1,180 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Connecting to MongoDB &mdash; LethusBox  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="LethusBox  documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Defining documents" href="defining-documents.html" />
+    <link rel="prev" title="Installing MongoEngine" href="installing.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="defining-documents.html" title="Defining documents"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installing.html" title="Installing MongoEngine"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">User Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="connecting-to-mongodb">
+<span id="guide-connecting"></span><h1>Connecting to MongoDB<a class="headerlink" href="#connecting-to-mongodb" title="Permalink to this headline">¶</a></h1>
+<p>To connect to a running instance of <strong class="program">mongod</strong>, use the
+<tt class="xref py py-func docutils literal"><span class="pre">connect()</span></tt> function. The first argument is the name of the
+database to connect to. If the database does not exist, it will be created. If
+the database requires authentication, <tt class="xref py py-attr docutils literal"><span class="pre">username</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">password</span></tt>
+arguments may be provided:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="n">connect</span>
+<span class="n">connect</span><span class="p">(</span><span class="s">&#39;project1&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;webapp&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&#39;pwd123&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default, MongoEngine assumes that the <strong class="program">mongod</strong> instance is running
+on <strong>localhost</strong> on port <strong>27017</strong>. If MongoDB is running elsewhere, you may
+provide <tt class="xref py py-attr docutils literal"><span class="pre">host</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">port</span></tt> arguments to
+<tt class="xref py py-func docutils literal"><span class="pre">connect()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connect</span><span class="p">(</span><span class="s">&#39;project1&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;192.168.1.35&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Uri style connections are also supported as long as you include the database
+name - just supply the uri as the <tt class="xref py py-attr docutils literal"><span class="pre">host</span></tt> to
+<tt class="xref py py-func docutils literal"><span class="pre">connect()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connect</span><span class="p">(</span><span class="s">&#39;project1&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;mongodb://localhost/database_name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="replicasets">
+<h2>ReplicaSets<a class="headerlink" href="#replicasets" title="Permalink to this headline">¶</a></h2>
+<p>MongoEngine now supports <tt class="xref py py-func docutils literal"><span class="pre">ReplicaSetConnection()</span></tt>
+to use them please use a URI style connection and provide the <cite>replicaSet</cite> name in the
+connection kwargs.</p>
+</div>
+<div class="section" id="multiple-databases">
+<h2>Multiple Databases<a class="headerlink" href="#multiple-databases" title="Permalink to this headline">¶</a></h2>
+<p>Multiple database support was added in MongoEngine 0.6. To use multiple
+databases you can use <tt class="xref py py-func docutils literal"><span class="pre">connect()</span></tt> and provide an <cite>alias</cite> name
+for the connection - if no <cite>alias</cite> is provided then &#8220;default&#8221; is used.</p>
+<p>In the background this uses <tt class="xref py py-func docutils literal"><span class="pre">register_connection()</span></tt> to
+store the data and you can register all aliases up front if required.</p>
+<p>Individual documents can also support multiple databases by providing a
+<cite>db_alias</cite> in their meta data.  This allows <tt class="xref py py-class docutils literal"><span class="pre">DBRef</span></tt> objects
+to point across databases and collections.  Below is an example schema, using
+3 different databases to store data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
+
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;db_alias&quot;</span><span class="p">:</span> <span class="s">&quot;user-db&quot;</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
+
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;db_alias&quot;</span><span class="p">:</span> <span class="s">&quot;book-db&quot;</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">AuthorBooks</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">ReferenceField</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+    <span class="n">book</span> <span class="o">=</span> <span class="n">ReferenceField</span><span class="p">(</span><span class="n">Book</span><span class="p">)</span>
+
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;db_alias&quot;</span><span class="p">:</span> <span class="s">&quot;users-books-db&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Connecting to MongoDB</a><ul>
+<li><a class="reference internal" href="#replicasets">ReplicaSets</a></li>
+<li><a class="reference internal" href="#multiple-databases">Multiple Databases</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installing.html"
+                        title="previous chapter">Installing MongoEngine</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="defining-documents.html"
+                        title="next chapter">Defining documents</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/guide/connecting.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="defining-documents.html" title="Defining documents"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installing.html" title="Installing MongoEngine"
+             >previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li>
+          <li><a href="index.html" >User Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Lethus Tecnologia da Informação.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,396 @@
+=================
+Referência da API 
+=================
+
+Instalação Geral
+================
+
+certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+        ...
+        'lethusbox',
+        ...
+    )
+
+é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.
+
+BootstrapMenu
+=============
+
+É um plugin que gera toda a estrutura de menus, 
+permitindo que os itens sejam exibidos por permissões de acesso.
+Tornando prático a manutenção e o controle da barra de menus
+
+Instalação
+----------
+
+certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+        ...
+        'lethusbox.bootstrapmenu',
+        ...
+    )
+
+é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.
+
+
+Configuração
+------------
+
+É necessário no settings.py escrevermos a lista de menus que teremos na área de navegação,
+da seguinte maneira
+
+.. code-block:: python
+
+    LETHUS_MENU = ( ... menus disponíveis ... )
+    
+
+cada menu pode ser formado da seguinte maneira
+
+.. code-block:: python
+
+    (u'Nome que será escrito na tela', {
+             'id': '...',
+             'category': '...',
+             'perm': '...',
+             'base_uri': '...'
+         }, (
+            ... Lista de items pertencentes ao menu ...
+         )),
+         
+Atributos:
+
+* Nome que será escrito na tela: obrigatório,
+* id: obrigatório, é a identicação do menu, tem que ser único e légivel
+* category: opcional, serve para agrupar menus de um mesmo módulo
+* perm: opcional, faz com que o menu seja exibido apenas se o usuário houver a permição selecionada.
+* base_uri: opcional, faz com que os items recebam a url como prefixo, deixando compacto a informação da uri dos items.
+
+items pertencentes ao menu é formado da seguinte maneira:
+
+.. code-block:: python
+
+    (u'Nome do item', {
+          'uri': '...',
+          'perm': '...'}),
+
+Atributos:
+
+* Nome do item: obrigatório, nome que será exibido dentro do menu
+* uri: obrigatório, é a uri que será aberto o menu.
+* perm: opcional, faz com que o menu seja exibido apenas se o usuário houver a permição selecionada.
+
+Utilização
+----------
+
+para a utilização do bootstrapmenu é necessario inicia-lo no template principal "base.html"
+nas primeiras linha do arquivo da seguinte maneira:
+
+.. code-block:: django
+
+   {% load bootstrapmenu %}
+
+
+para inserir o menu completo no template é necessário inserir o código
+
+.. code-block:: django
+
+    {% menu id_do_menu %}
+
+para inserir apenas o conteudo do menu é necessário inserir o código:
+
+.. code-block:: django
+
+    {% menucontent id_do_menu %}
+
+o bootstrapmenu também fornece controle de menus por categoria, exibindo apenas se há algum menu disponível para aquela categoria.
+funciona da seguinte forma:
+
+.. code-block:: django
+
+    {% menucategory id_da_categoria %}
+    ... código html ...
+	{% menucontent id_do_menu %}
+	... código html ...
+	{% menu id_do_menu %}
+	... mais menus ...
+	... código html ..
+    {% endmenucategory %}
+
+se não houver nenhum menu disponivel nenhum codigo html dentro do bloco será exibido.
+
+cbos
+====
+
+É um plugin que disponibiliza um acervo de profissões com seus códigos.
+
+Instalação
+----------
+
+certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+        ...
+        'lethusbox.cbos',
+        ...
+    )
+
+é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.
+
+Utilização
+----------
+
+para importar e buscar as profissões
+
+.. code-block:: python
+
+    from lethusbox.cbos.models import Ocupacao
+    Ocupacao.objects # queryset das ocupações
+
+
+Principais classes do módulo
+----------------------------
+
+.. autoclass:: lethusbox.cbos.models.Ocupacao
+   :members:
+   
+.. autoclass:: lethusbox.cbos.models.OcupacaoQuerySet
+   :members:
+   
+
+Django
+======
+
+O Lethusbox também carrega uma gama de ferramentas que permite o framework django mais extensível e reusável.
+
+Decorators
+----------
+
+json_response: transforma a resposta da view automaticamente para uma resposta no formato json
+
+exemplo:
+
+.. code-block:: python
+
+    @json_response
+    def status(request):
+        return {'ok': True}
+        
+FormsetField
+------------
+
+Inclue vários formulários dentro do outro da seguinte forma 1..N.
+
+exemplo de uso:
+
+.. code-block:: python
+
+    from django import forms
+    from lethusbox.django.formsetfield import FormsetField
+    
+    class FormularioFilho(forms.Form):
+       nome = forms.CharField()
+
+    class FormularioTeste(forms.Form)
+       filhos = FormsetField(FormularioFilho,
+             class_name=None,
+             validate=True,
+             template_name="...")
+             
+       def clean_filhos(self):
+           data = self.cleaned_data['filhos']
+
+
+Atributos de inicialização do FormsetField:
+
+* form: obrigatório, Formulário base
+* class_name: opcional, classe do div que será renderizado
+* validate: padrão = True, se falso retorna a classe FormSet no clean_field_name para tratamento especial.
+* template_name: opcional, path do template personalizado do formset.
+
+para mais exclarecimentos de como funciona um FormSet: https://docs.djangoproject.com/en/dev/topics/forms/formsets/
+
+
+FormField
+---------
+
+Inclue um único formulário dentro do outro da seguinte forma 1..1.
+
+exemplo de uso:
+
+.. code-block:: python
+
+    from django import forms
+    from lethusbox.django.formfield import FormField
+    
+    class FormularioFilho(forms.Form):
+       nome = forms.CharField()
+
+    class FormularioTeste(forms.Form)
+       filho = FormField(FormularioFilho,
+             class_name=None,
+             validate=True,
+             template_name="...",
+             form_kwargs={})
+             
+       def clean_filho(self):
+           data = self.cleaned_data['filho']
+
+
+Atributos de inicialização do FormField:
+
+* form: obrigatório, Formulário base
+* class_name: opcional, classe do div que será renderizado
+* validate: padrão = True, se falso retorna a classe Form no clean_field_name para tratamento especial.
+* template_name: opcional, path do template personalizado do form.
+* form_kwargs: opcional, argumentos que serão repassados para a inicialização do formulário filho.
+
+
+HybridListView
+--------------
+
+É uma ClassView extensão da ListView, que permite que os dados sejam também transportados via ajax para serem renderizados pelo plugin javascript ListBuilder.
+
+Exemplo de uso
+
+.. code-block:: python
+
+    from lethusbox.django.responses.list import HybridListView
+    class ListTesteView(HybridListView):
+        document = Teste
+        paginate_by = 20
+        allow_empty = True
+        json_object_list_fields = ['id', 'nome', 'is_active']
+        sort_fields = ['id', 'nome', 'is_active']
+        filter_fields = ['nome']
+        template_name = "teste/list.html"
+
+Atributos da view:
+
+* document: obrigatório, modelo do documento para ser listado;
+* paginate_by: obrigatório, quando o plugin não consegue ser carregado, a quantidade de itens da paginação padrão;
+* allow_empty: obrigatório, se é permitido listar quando não existem registros;
+* json_object_list_fields:, obrigatório lista de campos ou metodos para serem exibidos em tabela;
+* sort_fields: opcional, lista de campos para ordenação via banco de dados
+* filter_fields: opcional, lista de campos que permitem busca para ser utilizado no filtro.
+* template_name: obrigatório, path do template para renderizar a view.
+
+
+MongoEngine
+===========
+
+UpperStringField
+----------------
+É um campo extedido do StringField, que guarda apenas Letras maiusculas no banco de dados.
+
+Exemplo de uso:
+
+
+.. code-block:: python
+
+    from mongoengine import *
+    from lethusbox.mongoengine.fields import UpperStringField
+    
+    class TesteDocument(Document):
+         sigla = UpperStringField()
+
+Municípios
+==========
+
+A Lethusbox também mantem o acervo completo de todos os múnicipios do brasil juntamente com seu código do IBGE
+
+Instalação
+----------
+
+certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+        ...
+        'lethusbox.municipios',
+        ...
+    )
+
+é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.
+
+Constantes
+----------
+
+* lethusbox.municipios.constants.UF_CHOICES: Lista de todos os estados brasileiros
+* lethusbox.municipios.constants.UF_VERBOSE_CHOICES: Lista do mome completo de todos os estados brasileiros
+
+Principais classes do módulo
+----------------------------
+
+.. autoclass:: lethusbox.municipios.models.UFBrasil
+   :members:
+   
+.. autoclass:: lethusbox.municipios.models.MunicipioBrasil
+   :members:
+
+Plugins javascript
+==================
+
+O LethusBox já possui os plugins atualizados no acervo
+
+* jquery: http://jquery.com/
+* vários plugins jquery e jqueryui
+* twitter bootstrap: http://twitter.github.com/bootstrap/
+* vários plugins do bootstrap
+* underscore js: http://underscorejs.org/
+* backbone js: http://backbonejs.org/
+* async js: https://github.com/caolan/async
+* Highcharts: http://www.highcharts.com/
+
+para listar todos plugins que já possui no acervo está na pasta: lethusbox/static/js
+
+Templates
+=========
+
+O Lethusbox também possui alguns templates genéricos que podem ser utilizados em vários projetos.
+
+master/field_snippet.html
+-------------------------
+
+Um template utilizado para renderizar um campo do formulário.
+
+exemplo de uso
+
+.. code-block:: django
+
+    {% with field=form.campo %}
+    {% include "master/field_snippet.html" %}
+    {% endwith %}
+
+master/message.error.html
+-------------------------
+
+Um template para exibir os erros de um formulário
+
+exemplo de uso
+
+.. code-block:: django
+
+    {% include "master/message.error.html" %}
+
+
+master/form_snippet.html
+-------------------------
+
+Um template utilizado para renderizar um formulário completo
+
+exemplo de uso
+
+.. code-block:: django
+
+    <form action="." method="POST">
+        {% include "master/form_snippet.html" %}

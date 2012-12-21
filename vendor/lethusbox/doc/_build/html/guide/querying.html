@@ -1,0 +1,692 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Querying the database &mdash; LethusBox  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="LethusBox  documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="GridFS" href="gridfs.html" />
+    <link rel="prev" title="Documents instances" href="document-instances.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="gridfs.html" title="GridFS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="document-instances.html" title="Documents instances"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">User Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="querying-the-database">
+<h1>Querying the database<a class="headerlink" href="#querying-the-database" title="Permalink to this headline">¶</a></h1>
+<p><tt class="xref py py-class docutils literal"><span class="pre">Document</span></tt> classes have an <tt class="xref py py-attr docutils literal"><span class="pre">objects</span></tt> attribute, which
+is used for accessing the objects in the database associated with the class.
+The <tt class="xref py py-attr docutils literal"><span class="pre">objects</span></tt> attribute is actually a
+<tt class="xref py py-class docutils literal"><span class="pre">QuerySetManager</span></tt>, which creates and returns a new
+<tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> object on access. The
+<tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> object may be iterated over to
+fetch documents from the database:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Prints out the names of all the users in the database</span>
+<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Once the iteration finishes (when <tt class="xref py py-class docutils literal"><span class="pre">StopIteration</span></tt> is raised),
+<tt class="xref py py-meth docutils literal"><span class="pre">rewind()</span></tt> will be called so that the
+<tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> may be iterated over again. The
+results of the first iteration are <em>not</em> cached, so the database will be hit
+each time the <tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> is iterated over.</p>
+</div>
+<div class="section" id="filtering-queries">
+<h2>Filtering queries<a class="headerlink" href="#filtering-queries" title="Permalink to this headline">¶</a></h2>
+<p>The query may be filtered by calling the
+<tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> object with field lookup keyword
+arguments. The keys in the keyword arguments correspond to fields on the
+<tt class="xref py py-class docutils literal"><span class="pre">Document</span></tt> you are querying:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># This will return a QuerySet that will only iterate over users whose</span>
+<span class="c"># &#39;country&#39; field is set to &#39;uk&#39;</span>
+<span class="n">uk_users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">country</span><span class="o">=</span><span class="s">&#39;uk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Fields on embedded documents may also be referred to using field lookup syntax
+by using a double-underscore in place of the dot in object attribute access
+syntax:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># This will return a QuerySet that will only iterate over pages that have</span>
+<span class="c"># been written by a user whose &#39;country&#39; field is set to &#39;uk&#39;</span>
+<span class="n">uk_pages</span> <span class="o">=</span> <span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">author__country</span><span class="o">=</span><span class="s">&#39;uk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="query-operators">
+<h2>Query operators<a class="headerlink" href="#query-operators" title="Permalink to this headline">¶</a></h2>
+<p>Operators other than equality may also be used in queries; just attach the
+operator name to a key with a double-underscore:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Only find users whose age is 18 or less</span>
+<span class="n">young_users</span> <span class="o">=</span> <span class="n">Users</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">age__lte</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Available operators are as follows:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">ne</span></tt> &#8211; not equal to</li>
+<li><tt class="docutils literal"><span class="pre">lt</span></tt> &#8211; less than</li>
+<li><tt class="docutils literal"><span class="pre">lte</span></tt> &#8211; less than or equal to</li>
+<li><tt class="docutils literal"><span class="pre">gt</span></tt> &#8211; greater than</li>
+<li><tt class="docutils literal"><span class="pre">gte</span></tt> &#8211; greater than or equal to</li>
+<li><tt class="docutils literal"><span class="pre">not</span></tt> &#8211; negate a standard check, may be used before other operators (e.g.
+<tt class="docutils literal"><span class="pre">Q(age__not__mod=5)</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">in</span></tt> &#8211; value is in list (a list of values should be provided)</li>
+<li><tt class="docutils literal"><span class="pre">nin</span></tt> &#8211; value is not in list (a list of values should be provided)</li>
+<li><tt class="docutils literal"><span class="pre">mod</span></tt> &#8211; <tt class="docutils literal"><span class="pre">value</span> <span class="pre">%</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></tt>, where <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> are two provided values</li>
+<li><tt class="docutils literal"><span class="pre">all</span></tt> &#8211; every item in list of values provided is in array</li>
+<li><tt class="docutils literal"><span class="pre">size</span></tt> &#8211; the size of the array is</li>
+<li><tt class="docutils literal"><span class="pre">exists</span></tt> &#8211; value for field exists</li>
+</ul>
+<p>The following operators are available as shortcuts to querying with regular
+expressions:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">exact</span></tt> &#8211; string field exactly matches value</li>
+<li><tt class="docutils literal"><span class="pre">iexact</span></tt> &#8211; string field exactly matches value (case insensitive)</li>
+<li><tt class="docutils literal"><span class="pre">contains</span></tt> &#8211; string field contains value</li>
+<li><tt class="docutils literal"><span class="pre">icontains</span></tt> &#8211; string field contains value (case insensitive)</li>
+<li><tt class="docutils literal"><span class="pre">startswith</span></tt> &#8211; string field starts with value</li>
+<li><tt class="docutils literal"><span class="pre">istartswith</span></tt> &#8211; string field starts with value (case insensitive)</li>
+<li><tt class="docutils literal"><span class="pre">endswith</span></tt> &#8211; string field ends with value</li>
+<li><tt class="docutils literal"><span class="pre">iendswith</span></tt> &#8211; string field ends with value (case insensitive)</li>
+<li><tt class="docutils literal"><span class="pre">match</span></tt>  &#8211; performs an $elemMatch so you can match an entire document within an array</li>
+</ul>
+<p>There are a few special operators for performing geographical queries, that
+may used with <tt class="xref py py-class docutils literal"><span class="pre">GeoPointField</span></tt>s:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">within_distance</span></tt> &#8211; provide a list containing a point and a maximum
+distance (e.g. [(41.342, -87.653), 5])</li>
+<li><tt class="docutils literal"><span class="pre">within_spherical_distance</span></tt> &#8211; Same as above but using the spherical geo model
+(e.g. [(41.342, -87.653), 5/earth_radius])</li>
+<li><tt class="docutils literal"><span class="pre">near</span></tt> &#8211; order the documents by how close they are to a given point</li>
+<li><tt class="docutils literal"><span class="pre">near_sphere</span></tt> &#8211; Same as above but using the spherical geo model</li>
+<li><tt class="docutils literal"><span class="pre">within_box</span></tt> &#8211; filter documents to those within a given bounding box (e.g.
+[(35.0, -125.0), (40.0, -100.0)])</li>
+<li><tt class="docutils literal"><span class="pre">within_polygon</span></tt> &#8211; filter documents to those within a given polygon (e.g.
+[(41.91,-87.69), (41.92,-87.68), (41.91,-87.65), (41.89,-87.65)]).
+.. note:: Requires Mongo Server 2.0</li>
+</ul>
+<div class="section" id="querying-lists">
+<h3>Querying lists<a class="headerlink" href="#querying-lists" title="Permalink to this headline">¶</a></h3>
+<p>On most fields, this syntax will look up documents where the field specified
+matches the given value exactly, but when the field refers to a
+<tt class="xref py py-class docutils literal"><span class="pre">ListField</span></tt>, a single item may be provided, in which case
+lists that contain that item will be matched:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Page</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="n">ListField</span><span class="p">(</span><span class="n">StringField</span><span class="p">())</span>
+
+<span class="c"># This will match all pages that have the word &#39;coding&#39; as an item in the</span>
+<span class="c"># &#39;tags&#39; list</span>
+<span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="s">&#39;coding&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is possible to query by position in a list by using a numerical value as a
+query operator. So if you wanted to find all pages whose first tag was <tt class="docutils literal"><span class="pre">db</span></tt>,
+you could use the following query:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">tags__0</span><span class="o">=</span><span class="s">&#39;db&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you only want to fetch part of a list eg: you want to paginate a list, then
+the <cite>slice</cite> operator is required:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># comments - skip 5, limit 10</span>
+<span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="n">slice__comments</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>For updating documents, if you don&#8217;t know the position in a list, you can use
+the $ positional operator</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Post</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">comments__by</span><span class="o">=</span><span class="s">&quot;joe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s">&#39;inc__comments__$__votes&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>However, this doesn&#8217;t map well to the syntax so you can also use a capital S instead</p>
+<div class="highlight-python"><pre>Post.objects(comments__by="joe").update(inc__comments__S__votes=1)
+
+.. note:: Due to Mongo currently the $ operator only applies to the first matched item in the query.</pre>
+</div>
+</div>
+<div class="section" id="raw-queries">
+<h3>Raw queries<a class="headerlink" href="#raw-queries" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to provide a raw PyMongo query as a query parameter, which will
+be integrated directly into the query. This is done using the <tt class="docutils literal"><span class="pre">__raw__</span></tt>
+keyword argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">__raw__</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;tags&#39;</span><span class="p">:</span> <span class="s">&#39;coding&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.4.</span></p>
+</div>
+</div>
+<div class="section" id="limiting-and-skipping-results">
+<h2>Limiting and skipping results<a class="headerlink" href="#limiting-and-skipping-results" title="Permalink to this headline">¶</a></h2>
+<p>Just as with traditional ORMs, you may limit the number of results returned, or
+skip a number or results in you query.
+<tt class="xref py py-meth docutils literal"><span class="pre">limit()</span></tt> and
+<tt class="xref py py-meth docutils literal"><span class="pre">skip()</span></tt> and methods are available on
+<tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> objects, but the prefered syntax for
+achieving this is using array-slicing syntax:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Only the first 5 people</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="c"># All except for the first 5 people</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+
+<span class="c"># 5 users, starting from the 10th user found</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You may also index the query to retrieve a single result. If an item at that
+index does not exists, an <tt class="xref py py-class docutils literal"><span class="pre">IndexError</span></tt> will be raised. A shortcut for
+retrieving the first result and returning <tt class="xref py py-attr docutils literal"><span class="pre">None</span></tt> if no result exists is
+provided (<tt class="xref py py-meth docutils literal"><span class="pre">first()</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Make sure there are no users</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">drop_collection</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">IndexError: list index out of range</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">first</span><span class="p">()</span> <span class="o">==</span> <span class="bp">None</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Test User&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="section" id="retrieving-unique-results">
+<h3>Retrieving unique results<a class="headerlink" href="#retrieving-unique-results" title="Permalink to this headline">¶</a></h3>
+<p>To retrieve a result that should be unique in the collection, use
+<tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt>. This will raise
+<tt class="xref py py-class docutils literal"><span class="pre">DoesNotExist</span></tt> if no document matches the query,
+and <tt class="xref py py-class docutils literal"><span class="pre">MultipleObjectsReturned</span></tt> if more than one
+document matched the query.</p>
+<p>A variation of this method exists,
+<tt class="xref py py-meth docutils literal"><span class="pre">get_or_create()</span></tt>, that will create a new
+document with the query arguments if no documents match the query. An
+additional keyword argument, <tt class="xref py py-attr docutils literal"><span class="pre">defaults</span></tt> may be provided, which will be
+used as default values for the new document, in the case that it should need
+to be created:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;User A&#39;</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;User A&#39;</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="n">a</span><span class="o">.</span><span class="n">age</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">age</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="default-document-queries">
+<h2>Default Document queries<a class="headerlink" href="#default-document-queries" title="Permalink to this headline">¶</a></h2>
+<p>By default, the objects <tt class="xref py py-attr docutils literal"><span class="pre">objects</span></tt> attribute on a
+document returns a <tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> that doesn&#8217;t filter
+the collection &#8211; it returns all objects. This may be changed by defining a
+method on a document that modifies a queryset. The method should accept two
+arguments &#8211; <tt class="xref py py-attr docutils literal"><span class="pre">doc_cls</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">queryset</span></tt>. The first argument is the
+<tt class="xref py py-class docutils literal"><span class="pre">Document</span></tt> class that the method is defined on (in this
+sense, the method is more like a <tt class="xref py py-func docutils literal"><span class="pre">classmethod()</span></tt> than a regular method),
+and the second argument is the initial queryset. The method needs to be
+decorated with <tt class="xref py py-func docutils literal"><span class="pre">queryset_manager()</span></tt> in order for it
+to be recognised.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BlogPost</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">()</span>
+
+    <span class="nd">@queryset_manager</span>
+    <span class="k">def</span> <span class="nf">objects</span><span class="p">(</span><span class="n">doc_cls</span><span class="p">,</span> <span class="n">queryset</span><span class="p">):</span>
+        <span class="c"># This may actually also be done by defining a default ordering for</span>
+        <span class="c"># the document, but this illustrates the use of manager methods</span>
+        <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;-date&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You don&#8217;t need to call your method <tt class="xref py py-attr docutils literal"><span class="pre">objects</span></tt> &#8211; you may define as many
+custom manager methods as you like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BlogPost</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">BooleanField</span><span class="p">()</span>
+
+    <span class="nd">@queryset_manager</span>
+    <span class="k">def</span> <span class="nf">live_posts</span><span class="p">(</span><span class="n">doc_cls</span><span class="p">,</span> <span class="n">queryset</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">BlogPost</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;test1&#39;</span><span class="p">,</span> <span class="n">published</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="n">BlogPost</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;test2&#39;</span><span class="p">,</span> <span class="n">published</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">BlogPost</span><span class="o">.</span><span class="n">live_posts</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-querysets">
+<h2>Custom QuerySets<a class="headerlink" href="#custom-querysets" title="Permalink to this headline">¶</a></h2>
+<p>Should you want to add custom methods for interacting with or filtering
+documents, extending the <tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> class may be
+the way to go. To use a custom <tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> class on
+a document, set <tt class="docutils literal"><span class="pre">queryset_class</span></tt> to the custom class in a
+<tt class="xref py py-class docutils literal"><span class="pre">Document</span></tt>s <tt class="docutils literal"><span class="pre">meta</span></tt> dictionary:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">AwesomerQuerySet</span><span class="p">(</span><span class="n">QuerySet</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">get_awesome</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">awesome</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Page</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;queryset_class&#39;</span><span class="p">:</span> <span class="n">AwesomerQuerySet</span><span class="p">}</span>
+
+<span class="c"># To call:</span>
+<span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_awesome</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.4.</span></p>
+</div>
+<div class="section" id="aggregation">
+<h2>Aggregation<a class="headerlink" href="#aggregation" title="Permalink to this headline">¶</a></h2>
+<p>MongoDB provides some aggregation methods out of the box, but there are not as
+many as you typically get with an RDBMS. MongoEngine provides a wrapper around
+the built-in methods and provides some of its own, which are implemented as
+Javascript code that is executed on the database server.</p>
+<div class="section" id="counting-results">
+<h3>Counting results<a class="headerlink" href="#counting-results" title="Permalink to this headline">¶</a></h3>
+<p>Just as with limiting and skipping results, there is a method on
+<tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> objects &#8211;
+<tt class="xref py py-meth docutils literal"><span class="pre">count()</span></tt>, but there is also a more Pythonic
+way of achieving this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">num_users</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="further-aggregation">
+<h3>Further aggregation<a class="headerlink" href="#further-aggregation" title="Permalink to this headline">¶</a></h3>
+<p>You may sum over the values of a specific field on documents using
+<tt class="xref py py-meth docutils literal"><span class="pre">sum()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">yearly_expense</span> <span class="o">=</span> <span class="n">Employee</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s">&#39;salary&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the field isn&#8217;t present on a document, that document will be ignored from
+the sum.</p>
+</div>
+<p>To get the average (mean) of a field on a collection of documents, use
+<tt class="xref py py-meth docutils literal"><span class="pre">average()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mean_age</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="s">&#39;age&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As MongoDB provides native lists, MongoEngine provides a helper method to get a
+dictionary of the frequencies of items in lists across an entire collection &#8211;
+<tt class="xref py py-meth docutils literal"><span class="pre">item_frequencies()</span></tt>. An example of its use
+would be generating &#8220;tag-clouds&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">ListField</span><span class="p">(</span><span class="n">StringField</span><span class="p">())</span>
+
+<span class="c"># After adding some tagged articles...</span>
+<span class="n">tag_freqs</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">item_frequencies</span><span class="p">(</span><span class="s">&#39;tag&#39;</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+<span class="n">top_tags</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tag_freqs</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="query-efficiency-and-performance">
+<h2>Query efficiency and performance<a class="headerlink" href="#query-efficiency-and-performance" title="Permalink to this headline">¶</a></h2>
+<p>There are a couple of methods to improve efficiency when querying, reducing the
+information returned by the query or efficient dereferencing .</p>
+<div class="section" id="retrieving-a-subset-of-fields">
+<h3>Retrieving a subset of fields<a class="headerlink" href="#retrieving-a-subset-of-fields" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes a subset of fields on a <tt class="xref py py-class docutils literal"><span class="pre">Document</span></tt> is required,
+and for efficiency only these should be retrieved from the database. This issue
+is especially important for MongoDB, as fields may often be extremely large
+(e.g. a <tt class="xref py py-class docutils literal"><span class="pre">ListField</span></tt> of
+<tt class="xref py py-class docutils literal"><span class="pre">EmbeddedDocument</span></tt>s, which represent the comments on a
+blog post. To select only a subset of fields, use
+<tt class="xref py py-meth docutils literal"><span class="pre">only()</span></tt>, specifying the fields you want to
+retrieve as its arguments. Note that if fields that are not downloaded are
+accessed, their default value (or <tt class="xref py py-attr docutils literal"><span class="pre">None</span></tt> if no default value is provided)
+will be given:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Film</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">title</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">year</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">rating</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Film</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;The Shawshank Redemption&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">1994</span><span class="p">,</span> <span class="n">rating</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Film</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">only</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">title</span>
+<span class="go">&#39;The Shawshank Redemption&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">year</span>   <span class="c"># None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">rating</span> <span class="c"># default value</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="xref py py-meth docutils literal"><span class="pre">exclude()</span></tt> is the opposite of
+<tt class="xref py py-meth docutils literal"><span class="pre">only()</span></tt> if you want to exclude a field.</p>
+</div>
+<p>If you later need the missing fields, just call
+<tt class="xref py py-meth docutils literal"><span class="pre">reload()</span></tt> on your document.</p>
+</div>
+<div class="section" id="getting-related-data">
+<h3>Getting related data<a class="headerlink" href="#getting-related-data" title="Permalink to this headline">¶</a></h3>
+<p>When iterating the results of <tt class="xref py py-class docutils literal"><span class="pre">ListField</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">DictField</span></tt> we automatically dereference any
+<tt class="xref py py-class docutils literal"><span class="pre">DBRef</span></tt> objects as efficiently as possible, reducing the
+number the queries to mongo.</p>
+<p>There are times when that efficiency is not enough, documents that have
+<tt class="xref py py-class docutils literal"><span class="pre">ReferenceField</span></tt> objects or
+<tt class="xref py py-class docutils literal"><span class="pre">GenericReferenceField</span></tt> objects at the top level are
+expensive as the number of queries to MongoDB can quickly rise.</p>
+<p>To limit the number of queries use
+<tt class="xref py py-func docutils literal"><span class="pre">select_related()</span></tt> which converts the
+QuerySet to a list and dereferences as efficiently as possible.  By default
+<tt class="xref py py-func docutils literal"><span class="pre">select_related()</span></tt> only dereferences any
+references to the depth of 1 level.  If you have more complicated documents and
+want to dereference more of the object at once then increasing the <tt class="xref py py-attr docutils literal"><span class="pre">max_depth</span></tt>
+will dereference more levels of the document.</p>
+</div>
+</div>
+<div class="section" id="advanced-queries">
+<h2>Advanced queries<a class="headerlink" href="#advanced-queries" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes calling a <tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> object with keyword
+arguments can&#8217;t fully express the query you want to use &#8211; for example if you
+need to combine a number of constraints using <em>and</em> and <em>or</em>. This is made
+possible in MongoEngine through the <tt class="xref py py-class docutils literal"><span class="pre">Q</span></tt> class.
+A <tt class="xref py py-class docutils literal"><span class="pre">Q</span></tt> object represents part of a query, and
+can be initialised using the same keyword-argument syntax you use to query
+documents. To build a complex query, you may combine
+<tt class="xref py py-class docutils literal"><span class="pre">Q</span></tt> objects using the <tt class="docutils literal"><span class="pre">&amp;</span></tt> (and) and <tt class="docutils literal"><span class="pre">|</span></tt> (or)
+operators. To use a <tt class="xref py py-class docutils literal"><span class="pre">Q</span></tt> object, pass it in as the
+first positional argument to <tt class="xref py py-attr docutils literal"><span class="pre">Document.objects</span></tt> when you filter it by
+calling it with keyword arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Get published posts</span>
+<span class="n">Post</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">published</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">publish_date__lte</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+
+<span class="c"># Get top posts</span>
+<span class="n">Post</span><span class="o">.</span><span class="n">objects</span><span class="p">((</span><span class="n">Q</span><span class="p">(</span><span class="n">featured</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">hits__gte</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">hits__gte</span><span class="o">=</span><span class="mi">5000</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="atomic-updates">
+<span id="guide-atomic-updates"></span><h2>Atomic updates<a class="headerlink" href="#atomic-updates" title="Permalink to this headline">¶</a></h2>
+<p>Documents may be updated atomically by using the
+<tt class="xref py py-meth docutils literal"><span class="pre">update_one()</span></tt> and
+<tt class="xref py py-meth docutils literal"><span class="pre">update()</span></tt> methods on a
+<tt class="xref py py-meth docutils literal"><span class="pre">QuerySet()</span></tt>. There are several different &#8220;modifiers&#8221;
+that you may use with these methods:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">set</span></tt> &#8211; set a particular value</li>
+<li><tt class="docutils literal"><span class="pre">unset</span></tt> &#8211; delete a particular value (since MongoDB v1.3+)</li>
+<li><tt class="docutils literal"><span class="pre">inc</span></tt> &#8211; increment a value by a given amount</li>
+<li><tt class="docutils literal"><span class="pre">dec</span></tt> &#8211; decrement a value by a given amount</li>
+<li><tt class="docutils literal"><span class="pre">pop</span></tt> &#8211; remove the last item from a list</li>
+<li><tt class="docutils literal"><span class="pre">push</span></tt> &#8211; append a value to a list</li>
+<li><tt class="docutils literal"><span class="pre">push_all</span></tt> &#8211; append several values to a list</li>
+<li><tt class="docutils literal"><span class="pre">pop</span></tt> &#8211; remove the first or last element of a list</li>
+<li><tt class="docutils literal"><span class="pre">pull</span></tt> &#8211; remove a value from a list</li>
+<li><tt class="docutils literal"><span class="pre">pull_all</span></tt> &#8211; remove several values from a list</li>
+<li><tt class="docutils literal"><span class="pre">add_to_set</span></tt> &#8211; add value to a list only if its not in the list already</li>
+</ul>
+<p>The syntax for atomic updates is similar to the querying syntax, but the
+modifier comes before the field, not after it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">post</span> <span class="o">=</span> <span class="n">BlogPost</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;Test&#39;</span><span class="p">,</span> <span class="n">page_views</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;database&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">update_one</span><span class="p">(</span><span class="n">inc__page_views</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>  <span class="c"># the document has been changed, so we need to reload it</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">page_views</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">update_one</span><span class="p">(</span><span class="n">set__title</span><span class="o">=</span><span class="s">&#39;Example Post&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">title</span>
+<span class="go">&#39;Example Post&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">update_one</span><span class="p">(</span><span class="n">push__tags</span><span class="o">=</span><span class="s">&#39;nosql&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">tags</span>
+<span class="go">[&#39;database&#39;, &#39;nosql&#39;]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In version 0.5 the <tt class="xref py py-meth docutils literal"><span class="pre">save()</span></tt> runs atomic updates
+on changed documents by tracking changes to that document.</p>
+</div>
+<p>The positional operator allows you to update list items without knowing the
+index position, therefore making the update a single atomic operation.  As we
+cannot use the <cite>$</cite> syntax in keyword arguments it has been mapped to <cite>S</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">post</span> <span class="o">=</span> <span class="n">BlogPost</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;Test&#39;</span><span class="p">,</span> <span class="n">page_views</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;database&#39;</span><span class="p">,</span> <span class="s">&#39;mongo&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="s">&#39;mongo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">set__tags__S</span><span class="o">=</span><span class="s">&#39;mongodb&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post</span><span class="o">.</span><span class="n">tags</span>
+<span class="go">[&#39;database&#39;, &#39;mongodb&#39;]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently only top level lists are handled, future versions of mongodb /
+pymongo plan to support nested positional operators.  See <a class="reference external" href="http://www.mongodb.org/display/DOCS/Updating#Updating-The%24positionaloperator">The $ positional
+operator</a>.</p>
+</div>
+</div>
+<div class="section" id="server-side-javascript-execution">
+<h2>Server-side javascript execution<a class="headerlink" href="#server-side-javascript-execution" title="Permalink to this headline">¶</a></h2>
+<p>Javascript functions may be written and sent to the server for execution. The
+result of this is the return value of the Javascript function. This
+functionality is accessed through the
+<tt class="xref py py-meth docutils literal"><span class="pre">exec_js()</span></tt> method on
+<tt class="xref py py-meth docutils literal"><span class="pre">QuerySet()</span></tt> objects. Pass in a string containing a
+Javascript function as the first argument.</p>
+<p>The remaining positional arguments are names of fields that will be passed into
+you Javascript function as its arguments. This allows functions to be written
+that may be executed on any field in a collection (e.g. the
+<tt class="xref py py-meth docutils literal"><span class="pre">sum()</span></tt> method, which accepts the name of
+the field to sum over as its argument). Note that field names passed in in this
+manner are automatically translated to the names used on the database (set
+using the <tt class="xref py py-attr docutils literal"><span class="pre">name</span></tt> keyword argument to a field constructor).</p>
+<p>Keyword arguments to <tt class="xref py py-meth docutils literal"><span class="pre">exec_js()</span></tt> are
+combined into an object called <tt class="xref py py-attr docutils literal"><span class="pre">options</span></tt>, which is available in the
+Javascript function. This may be used for defining specific parameters for your
+function.</p>
+<p>Some variables are made available in the scope of the Javascript function:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">collection</span></tt> &#8211; the name of the collection that corresponds to the
+<tt class="xref py py-class docutils literal"><span class="pre">Document</span></tt> class that is being used; this should be
+used to get the <tt class="xref py py-class docutils literal"><span class="pre">Collection</span></tt> object from <tt class="xref py py-attr docutils literal"><span class="pre">db</span></tt> in Javascript
+code</li>
+<li><tt class="docutils literal"><span class="pre">query</span></tt> &#8211; the query that has been generated by the
+<tt class="xref py py-class docutils literal"><span class="pre">QuerySet</span></tt> object; this may be passed into
+the <tt class="xref py py-meth docutils literal"><span class="pre">find()</span></tt> method on a <tt class="xref py py-class docutils literal"><span class="pre">Collection</span></tt> object in the Javascript
+function</li>
+<li><tt class="docutils literal"><span class="pre">options</span></tt> &#8211; an object containing the keyword arguments passed into
+<tt class="xref py py-meth docutils literal"><span class="pre">exec_js()</span></tt></li>
+</ul>
+<p>The following example demonstrates the intended usage of
+<tt class="xref py py-meth docutils literal"><span class="pre">exec_js()</span></tt> by defining a function that sums
+over a field on a document (this functionality is already available throught
+<tt class="xref py py-meth docutils literal"><span class="pre">sum()</span></tt> but is shown here for sake of
+example):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">sum_field</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">include_negatives</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    function(sumField) {</span>
+<span class="s">        var total = 0.0;</span>
+<span class="s">        db[collection].find(query).forEach(function(doc) {</span>
+<span class="s">            var val = doc[sumField];</span>
+<span class="s">            if (val &gt;= 0.0 || options.includeNegatives) {</span>
+<span class="s">                total += val;</span>
+<span class="s">            }</span>
+<span class="s">        });</span>
+<span class="s">        return total;</span>
+<span class="s">    }</span>
+<span class="s">    &quot;&quot;&quot;</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;includeNegatives&#39;</span><span class="p">:</span> <span class="n">include_negatives</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">document</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">exec_js</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As fields in MongoEngine may use different names in the database (set using the
+<tt class="xref py py-attr docutils literal"><span class="pre">db_field</span></tt> keyword argument to a <tt class="xref py py-class docutils literal"><span class="pre">Field</span></tt> constructor), a mechanism
+exists for replacing MongoEngine field names with the database field names in
+Javascript code. When accessing a field on a collection object, use
+square-bracket notation, and prefix the MongoEngine field name with a tilde.
+The field name that follows the tilde will be translated to the name used in
+the database. Note that when referring to fields on embedded documents,
+the name of the <tt class="xref py py-class docutils literal"><span class="pre">EmbeddedDocumentField</span></tt>, followed by a dot,
+should be used before the name of the field on the embedded document. The
+following example shows how the substitutions are made:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">EmbeddedDocument</span><span class="p">):</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">db_field</span><span class="o">=</span><span class="s">&#39;body&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">BlogPost</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">db_field</span><span class="o">=</span><span class="s">&#39;doctitle&#39;</span><span class="p">)</span>
+    <span class="n">comments</span> <span class="o">=</span> <span class="n">ListField</span><span class="p">(</span><span class="n">EmbeddedDocumentField</span><span class="p">(</span><span class="n">Comment</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;cs&#39;</span><span class="p">)</span>
+
+<span class="c"># Returns a list of dictionaries. Each dictionary contains a value named</span>
+<span class="c"># &quot;document&quot;, which corresponds to the &quot;title&quot; field on a BlogPost, and</span>
+<span class="c"># &quot;comment&quot;, which corresponds to an individual comment. The substitutions</span>
+<span class="c"># made are shown in the comments.</span>
+<span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">exec_js</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">function() {</span>
+<span class="s">    var comments = [];</span>
+<span class="s">    db[collection].find(query).forEach(function(doc) {</span>
+<span class="s">        // doc[~comments] -&gt; doc[&quot;cs&quot;]</span>
+<span class="s">        var docComments = doc[~comments];</span>
+
+<span class="s">        for (var i = 0; i &lt; docComments.length; i++) {</span>
+<span class="s">            // doc[~comments][i] -&gt; doc[&quot;cs&quot;][i]</span>
+<span class="s">            var comment = doc[~comments][i];</span>
+
+<span class="s">            comments.push({</span>
+<span class="s">                // doc[~title] -&gt; doc[&quot;doctitle&quot;]</span>
+<span class="s">                &#39;document&#39;: doc[~title],</span>
+
+<span class="s">                // comment[~comments.content] -&gt; comment[&quot;body&quot;]</span>
+<span class="s">                &#39;comment&#39;: comment[~comments.content]</span>
+<span class="s">            });</span>
+<span class="s">        }</span>
+<span class="s">    });</span>
+<span class="s">    return comments;</span>
+<span class="s">}</span>
+<span class="s">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Querying the database</a><ul>
+<li><a class="reference internal" href="#filtering-queries">Filtering queries</a></li>
+<li><a class="reference internal" href="#query-operators">Query operators</a><ul>
+<li><a class="reference internal" href="#querying-lists">Querying lists</a></li>
+<li><a class="reference internal" href="#raw-queries">Raw queries</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#limiting-and-skipping-results">Limiting and skipping results</a><ul>
+<li><a class="reference internal" href="#retrieving-unique-results">Retrieving unique results</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#default-document-queries">Default Document queries</a></li>
+<li><a class="reference internal" href="#custom-querysets">Custom QuerySets</a></li>
+<li><a class="reference internal" href="#aggregation">Aggregation</a><ul>
+<li><a class="reference internal" href="#counting-results">Counting results</a></li>
+<li><a class="reference internal" href="#further-aggregation">Further aggregation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#query-efficiency-and-performance">Query efficiency and performance</a><ul>
+<li><a class="reference internal" href="#retrieving-a-subset-of-fields">Retrieving a subset of fields</a></li>
+<li><a class="reference internal" href="#getting-related-data">Getting related data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-queries">Advanced queries</a></li>
+<li><a class="reference internal" href="#atomic-updates">Atomic updates</a></li>
+<li><a class="reference internal" href="#server-side-javascript-execution">Server-side javascript execution</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="document-instances.html"
+                        title="previous chapter">Documents instances</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gridfs.html"
+                        title="next chapter">GridFS</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/guide/querying.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="gridfs.html" title="GridFS"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="document-instances.html" title="Documents instances"
+             >previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li>
+          <li><a href="index.html" >User Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Lethus Tecnologia da Informação.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

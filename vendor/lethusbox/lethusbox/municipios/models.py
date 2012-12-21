@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 __all__ = ('UFBrasil', 'MunicipioBrasil')
@@ -8,9 +9,15 @@ from constants import UF_CHOICES
 
 class UFBrasil(Document):
     """
-    Representa todos os estados do brasil
-    não é utilizado como domínio do sistema.
-    é utilizado apenas para consulta.
+    Representa um estado do brasil,
+    utilizado apenas para consulta.
+    
+    atributos:
+
+    * codigo: código ibge do estado
+    * sigla: sigla do estado
+    * nome: nome do estado
+    * regiao: região do estado
     """
 
     codigo = IntField(
@@ -37,9 +44,14 @@ class UFBrasil(Document):
 
 class MunicipioBrasil(Document):
     """
-    Representa todos os municipios do brasil.
-    não é utilizado como domínio do sistema.
+    Representa um município do brasil.
     é utilizado apenas para consulta
+
+    atributos:
+
+    * codigo: código ibge do município
+    * nome: nome completo do município
+    * uf_sigla: sigla do estado do município
     """
 
     codigo = IntField(
@@ -59,6 +71,10 @@ class MunicipioBrasil(Document):
             'collection': 'brasil.municipio'}
 
     def json_format(self):
+        """
+        Retorna o município no formato json 
+        pronto para ser enviado via ajax
+        """
         return {'codigo': self.codigo,
                 'nome': self.nome,
                 'uf': self.uf_sigla}

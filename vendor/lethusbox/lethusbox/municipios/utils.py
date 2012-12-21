@@ -26,13 +26,6 @@ class Loader(object):
         mun.nome = node['fields']['nome']
         mun.save()
 
-        if created:
-            print "Criando municipio %s do estado %s" % (
-                mun.nome, mun.uf_sigla)
-        else:
-            print "Atualizando municipio %s do estado %s" % (
-                mun.nome, mun.uf_sigla)
-
     def _load_uf(self, node):
         uf, created = UFBrasil.objects.get_or_create(
             pk=node['pk'], auto_save=False)
@@ -41,11 +34,6 @@ class Loader(object):
         uf.regiao = node['fields']['regiao']
         uf.nome = node['fields']['nome']
         uf.save()
-
-        if created:
-            print "Criando o estado %s" % uf.nome
-        else:
-            print "Atualizando o estado %s" % uf.nome
 
     def load(self):
         """

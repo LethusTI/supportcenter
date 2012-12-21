@@ -1,0 +1,504 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Referência da API &mdash; LethusBox  documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="LethusBox  documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">LethusBox  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="referencia-da-api">
+<h1>Referência da API<a class="headerlink" href="#referencia-da-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="instalacao-geral">
+<h2>Instalação Geral<a class="headerlink" href="#instalacao-geral" title="Permalink to this headline">¶</a></h2>
+<p>certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">...</span>
+    <span class="s">&#39;lethusbox&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.</p>
+</div>
+<div class="section" id="bootstrapmenu">
+<h2>BootstrapMenu<a class="headerlink" href="#bootstrapmenu" title="Permalink to this headline">¶</a></h2>
+<p>É um plugin que gera toda a estrutura de menus,
+permitindo que os itens sejam exibidos por permissões de acesso.
+Tornando prático a manutenção e o controle da barra de menus</p>
+<div class="section" id="instalacao">
+<h3>Instalação<a class="headerlink" href="#instalacao" title="Permalink to this headline">¶</a></h3>
+<p>certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">...</span>
+    <span class="s">&#39;lethusbox.bootstrapmenu&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.</p>
+</div>
+<div class="section" id="configuracao">
+<h3>Configuração<a class="headerlink" href="#configuracao" title="Permalink to this headline">¶</a></h3>
+<p>É necessário no settings.py escrevermos a lista de menus que teremos na área de navegação,
+da seguinte maneira</p>
+<div class="highlight-python"><pre>LETHUS_MENU = ( ... menus disponíveis ... )</pre>
+</div>
+<p>cada menu pode ser formado da seguinte maneira</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="s">u&#39;Nome que será escrito na tela&#39;</span><span class="p">,</span> <span class="p">{</span>
+         <span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="s">&#39;...&#39;</span><span class="p">,</span>
+         <span class="s">&#39;category&#39;</span><span class="p">:</span> <span class="s">&#39;...&#39;</span><span class="p">,</span>
+         <span class="s">&#39;perm&#39;</span><span class="p">:</span> <span class="s">&#39;...&#39;</span><span class="p">,</span>
+         <span class="s">&#39;base_uri&#39;</span><span class="p">:</span> <span class="s">&#39;...&#39;</span>
+     <span class="p">},</span> <span class="p">(</span>
+        <span class="o">...</span> <span class="n">Lista</span> <span class="n">de</span> <span class="n">items</span> <span class="n">pertencentes</span> <span class="n">ao</span> <span class="n">menu</span> <span class="o">...</span>
+     <span class="p">)),</span>
+</pre></div>
+</div>
+<p>Atributos:</p>
+<ul class="simple">
+<li>Nome que será escrito na tela: obrigatório,</li>
+<li>id: obrigatório, é a identicação do menu, tem que ser único e légivel</li>
+<li>category: opcional, serve para agrupar menus de um mesmo módulo</li>
+<li>perm: opcional, faz com que o menu seja exibido apenas se o usuário houver a permição selecionada.</li>
+<li>base_uri: opcional, faz com que os items recebam a url como prefixo, deixando compacto a informação da uri dos items.</li>
+</ul>
+<p>items pertencentes ao menu é formado da seguinte maneira:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="s">u&#39;Nome do item&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="s">&#39;uri&#39;</span><span class="p">:</span> <span class="s">&#39;...&#39;</span><span class="p">,</span>
+      <span class="s">&#39;perm&#39;</span><span class="p">:</span> <span class="s">&#39;...&#39;</span><span class="p">}),</span>
+</pre></div>
+</div>
+<p>Atributos:</p>
+<ul class="simple">
+<li>Nome do item: obrigatório, nome que será exibido dentro do menu</li>
+<li>uri: obrigatório, é a uri que será aberto o menu.</li>
+<li>perm: opcional, faz com que o menu seja exibido apenas se o usuário houver a permição selecionada.</li>
+</ul>
+</div>
+<div class="section" id="utilizacao">
+<h3>Utilização<a class="headerlink" href="#utilizacao" title="Permalink to this headline">¶</a></h3>
+<p>para a utilização do bootstrapmenu é necessario inicia-lo no template principal &#8220;base.html&#8221;
+nas primeiras linha do arquivo da seguinte maneira:</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">load</span> <span class="nv">bootstrapmenu</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>para inserir o menu completo no template é necessário inserir o código</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">menu</span> <span class="nv">id_do_menu</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>para inserir apenas o conteudo do menu é necessário inserir o código:</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">menucontent</span> <span class="nv">id_do_menu</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>o bootstrapmenu também fornece controle de menus por categoria, exibindo apenas se há algum menu disponível para aquela categoria.
+funciona da seguinte forma:</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">menucategory</span> <span class="nv">id_da_categoria</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">... código html ...</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">menucontent</span> <span class="nv">id_do_menu</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    ... código html ...</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">menu</span> <span class="nv">id_do_menu</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    ... mais menus ...</span>
+<span class="x">    ... código html ..</span>
+<span class="cp">{%</span> <span class="k">endmenucategory</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>se não houver nenhum menu disponivel nenhum codigo html dentro do bloco será exibido.</p>
+</div>
+</div>
+<div class="section" id="cbos">
+<h2>cbos<a class="headerlink" href="#cbos" title="Permalink to this headline">¶</a></h2>
+<p>É um plugin que disponibiliza um acervo de profissões com seus códigos.</p>
+<div class="section" id="id1">
+<h3>Instalação<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">...</span>
+    <span class="s">&#39;lethusbox.cbos&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.</p>
+</div>
+<div class="section" id="id2">
+<h3>Utilização<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>para importar e buscar as profissões</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lethusbox.cbos.models</span> <span class="kn">import</span> <span class="n">Ocupacao</span>
+<span class="n">Ocupacao</span><span class="o">.</span><span class="n">objects</span> <span class="c"># queryset das ocupações</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="principais-classes-do-modulo">
+<h3>Principais classes do módulo<a class="headerlink" href="#principais-classes-do-modulo" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="lethusbox.cbos.models.Ocupacao">
+<em class="property">class </em><tt class="descclassname">lethusbox.cbos.models.</tt><tt class="descname">Ocupacao</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.cbos.models.Ocupacao" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representa uma ocupação</p>
+<p>atributos</p>
+<p>codigo: codigo da profissão regulamentada
+nome: nome descritivo da profissão</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.cbos.models.OcupacaoQuerySet">
+<em class="property">class </em><tt class="descclassname">lethusbox.cbos.models.</tt><tt class="descname">OcupacaoQuerySet</tt><big>(</big><em>document</em>, <em>collection</em><big>)</big><a class="headerlink" href="#lethusbox.cbos.models.OcupacaoQuerySet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queryset extendida, para uso em Ocupacao.objects</p>
+<dl class="method">
+<dt id="lethusbox.cbos.models.OcupacaoQuerySet.categoria">
+<tt class="descname">categoria</tt><big>(</big><em>codigo_inicial</em>, <em>codigo_final=None</em><big>)</big><a class="headerlink" href="#lethusbox.cbos.models.OcupacaoQuerySet.categoria" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filtro a queryset por um range de categorias</p>
+<ul class="simple">
+<li>codigo_inicial: codigo da categoria inicial ou única;</li>
+<li>codigo_final: codigo final para o filtro;</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="django">
+<h2>Django<a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h2>
+<p>O Lethusbox também carrega uma gama de ferramentas que permite o framework django mais extensível e reusável.</p>
+<div class="section" id="decorators">
+<h3>Decorators<a class="headerlink" href="#decorators" title="Permalink to this headline">¶</a></h3>
+<p>json_response: transforma a resposta da view automaticamente para uma resposta no formato json</p>
+<p>exemplo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@json_response</span>
+<span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;ok&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="formsetfield">
+<h3>FormsetField<a class="headerlink" href="#formsetfield" title="Permalink to this headline">¶</a></h3>
+<p>Inclue vários formulários dentro do outro da seguinte forma 1..N.</p>
+<p>exemplo de uso:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">lethusbox.django.formsetfield</span> <span class="kn">import</span> <span class="n">FormsetField</span>
+
+<span class="k">class</span> <span class="nc">FormularioFilho</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+   <span class="n">nome</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">FormularioTeste</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">)</span>
+   <span class="n">filhos</span> <span class="o">=</span> <span class="n">FormsetField</span><span class="p">(</span><span class="n">FormularioFilho</span><span class="p">,</span>
+         <span class="n">class_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+         <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+         <span class="n">template_name</span><span class="o">=</span><span class="s">&quot;...&quot;</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">clean_filhos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+       <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;filhos&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Atributos de inicialização do FormsetField:</p>
+<ul class="simple">
+<li>form: obrigatório, Formulário base</li>
+<li>class_name: opcional, classe do div que será renderizado</li>
+<li>validate: padrão = True, se falso retorna a classe FormSet no clean_field_name para tratamento especial.</li>
+<li>template_name: opcional, path do template personalizado do formset.</li>
+</ul>
+<p>para mais exclarecimentos de como funciona um FormSet: <a class="reference external" href="https://docs.djangoproject.com/en/dev/topics/forms/formsets/">https://docs.djangoproject.com/en/dev/topics/forms/formsets/</a></p>
+</div>
+<div class="section" id="formfield">
+<h3>FormField<a class="headerlink" href="#formfield" title="Permalink to this headline">¶</a></h3>
+<p>Inclue um único formulário dentro do outro da seguinte forma 1..1.</p>
+<p>exemplo de uso:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">lethusbox.django.formfield</span> <span class="kn">import</span> <span class="n">FormField</span>
+
+<span class="k">class</span> <span class="nc">FormularioFilho</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+   <span class="n">nome</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">FormularioTeste</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">)</span>
+   <span class="n">filho</span> <span class="o">=</span> <span class="n">FormField</span><span class="p">(</span><span class="n">FormularioFilho</span><span class="p">,</span>
+         <span class="n">class_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+         <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+         <span class="n">template_name</span><span class="o">=</span><span class="s">&quot;...&quot;</span><span class="p">,</span>
+         <span class="n">form_kwargs</span><span class="o">=</span><span class="p">{})</span>
+
+   <span class="k">def</span> <span class="nf">clean_filho</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+       <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;filho&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Atributos de inicialização do FormField:</p>
+<ul class="simple">
+<li>form: obrigatório, Formulário base</li>
+<li>class_name: opcional, classe do div que será renderizado</li>
+<li>validate: padrão = True, se falso retorna a classe Form no clean_field_name para tratamento especial.</li>
+<li>template_name: opcional, path do template personalizado do form.</li>
+<li>form_kwargs: opcional, argumentos que serão repassados para a inicialização do formulário filho.</li>
+</ul>
+</div>
+<div class="section" id="hybridlistview">
+<h3>HybridListView<a class="headerlink" href="#hybridlistview" title="Permalink to this headline">¶</a></h3>
+<p>É uma ClassView extensão da ListView, que permite que os dados sejam também transportados via ajax para serem renderizados pelo plugin javascript ListBuilder.</p>
+<p>Exemplo de uso</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lethusbox.django.responses.list</span> <span class="kn">import</span> <span class="n">HybridListView</span>
+<span class="k">class</span> <span class="nc">ListTesteView</span><span class="p">(</span><span class="n">HybridListView</span><span class="p">):</span>
+    <span class="n">document</span> <span class="o">=</span> <span class="n">Teste</span>
+    <span class="n">paginate_by</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">allow_empty</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">json_object_list_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;nome&#39;</span><span class="p">,</span> <span class="s">&#39;is_active&#39;</span><span class="p">]</span>
+    <span class="n">sort_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;nome&#39;</span><span class="p">,</span> <span class="s">&#39;is_active&#39;</span><span class="p">]</span>
+    <span class="n">filter_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;nome&#39;</span><span class="p">]</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s">&quot;teste/list.html&quot;</span>
+</pre></div>
+</div>
+<p>Atributos da view:</p>
+<ul class="simple">
+<li>document: obrigatório, modelo do documento para ser listado;</li>
+<li>paginate_by: obrigatório, quando o plugin não consegue ser carregado, a quantidade de itens da paginação padrão;</li>
+<li>allow_empty: obrigatório, se é permitido listar quando não existem registros;</li>
+<li>json_object_list_fields:, obrigatório lista de campos ou metodos para serem exibidos em tabela;</li>
+<li>sort_fields: opcional, lista de campos para ordenação via banco de dados</li>
+<li>filter_fields: opcional, lista de campos que permitem busca para ser utilizado no filtro.</li>
+<li>template_name: obrigatório, path do template para renderizar a view.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="mongoengine">
+<h2>MongoEngine<a class="headerlink" href="#mongoengine" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="upperstringfield">
+<h3>UpperStringField<a class="headerlink" href="#upperstringfield" title="Permalink to this headline">¶</a></h3>
+<p>É um campo extedido do StringField, que guarda apenas Letras maiusculas no banco de dados.</p>
+<p>Exemplo de uso:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">lethusbox.mongoengine.fields</span> <span class="kn">import</span> <span class="n">UpperStringField</span>
+
+<span class="k">class</span> <span class="nc">TesteDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+     <span class="n">sigla</span> <span class="o">=</span> <span class="n">UpperStringField</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="municipios">
+<h2>Municípios<a class="headerlink" href="#municipios" title="Permalink to this headline">¶</a></h2>
+<p>A Lethusbox também mantem o acervo completo de todos os múnicipios do brasil juntamente com seu código do IBGE</p>
+<div class="section" id="id3">
+<h3>Instalação<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">...</span>
+    <span class="s">&#39;lethusbox.municipios&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.</p>
+</div>
+<div class="section" id="constantes">
+<h3>Constantes<a class="headerlink" href="#constantes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>lethusbox.municipios.constants.UF_CHOICES: Lista de todos os estados brasileiros</li>
+<li>lethusbox.municipios.constants.UF_VERBOSE_CHOICES: Lista do mome completo de todos os estados brasileiros</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Principais classes do módulo<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="lethusbox.municipios.models.UFBrasil">
+<em class="property">class </em><tt class="descclassname">lethusbox.municipios.models.</tt><tt class="descname">UFBrasil</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.municipios.models.UFBrasil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representa um estado do brasil,
+utilizado apenas para consulta.</p>
+<p>atributos:</p>
+<ul class="simple">
+<li>codigo: código ibge do estado</li>
+<li>sigla: sigla do estado</li>
+<li>nome: nome do estado</li>
+<li>regiao: região do estado</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.municipios.models.MunicipioBrasil">
+<em class="property">class </em><tt class="descclassname">lethusbox.municipios.models.</tt><tt class="descname">MunicipioBrasil</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.municipios.models.MunicipioBrasil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representa um município do brasil.
+é utilizado apenas para consulta</p>
+<p>atributos:</p>
+<ul class="simple">
+<li>codigo: código ibge do município</li>
+<li>nome: nome completo do município</li>
+<li>uf_sigla: sigla do estado do município</li>
+</ul>
+<dl class="method">
+<dt id="lethusbox.municipios.models.MunicipioBrasil.json_format">
+<tt class="descname">json_format</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.municipios.models.MunicipioBrasil.json_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna o município no formato json 
+pronto para ser enviado via ajax</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="plugins-javascript">
+<h2>Plugins javascript<a class="headerlink" href="#plugins-javascript" title="Permalink to this headline">¶</a></h2>
+<p>O LethusBox já possui os plugins atualizados no acervo</p>
+<ul class="simple">
+<li>jquery: <a class="reference external" href="http://jquery.com/">http://jquery.com/</a></li>
+<li>vários plugins jquery e jqueryui</li>
+<li>twitter bootstrap: <a class="reference external" href="http://twitter.github.com/bootstrap/">http://twitter.github.com/bootstrap/</a></li>
+<li>vários plugins do bootstrap</li>
+<li>underscore js: <a class="reference external" href="http://underscorejs.org/">http://underscorejs.org/</a></li>
+<li>backbone js: <a class="reference external" href="http://backbonejs.org/">http://backbonejs.org/</a></li>
+<li>async js: <a class="reference external" href="https://github.com/caolan/async">https://github.com/caolan/async</a></li>
+<li>Highcharts: <a class="reference external" href="http://www.highcharts.com/">http://www.highcharts.com/</a></li>
+</ul>
+<p>para listar todos plugins que já possui no acervo está na pasta: lethusbox/static/js</p>
+</div>
+<div class="section" id="templates">
+<h2>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p>O Lethusbox também possui alguns templates genéricos que podem ser utilizados em vários projetos.</p>
+<div class="section" id="master-field-snippet-html">
+<h3>master/field_snippet.html<a class="headerlink" href="#master-field-snippet-html" title="Permalink to this headline">¶</a></h3>
+<p>Um template utilizado para renderizar um campo do formulário.</p>
+<p>exemplo de uso</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">with</span> <span class="nv">field</span><span class="o">=</span><span class="nv">form.campo</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">include</span> <span class="s2">&quot;master/field_snippet.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endwith</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="master-message-error-html">
+<h3>master/message.error.html<a class="headerlink" href="#master-message-error-html" title="Permalink to this headline">¶</a></h3>
+<p>Um template para exibir os erros de um formulário</p>
+<p>exemplo de uso</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">include</span> <span class="s2">&quot;master/message.error.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="master-form-snippet-html">
+<h3>master/form_snippet.html<a class="headerlink" href="#master-form-snippet-html" title="Permalink to this headline">¶</a></h3>
+<p>Um template utilizado para renderizar um formulário completo</p>
+<p>exemplo de uso</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="x">&lt;form action=&quot;.&quot; method=&quot;POST&quot;&gt;</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">include</span> <span class="s2">&quot;master/form_snippet.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Referência da API</a><ul>
+<li><a class="reference internal" href="#instalacao-geral">Instalação Geral</a></li>
+<li><a class="reference internal" href="#bootstrapmenu">BootstrapMenu</a><ul>
+<li><a class="reference internal" href="#instalacao">Instalação</a></li>
+<li><a class="reference internal" href="#configuracao">Configuração</a></li>
+<li><a class="reference internal" href="#utilizacao">Utilização</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cbos">cbos</a><ul>
+<li><a class="reference internal" href="#id1">Instalação</a></li>
+<li><a class="reference internal" href="#id2">Utilização</a></li>
+<li><a class="reference internal" href="#principais-classes-do-modulo">Principais classes do módulo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#django">Django</a><ul>
+<li><a class="reference internal" href="#decorators">Decorators</a></li>
+<li><a class="reference internal" href="#formsetfield">FormsetField</a></li>
+<li><a class="reference internal" href="#formfield">FormField</a></li>
+<li><a class="reference internal" href="#hybridlistview">HybridListView</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mongoengine">MongoEngine</a><ul>
+<li><a class="reference internal" href="#upperstringfield">UpperStringField</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#municipios">Municípios</a><ul>
+<li><a class="reference internal" href="#id3">Instalação</a></li>
+<li><a class="reference internal" href="#constantes">Constantes</a></li>
+<li><a class="reference internal" href="#id4">Principais classes do módulo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugins-javascript">Plugins javascript</a></li>
+<li><a class="reference internal" href="#templates">Templates</a><ul>
+<li><a class="reference internal" href="#master-field-snippet-html">master/field_snippet.html</a></li>
+<li><a class="reference internal" href="#master-message-error-html">master/message.error.html</a></li>
+<li><a class="reference internal" href="#master-form-snippet-html">master/form_snippet.html</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/apireference.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">LethusBox  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Lethus Tecnologia da Informação.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

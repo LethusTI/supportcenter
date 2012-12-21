@@ -1,0 +1,206 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>GridFS &mdash; LethusBox  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="LethusBox  documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Signals" href="signals.html" />
+    <link rel="prev" title="Querying the database" href="querying.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="signals.html" title="Signals"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="querying.html" title="Querying the database"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">User Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gridfs">
+<h1>GridFS<a class="headerlink" href="#gridfs" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.4.</span></p>
+<div class="section" id="writing">
+<h2>Writing<a class="headerlink" href="#writing" title="Permalink to this headline">¶</a></h2>
+<p>GridFS support comes in the form of the <tt class="xref py py-class docutils literal"><span class="pre">FileField</span></tt> field
+object. This field acts as a file-like object and provides a couple of
+different ways of inserting and retrieving data. Arbitrary metadata such as
+content type can also be stored alongside the files. In the following example,
+a document is created to store details about animals, including a photo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">genus</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
+    <span class="n">family</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
+    <span class="n">photo</span> <span class="o">=</span> <span class="n">FileField</span><span class="p">()</span>
+
+<span class="n">marmot</span> <span class="o">=</span> <span class="n">Animal</span><span class="p">(</span><span class="s">&#39;Marmota&#39;</span><span class="p">,</span> <span class="s">&#39;Sciuridae&#39;</span><span class="p">)</span>
+
+<span class="n">marmot_photo</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;marmot.jpg&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>      <span class="c"># Retrieve a photo from disk</span>
+<span class="n">marmot</span><span class="o">.</span><span class="n">photo</span> <span class="o">=</span> <span class="n">marmot_photo</span>                 <span class="c"># Store photo in the document</span>
+<span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s">&#39;image/jpeg&#39;</span>    <span class="c"># Store metadata</span>
+
+<span class="n">marmot</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Another way of writing to a <tt class="xref py py-class docutils literal"><span class="pre">FileField</span></tt> is to use the
+<tt class="xref py py-func docutils literal"><span class="pre">put()</span></tt> method. This allows for metadata to be stored in the same call as
+the file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">marmot_photo</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&#39;image/jpeg&#39;</span><span class="p">)</span>
+
+<span class="n">marmot</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="retrieval">
+<h2>Retrieval<a class="headerlink" href="#retrieval" title="Permalink to this headline">¶</a></h2>
+<p>So using the <tt class="xref py py-class docutils literal"><span class="pre">FileField</span></tt> is just like using any other
+field. The file can also be retrieved just as easily:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">marmot</span> <span class="o">=</span> <span class="n">Animal</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">genus</span><span class="o">=</span><span class="s">&#39;Marmota&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="n">photo</span> <span class="o">=</span> <span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">content_type</span> <span class="o">=</span> <span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">content_type</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="streaming">
+<h2>Streaming<a class="headerlink" href="#streaming" title="Permalink to this headline">¶</a></h2>
+<p>Streaming data into a <tt class="xref py py-class docutils literal"><span class="pre">FileField</span></tt> is achieved in a
+slightly different manner.  First, a new file must be created by calling the
+<tt class="xref py py-func docutils literal"><span class="pre">new_file()</span></tt> method. Data can then be written using <tt class="xref py py-func docutils literal"><span class="pre">write()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">new_file</span><span class="p">()</span>
+<span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;some_image_data&#39;</span><span class="p">)</span>
+<span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;some_more_image_data&#39;</span><span class="p">)</span>
+<span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deletion">
+<h2>Deletion<a class="headerlink" href="#deletion" title="Permalink to this headline">¶</a></h2>
+<p>Deleting stored files is achieved with the <tt class="xref py py-func docutils literal"><span class="pre">delete()</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The FileField in a Document actually only stores the ID of a file in a
+separate GridFS collection. This means that deleting a document
+with a defined FileField does not actually delete the file. You must be
+careful to delete any files in a Document as above before deleting the
+Document itself.</p>
+</div>
+</div>
+<div class="section" id="replacing-files">
+<h2>Replacing files<a class="headerlink" href="#replacing-files" title="Permalink to this headline">¶</a></h2>
+<p>Files can be replaced with the <tt class="xref py py-func docutils literal"><span class="pre">replace()</span></tt> method. This works just like
+the <tt class="xref py py-func docutils literal"><span class="pre">put()</span></tt> method so even metadata can (and should) be replaced:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">another_marmot</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;another_marmot.png&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">marmot</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">another_marmot</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&#39;image/png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">GridFS</a><ul>
+<li><a class="reference internal" href="#writing">Writing</a></li>
+<li><a class="reference internal" href="#retrieval">Retrieval</a></li>
+<li><a class="reference internal" href="#streaming">Streaming</a></li>
+<li><a class="reference internal" href="#deletion">Deletion</a></li>
+<li><a class="reference internal" href="#replacing-files">Replacing files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="querying.html"
+                        title="previous chapter">Querying the database</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="signals.html"
+                        title="next chapter">Signals</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/guide/gridfs.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="signals.html" title="Signals"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="querying.html" title="Querying the database"
+             >previous</a> |</li>
+        <li><a href="../index.html">LethusBox  documentation</a> &raquo;</li>
+          <li><a href="index.html" >User Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2013, Lethus Tecnologia da Informação.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
