@@ -166,3 +166,10 @@ h1 small {
 .date { width: 90px; }
 div.field-checkbox label {display: inline;}
 .upper { text-transform:uppercase; }
+
+.field-error > input,
+.field-error > select,
+.field-error > textarea {
+    color: #B94A48;
+    background-color: #F2DEDE;
+}
