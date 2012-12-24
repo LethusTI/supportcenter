@@ -11,10 +11,10 @@
         var dates = $( "#id_from_date, #id_to_date" ).datepicker();
         function setActions (mod) {
             if (!mod) {
-                $("#action").slideUp();
+                $("#id_action").slideUp();
                 return;
             }
-            $("#action").slideDown();
+            $("#id_action").slideDown();
 
             $.getJSON('.', {cmd: 'get_action_list',
                             module: mod},
