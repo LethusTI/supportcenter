@@ -1,0 +1,4 @@
+div#upload-container,div#file-delete-confirm, div#file-edit-dialog {display: none;}
+div#close-folder-confirm {display: none;}
+td.remove {width: 16px; height: 16px; float: right;}
+td.remove a {background: url('/static/img/delete.gif'); width: 16px; height: 16px; display: block;}

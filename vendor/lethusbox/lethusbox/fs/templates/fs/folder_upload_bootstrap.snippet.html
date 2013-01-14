@@ -1,0 +1,60 @@
+<div id="files">
+	<span id="toolbar" class="btn-group">
+		<a id="add-file" class="btn btn-primary" href="#" rev="ui-icon-plus">
+			<i class="icon-plus icon-white"></i>
+			Adicionar arquivo
+		</a>
+
+		<a id="delete-file" class="btn" href="#" rev="ui-icon-trash">
+			<i class="icon-remove"></i>
+			Remover
+		</a>
+		<a id="download-file" class="btn" href="#">
+			<i class="icon-arrow-down"></i>
+			Baixar
+		</a>
+	</span>
+	<br />
+	<table class="table table-bordered" id="result">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nome</th>
+				<th>Tamanho</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for file in folder.files %}
+			<tr><td>{{ file.pk }}</td>
+				<td>{{ file.filename }}</td>
+				<td>{{ file.human_size }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+
+	<div id="upload-container" class="modal hide">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<div class="modal-header">
+			<h3>Enviar arquivos</h3>
+		</div>
+		<div class="modal-body">
+			<table id="upload-table" class="table table-bordered">
+				<thead class="ui-widget ui-state-default">
+					<tr>
+						<th>Nome</th>
+						<th>Tamanho</th>
+						<th>Progresso</th>
+					</tr>
+					<tbody>
+					</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<a id="pickfiles" href="#" class="btn">Selecionar arquivos</a>
+			<a id="sendfiles" href="#" class="btn btn-primary">Enviar</a>
+		</div>
+	</div>
+</div>

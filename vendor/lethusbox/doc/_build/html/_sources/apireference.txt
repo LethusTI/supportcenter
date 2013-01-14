@@ -17,6 +17,8 @@ certifique que no settings.py do projeto exteja fazendo refêrencia para o plugi
 
 é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.
 
+
+
 BootstrapMenu
 =============
 
@@ -170,6 +172,30 @@ Django
 ======
 
 O Lethusbox também carrega uma gama de ferramentas que permite o framework django mais extensível e reusável.
+
+Pré Modelos incluidos
+---------------------
+
+No LethusBox temos alguns modelos que são inclusos praticamente em todos os projetos.
+
+.. automodule:: lethusbox.django.models
+   :members:
+
+Campos para formulários
+-----------------------
+
+No Lethusbox também temos alguns campos já moldados para reuso.
+
+.. automodule:: lethusbox.django.fields
+   :members:
+
+Widgets para formulários
+-----------------------
+
+No Lethusbox também temos alguns widgets já moldados para reuso.
+
+.. automodule:: lethusbox.django.widgets
+   :members:
 
 Decorators
 ----------
@@ -336,6 +362,100 @@ Principais classes do módulo
    
 .. autoclass:: lethusbox.municipios.models.MunicipioBrasil
    :members:
+
+
+FS (Sistema de arquivos)
+========================
+
+O Lethusbox também contém suporte para armazenamento de arquivos e fotos embutido.
+
+Instalação
+----------
+
+certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+        ...
+        'lethusbox.fs',
+        ...
+    )
+
+é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.
+
+Models
+------
+
+o sistema de arquivos da lethusbox contém 4 modelos para sistema de arquivos.
+
+.. autoclass:: lethusbox.fs.models.Album
+   :members:
+
+.. autoclass:: lethusbox.fs.models.PhotoAlbum
+   :members:
+
+.. autoclass:: lethusbox.fs.models.Folder
+   :members:
+
+.. autoclass:: lethusbox.fs.models.FileFolder
+   :members:
+
+
+Views MixIns
+------------
+
+os sistema de arquivos da lethusbox também contem algoritos prontos para serem mixados em na camada de views para o gerenciamento de arquivos e fotos.
+
+.. autoclass:: lethusbox.fs.views.FileViewMixIn
+   :members:
+
+.. autoclass:: lethusbox.fs.views.FileUploadMixIn
+   :members:
+
+.. autoclass:: lethusbox.fs.views.PhotoViewMixIn
+   :members:
+
+Javascript e Template
+---------------------
+
+Para envio de arquivos é necessário o uso de um javascript, css, juntamente com seu template.
+
+para projetos que usam bootstrap:
+
+é necessário incluir o js: js/folder.uploadfiles.bootstrap.js, e o css css/folder.uploadfiles.bootstrap.css.
+
+para projetos que usam jqueryUI:
+
+é necessário incluir o js: js/folder.uploadfiles.jqueryui.js, e o css
+css/folder.uploadfiles.jqueryui.css.
+
+para incluir o template utilizando bootstrap:
+
+.. code-block:: django
+
+    {% with folder=... objeto folder vindo do contexto ... %}
+    {% include "fs/folder_upload_bootstrap.snippet.html %}
+    {% endwith %}
+
+para projetos que utilizam jqueryUI:
+
+.. code-block:: django
+
+    {% with folder=... objeto folder vindo do contexto ... %}
+    {% include "fs/folder_upload_jqueryui.snippet.html %}
+    {% endwith %}
+
+
+devemos também inicializar o plugin em javascript do proprio template da seguinte maneira
+
+.. code-block:: html
+
+    <script type="text/javascript">
+        $(document).ready(function(e){
+            $("#files").fileManager({token: '{{csrf_token}}'});
+        });
+    </script>
 
 Plugins javascript
 ==================

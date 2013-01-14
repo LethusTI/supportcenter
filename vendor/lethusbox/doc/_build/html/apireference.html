@@ -33,6 +33,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="index.html">LethusBox  documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -196,6 +199,210 @@ nome: nome descritivo da profissão</p>
 <div class="section" id="django">
 <h2>Django<a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h2>
 <p>O Lethusbox também carrega uma gama de ferramentas que permite o framework django mais extensível e reusável.</p>
+<div class="section" id="pre-modelos-incluidos">
+<h3>Pré Modelos incluidos<a class="headerlink" href="#pre-modelos-incluidos" title="Permalink to this headline">¶</a></h3>
+<p>No LethusBox temos alguns modelos que são inclusos praticamente em todos os projetos.</p>
+<span class="target" id="module-lethusbox.django.models"></span><dl class="class">
+<dt id="lethusbox.django.models.SettingValue">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.models.</tt><tt class="descname">SettingValue</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.SettingValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Usado para guardar as configurações do sistema</p>
+<dl class="classmethod">
+<dt id="lethusbox.django.models.SettingValue.get_bool">
+<em class="property">classmethod </em><tt class="descname">get_bool</tt><big>(</big><em>key</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.SettingValue.get_bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Busca valores booleanos gravados</p>
+<ul class="simple">
+<li>key: chave da configuração</li>
+<li>default: se não encontrar retorne.</li>
+</ul>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.django.models.SettingValue.set">
+<em class="property">classmethod </em><tt class="descname">set</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.SettingValue.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guarda uma configuração.</p>
+<ul class="simple">
+<li>key: nome único da configuração.</li>
+<li>value: valor para ser definido.</li>
+</ul>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.django.models.SettingValue.set_bool">
+<em class="property">classmethod </em><tt class="descname">set_bool</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.SettingValue.set_bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guarda uma configuração booleana</p>
+<ul class="simple">
+<li>key: chave da configuração.</li>
+<li>value: valor True, False ou None</li>
+</ul>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.django.models.SettingValue.unset">
+<em class="property">classmethod </em><tt class="descname">unset</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.SettingValue.unset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove uma configuração do banco de dados</p>
+<p>key: chave única da configuração para ser removida.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.models.ImageConstant">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.models.</tt><tt class="descname">ImageConstant</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.ImageConstant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utilizado para guardar imagens que são constantes
+ex como brasões logos, etc</p>
+<dl class="classmethod">
+<dt id="lethusbox.django.models.ImageConstant.get_cached">
+<em class="property">classmethod </em><tt class="descname">get_cached</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.ImageConstant.get_cached" title="Permalink to this definition">¶</a></dt>
+<dd><p>Busca imagem no cache, se não encontrada tenta buscar no banco de dados.</p>
+<ul class="simple">
+<li>key: chave da imagem</li>
+</ul>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.django.models.ImageConstant.has">
+<em class="property">classmethod </em><tt class="descname">has</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.ImageConstant.has" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna verdadeiro se possui a imagem no banco de dados.</p>
+<ul class="simple">
+<li>key: chave da imagem</li>
+</ul>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.django.models.ImageConstant.reset_all_cache">
+<em class="property">classmethod </em><tt class="descname">reset_all_cache</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.django.models.ImageConstant.reset_all_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limpa todo cache</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.django.models.ImageConstant.reset_cache">
+<em class="property">classmethod </em><tt class="descname">reset_cache</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.ImageConstant.reset_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limpa o cache de uma imagem</p>
+<ul class="simple">
+<li>key: chave da imagem</li>
+</ul>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.django.models.ImageConstant.set">
+<em class="property">classmethod </em><tt class="descname">set</tt><big>(</big><em>key</em>, <em>bf</em><big>)</big><a class="headerlink" href="#lethusbox.django.models.ImageConstant.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seta uma imagem costante</p>
+<ul class="simple">
+<li>key: chave da imagem</li>
+<li>buf: buffer contendo a imagem</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="campos-para-formularios">
+<h3>Campos para formulários<a class="headerlink" href="#campos-para-formularios" title="Permalink to this headline">¶</a></h3>
+<p>No Lethusbox também temos alguns campos já moldados para reuso.</p>
+<span class="target" id="module-lethusbox.django.fields"></span><dl class="class">
+<dt id="lethusbox.django.fields.MongoObjectIdChoiceField">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.fields.</tt><tt class="descname">MongoObjectIdChoiceField</tt><big>(</big><em>choices=()</em>, <em>required=True</em>, <em>widget=None</em>, <em>label=None</em>, <em>initial=None</em>, <em>help_text=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.MongoObjectIdChoiceField" title="Permalink to this definition">¶</a></dt>
+<dd><p>ChoiceField que aceita apenas chaves primárias do mongodb</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.fields.ObjectIdMultipleChoiceField">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.fields.</tt><tt class="descname">ObjectIdMultipleChoiceField</tt><big>(</big><em>choices=()</em>, <em>required=True</em>, <em>widget=None</em>, <em>label=None</em>, <em>initial=None</em>, <em>help_text=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.ObjectIdMultipleChoiceField" title="Permalink to this definition">¶</a></dt>
+<dd><p>MultipleChoiceField que aceita apenas chaves primárias do mongodb</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.fields.MongoDateField">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.fields.</tt><tt class="descname">MongoDateField</tt><big>(</big><em>input_formats=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.MongoDateField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Em mongoDB todo campo do tipo data aceita apenas valores datetime.
+este campo permite que aceite também objetos datetime.date</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.fields.NumberInput">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.fields.</tt><tt class="descname">NumberInput</tt><big>(</big><em>attrs=None</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.NumberInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget de entrada de número funciona em HTML5</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.fields.BRCPFCNPJField">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.fields.</tt><tt class="descname">BRCPFCNPJField</tt><big>(</big><em>required=True</em>, <em>widget=None</em>, <em>label=None</em>, <em>initial=None</em>, <em>help_text=None</em>, <em>error_messages=None</em>, <em>show_hidden_initial=False</em>, <em>validators=</em><span class="optional">[</span><span class="optional">]</span>, <em>localize=False</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.BRCPFCNPJField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Campo para formulário que aceita tanto CPF quando CNPJ.</p>
+<dl class="classmethod">
+<dt id="lethusbox.django.fields.BRCPFCNPJField.dv_maker">
+<em class="property">classmethod </em><tt class="descname">dv_maker</tt><big>(</big><em>v</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.BRCPFCNPJField.dv_maker" title="Permalink to this definition">¶</a></dt>
+<dd><p>calcula o digito verificador</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.django.fields.BRCPFCNPJField.validate_CNPJ">
+<tt class="descname">validate_CNPJ</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.BRCPFCNPJField.validate_CNPJ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value can be either a string in the format XX.XXX.XXX/XXXX-XX or a
+group of 14 characters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.django.fields.BRCPFCNPJField.validate_CPF">
+<tt class="descname">validate_CPF</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.BRCPFCNPJField.validate_CPF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value can be either a string in the format XXX.XXX.XXX-XX or an
+11-digit number.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.fields.BRPhoneNumberField">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.fields.</tt><tt class="descname">BRPhoneNumberField</tt><big>(</big><em>required=True</em>, <em>widget=None</em>, <em>label=None</em>, <em>initial=None</em>, <em>help_text=None</em>, <em>error_messages=None</em>, <em>show_hidden_initial=False</em>, <em>validators=</em><span class="optional">[</span><span class="optional">]</span>, <em>localize=False</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.BRPhoneNumberField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Campo para telefones brasileiros, já acertado para aceitar telefones com 9 digitos.</p>
+<dl class="attribute">
+<dt id="lethusbox.django.fields.BRPhoneNumberField.widget">
+<tt class="descname">widget</tt><a class="headerlink" href="#lethusbox.django.fields.BRPhoneNumberField.widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">BRPhoneNumberInput</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.fields.MoneyInput">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.fields.</tt><tt class="descname">MoneyInput</tt><big>(</big><em>max_value=None</em>, <em>min_value=None</em>, <em>max_digits=None</em>, <em>decimal_places=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.django.fields.MoneyInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Campo usado para guardar dinheiro em Decimal</p>
+<dl class="attribute">
+<dt id="lethusbox.django.fields.MoneyInput.widget">
+<tt class="descname">widget</tt><a class="headerlink" href="#lethusbox.django.fields.MoneyInput.widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">MoneyWidget</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="widgets-para-formularios">
+<h3>Widgets para formulários<a class="headerlink" href="#widgets-para-formularios" title="Permalink to this headline">¶</a></h3>
+<p>No Lethusbox também temos alguns widgets já moldados para reuso.</p>
+<span class="target" id="module-lethusbox.django.widgets"></span><dl class="class">
+<dt id="lethusbox.django.widgets.NumberInput">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.widgets.</tt><tt class="descname">NumberInput</tt><big>(</big><em>attrs=None</em><big>)</big><a class="headerlink" href="#lethusbox.django.widgets.NumberInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget de entrada de número funciona em HTML5</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.widgets.HTML5EmailInput">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.widgets.</tt><tt class="descname">HTML5EmailInput</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.django.widgets.HTML5EmailInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget de entrada de email funciona em HTML5</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.widgets.BRPhoneNumberInput">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.widgets.</tt><tt class="descname">BRPhoneNumberInput</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.django.widgets.BRPhoneNumberInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget de entrada de telefones brasileiros</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.django.widgets.MoneyWidget">
+<em class="property">class </em><tt class="descclassname">lethusbox.django.widgets.</tt><tt class="descname">MoneyWidget</tt><big>(</big><em>attrs=None</em><big>)</big><a class="headerlink" href="#lethusbox.django.widgets.MoneyWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget de entrada de dinheiro (reais).</p>
+</dd></dl>
+
+</div>
 <div class="section" id="decorators">
 <h3>Decorators<a class="headerlink" href="#decorators" title="Permalink to this headline">¶</a></h3>
 <p>json_response: transforma a resposta da view automaticamente para uma resposta no formato json</p>
@@ -367,6 +574,264 @@ pronto para ser enviado via ajax</p>
 
 </div>
 </div>
+<div class="section" id="fs-sistema-de-arquivos">
+<h2>FS (Sistema de arquivos)<a class="headerlink" href="#fs-sistema-de-arquivos" title="Permalink to this headline">¶</a></h2>
+<p>O Lethusbox também contém suporte para armazenamento de arquivos e fotos embutido.</p>
+<div class="section" id="id5">
+<h3>Instalação<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>certifique que no settings.py do projeto exteja fazendo refêrencia para o plugin</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">...</span>
+    <span class="s">&#39;lethusbox.fs&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>é importante que ele seja um dos primeiros módulos na lista de aplicações instaladas.</p>
+</div>
+<div class="section" id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h3>
+<p>o sistema de arquivos da lethusbox contém 4 modelos para sistema de arquivos.</p>
+<dl class="class">
+<dt id="lethusbox.fs.models.Album">
+<em class="property">class </em><tt class="descclassname">lethusbox.fs.models.</tt><tt class="descname">Album</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Album" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classe que representa um álbum.</p>
+<p>Atributos:</p>
+<ul class="simple">
+<li>ref: referência para o documento dono do álbum</li>
+<li>created: data de criação do álbum</li>
+</ul>
+<dl class="method">
+<dt id="lethusbox.fs.models.Album.delete">
+<tt class="descname">delete</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Album.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apaga o album e suas fotos</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.Album.delete_all_photos">
+<tt class="descname">delete_all_photos</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Album.delete_all_photos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove todas as fotos do álbum</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.Album.lock_photos">
+<tt class="descname">lock_photos</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Album.lock_photos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tranca as fotos para proibir a remoção.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.fs.models.Album.new_from_owner">
+<em class="property">classmethod </em><tt class="descname">new_from_owner</tt><big>(</big><em>owner</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Album.new_from_owner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cria um novo album para um objeto</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lethusbox.fs.models.Album.photos">
+<tt class="descname">photos</tt><a class="headerlink" href="#lethusbox.fs.models.Album.photos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna uma queryset das fotos do álbum</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.Album.put_file">
+<tt class="descname">put_file</tt><big>(</big><em>infile</em>, <em>pk=None</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Album.put_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insere uma foto no album</p>
+<ul class="simple">
+<li>infile: arquivo do tipo IO de entrada.</li>
+<li>pk: para definir uma chave primaria para foto (não obrigatório).</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.fs.models.PhotoAlbum">
+<em class="property">class </em><tt class="descclassname">lethusbox.fs.models.</tt><tt class="descname">PhotoAlbum</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.PhotoAlbum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representa uma foto de um álbum.</p>
+<p>Atributos:</p>
+<ul class="simple">
+<li>image: ImageField para armazenar a imagem tamanho máximo 800x600, thumbnail de 160x120.</li>
+<li>locked: se a foto está tracada para remoção/edição.</li>
+<li>comment: comentário da foto.</li>
+<li>created: data e hora de criação da foto</li>
+<li>album: álbum referênte da foto.</li>
+</ul>
+<dl class="method">
+<dt id="lethusbox.fs.models.PhotoAlbum.as_response">
+<tt class="descname">as_response</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.models.PhotoAlbum.as_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna a resposta HTTP contento a imagem</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.PhotoAlbum.as_thumb_response">
+<tt class="descname">as_thumb_response</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.models.PhotoAlbum.as_thumb_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna a resposta HTTP contento a imagem em thumbnail.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.PhotoAlbum.delete">
+<tt class="descname">delete</tt><big>(</big><em>force=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.PhotoAlbum.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deleta a imagem do banco de dados.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.PhotoAlbum.json_format">
+<tt class="descname">json_format</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.models.PhotoAlbum.json_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna em formato JSON para re-envio.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.fs.models.Folder">
+<em class="property">class </em><tt class="descclassname">lethusbox.fs.models.</tt><tt class="descname">Folder</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representa uma pasta de arquivos.</p>
+<p>Atributos:</p>
+<ul class="simple">
+<li>ref: referência para o documento dono da pasta</li>
+<li>created: data e hora de criação da pasta</li>
+</ul>
+<dl class="method">
+<dt id="lethusbox.fs.models.Folder.delete">
+<tt class="descname">delete</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Folder.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apaga a pasta e seus arquivos</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lethusbox.fs.models.Folder.files">
+<tt class="descname">files</tt><a class="headerlink" href="#lethusbox.fs.models.Folder.files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna os arquivos contidos na pasta</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lethusbox.fs.models.Folder.new_from_owner">
+<em class="property">classmethod </em><tt class="descname">new_from_owner</tt><big>(</big><em>owner</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Folder.new_from_owner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cria uma pasta para um objeto</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.Folder.put_file">
+<tt class="descname">put_file</tt><big>(</big><em>infile</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.Folder.put_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insere um arquivo na pasta</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.fs.models.FileFolder">
+<em class="property">class </em><tt class="descclassname">lethusbox.fs.models.</tt><tt class="descname">FileFolder</tt><big>(</big><em>**values</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.FileFolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representa um arquivo de uma pasta.</p>
+<dl class="method">
+<dt id="lethusbox.fs.models.FileFolder.as_response">
+<tt class="descname">as_response</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.models.FileFolder.as_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna resposta HTTP contendo o arquivo anexado.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.FileFolder.delete">
+<tt class="descname">delete</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.fs.models.FileFolder.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove o arquivo do banco de dados.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lethusbox.fs.models.FileFolder.filename">
+<tt class="descname">filename</tt><a class="headerlink" href="#lethusbox.fs.models.FileFolder.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna o nome do arquivo</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lethusbox.fs.models.FileFolder.human_size">
+<tt class="descname">human_size</tt><a class="headerlink" href="#lethusbox.fs.models.FileFolder.human_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna o tamanho humanizado do arquivo</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lethusbox.fs.models.FileFolder.json_format">
+<tt class="descname">json_format</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.models.FileFolder.json_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna o arquivo em formato JSON</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lethusbox.fs.models.FileFolder.size">
+<tt class="descname">size</tt><a class="headerlink" href="#lethusbox.fs.models.FileFolder.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna o tamanho em bytes do arquivo.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="views-mixins">
+<h3>Views MixIns<a class="headerlink" href="#views-mixins" title="Permalink to this headline">¶</a></h3>
+<p>os sistema de arquivos da lethusbox também contem algoritos prontos para serem mixados em na camada de views para o gerenciamento de arquivos e fotos.</p>
+<dl class="class">
+<dt id="lethusbox.fs.views.FileViewMixIn">
+<em class="property">class </em><tt class="descclassname">lethusbox.fs.views.</tt><tt class="descname">FileViewMixIn</tt><a class="headerlink" href="#lethusbox.fs.views.FileViewMixIn" title="Permalink to this definition">¶</a></dt>
+<dd><p>MixIn para View que permite o download de arquivos de alguma pasta.</p>
+<dl class="method">
+<dt id="lethusbox.fs.views.FileViewMixIn.get_folder">
+<tt class="descname">get_folder</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.views.FileViewMixIn.get_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Para implementar nas classes mixadas. é usada para retornar a pasta de arquivos que haverá operações.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.fs.views.FileUploadMixIn">
+<em class="property">class </em><tt class="descclassname">lethusbox.fs.views.</tt><tt class="descname">FileUploadMixIn</tt><a class="headerlink" href="#lethusbox.fs.views.FileUploadMixIn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filha de FileViewMixIn.</p>
+<p>MixIn para View que permite o download e o envio de arquivos de/para alguma pasta.</p>
+<p>Implementar todos os metodos em requisito de sua classe pai.</p>
+<dl class="method">
+<dt id="lethusbox.fs.views.FileUploadMixIn.post">
+<tt class="descname">post</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lethusbox.fs.views.FileUploadMixIn.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Para enviar uma foto</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lethusbox.fs.views.PhotoViewMixIn">
+<em class="property">class </em><tt class="descclassname">lethusbox.fs.views.</tt><tt class="descname">PhotoViewMixIn</tt><a class="headerlink" href="#lethusbox.fs.views.PhotoViewMixIn" title="Permalink to this definition">¶</a></dt>
+<dd><p>MixIn de View para visualização de fotos de um álbum.</p>
+<dl class="method">
+<dt id="lethusbox.fs.views.PhotoViewMixIn.get_album">
+<tt class="descname">get_album</tt><big>(</big><big>)</big><a class="headerlink" href="#lethusbox.fs.views.PhotoViewMixIn.get_album" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementação obrigatória na classe mixada.
+deve retornar o albúm que haverá operações.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="javascript-e-template">
+<h3>Javascript e Template<a class="headerlink" href="#javascript-e-template" title="Permalink to this headline">¶</a></h3>
+<p>Para envio de arquivos é necessário o uso de um javascript, css, juntamente com seu template.</p>
+<p>para projetos que usam bootstrap:</p>
+<p>é necessário incluir o js: js/folder.uploadfiles.bootstrap.js, e o css css/folder.uploadfiles.bootstrap.css.</p>
+<p>para projetos que usam jqueryUI:</p>
+<p>é necessário incluir o js: js/folder.uploadfiles.jqueryui.js, e o css
+css/folder.uploadfiles.jqueryui.css.</p>
+<p>para incluir o template utilizando bootstrap:</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">with</span> <span class="nv">folder</span><span class="o">=</span><span class="p">...</span> <span class="nv">objeto</span> <span class="nv">folder</span> <span class="nv">vindo</span> <span class="nv">do</span> <span class="nv">contexto</span> <span class="p">...</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">include</span> <span class="p">&quot;</span><span class="nv">fs</span><span class="o">/</span><span class="nv">folder_upload_bootstrap.snippet.html</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endwith</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>para projetos que utilizam jqueryUI:</p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">with</span> <span class="nv">folder</span><span class="o">=</span><span class="p">...</span> <span class="nv">objeto</span> <span class="nv">folder</span> <span class="nv">vindo</span> <span class="nv">do</span> <span class="nv">contexto</span> <span class="p">...</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">include</span> <span class="p">&quot;</span><span class="nv">fs</span><span class="o">/</span><span class="nv">folder_upload_jqueryui.snippet.html</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endwith</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>devemos também inicializar o plugin em javascript do proprio template da seguinte maneira</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#files&quot;</span><span class="p">).</span><span class="nx">fileManager</span><span class="p">({</span><span class="nx">token</span><span class="o">:</span> <span class="s1">&#39;{{csrf_token}}&#39;</span><span class="p">});</span>
+    <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="plugins-javascript">
 <h2>Plugins javascript<a class="headerlink" href="#plugins-javascript" title="Permalink to this headline">¶</a></h2>
 <p>O LethusBox já possui os plugins atualizados no acervo</p>
@@ -438,6 +903,9 @@ pronto para ser enviado via ajax</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#django">Django</a><ul>
+<li><a class="reference internal" href="#pre-modelos-incluidos">Pré Modelos incluidos</a></li>
+<li><a class="reference internal" href="#campos-para-formularios">Campos para formulários</a></li>
+<li><a class="reference internal" href="#widgets-para-formularios">Widgets para formulários</a></li>
 <li><a class="reference internal" href="#decorators">Decorators</a></li>
 <li><a class="reference internal" href="#formsetfield">FormsetField</a></li>
 <li><a class="reference internal" href="#formfield">FormField</a></li>
@@ -452,6 +920,13 @@ pronto para ser enviado via ajax</p>
 <li><a class="reference internal" href="#id3">Instalação</a></li>
 <li><a class="reference internal" href="#constantes">Constantes</a></li>
 <li><a class="reference internal" href="#id4">Principais classes do módulo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fs-sistema-de-arquivos">FS (Sistema de arquivos)</a><ul>
+<li><a class="reference internal" href="#id5">Instalação</a></li>
+<li><a class="reference internal" href="#models">Models</a></li>
+<li><a class="reference internal" href="#views-mixins">Views MixIns</a></li>
+<li><a class="reference internal" href="#javascript-e-template">Javascript e Template</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#plugins-javascript">Plugins javascript</a></li>
@@ -493,6 +968,9 @@ pronto para ser enviado via ajax</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="index.html">LethusBox  documentation</a> &raquo;</li> 
       </ul>
     </div>

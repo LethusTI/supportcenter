@@ -10,7 +10,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from mongotools.forms import MongoForm
 
-from protocolo.common.forms import FilterForm
+from lethusbox.django.forms import FilterForm
 
 from models import User, UnidadeProfile
 from constants import PERMISSIONS

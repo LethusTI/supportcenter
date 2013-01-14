@@ -7,7 +7,7 @@ from django.core.servers.basehttp import FileWrapper
 
 from forms import AdminSettingsForm
 
-from protocolo.common.models import ImageConstant
+from lethusbox.django.models import ImageConstant
 
 class AdminSettingsView(FormView):
     form_class = AdminSettingsForm

@@ -9,12 +9,11 @@ from PIL import Image, ImageOps
 
 from lethusbox.municipios.models import MunicipioBrasil
 from lethusbox.municipios.constants import UF_CHOICES
+from lethusbox.django.models import SettingValue, ImageConstant
+from lethusbox.django.widgets import CepInput
 
 from django import forms
 from mongotools.forms import MongoForm
-
-from protocolo.common.fields import MyCepInput
-from protocolo.common.models import SettingValue, ImageConstant
 
 try:
     from cStringIO import StringIO
@@ -27,8 +26,7 @@ class AdminSettingsForm(forms.Form):
     uf = forms.ChoiceField(label="Estado",
                            choices=((('', '-----'),)+ UF_CHOICES))
     cep = BRZipCodeField(
-        label="CEP",
-        widget=MyCepInput(attrs={'class': 'cep'}))
+        label="CEP")
     
     entidade = forms.CharField(max_length=300,
                                label=u"Nome completo da prefeitura")

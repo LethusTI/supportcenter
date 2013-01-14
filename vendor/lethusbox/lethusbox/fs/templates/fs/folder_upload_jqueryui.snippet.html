@@ -1,0 +1,36 @@
+<div id="files">
+    <span id="toolbar" class="ui-widget-header ui-corner-all">
+        <a id="add-file" class="button-icon ignore-autoconnect" href="#" rev="ui-icon-plus">Adicionar arquivo</a>
+        <a id="delete-file" class="alone-action button-icon ignore-autoconnect" href="#" rev="ui-icon-trash">Remover</a>
+        <a id="download-file" class="alone-action button-icon ignore-autoconnect" href="#">Baixar</a>
+    </span>
+    <table class="display" id="result">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Tamanho</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in folder.files %}
+            <tr><td>{{ file.pk }}</td>
+                <td>{{ file.filename }}</td>
+                <td>{{ file.human_size }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="upload-container" title="Upload de arquivos">
+        <table id="upload-table">
+            <thead class="ui-widget ui-state-default">
+                <tr>
+					<th>Nome</th>
+					<th>Tamanho</th>
+					<th>Progresso</th>
+				</tr>
+                <tbody>
+                </tbody>
+        </table>
+    </div>
+</div>
