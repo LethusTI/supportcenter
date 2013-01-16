@@ -184,3 +184,11 @@ class BRPhoneNumberField(Field):
         if m:
             return u'%s-%s-%s' % (m.group(1), m.group(2), m.group(3))
         raise ValidationError(self.error_messages['invalid'])
+
+class IdChoiceField(ChoiceField):
+    def valid_value(self, value):
+        if id_choice_re.match(value):
+            return True
+
+        return False
+

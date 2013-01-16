@@ -1,0 +1,56 @@
+{% extends "master/base.html" %}
+
+{% block header %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-combobox.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-relationbox.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/bairro.form.js"></script>
+<style type="text/css">
+  #field-mun, #field-distrito {display: none;}
+</style>
+<link href="{{ STATIC_URL}}css/bootstrap-combobox.css" media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>
+    {% if object %}Editando{% else %}Adicionando{% endif %} bairro
+    <small>* são obrigatórios</small>
+  </h1>
+</div>
+{% include "master/message.error.html" %}
+
+<form id="form" novalidate action="." method="POST">
+  {% csrf_token %}
+  
+  {% with field=form.nome %}
+  {% include "master/field_snippet.html" %}
+  {% endwith %}
+
+  {% with field=form.uf %}
+  {% include "master/field_snippet.html" %}
+  {% endwith %}
+
+  {% with field=form.mun %}
+  {% include "master/field_snippet.html" %}
+  {% endwith %}
+  
+  <div id="field-distrito" class="field">
+    <label for="id_distrito">
+      Distrito
+    </label>
+    
+    {{ form.distrito_nome }}
+    {{ form.distrito_select }}
+  </div>
+
+  <p class="btn-group">
+    <button type="submit" class="btn btn-primary">
+    	<i class="icon-ok icon-white"></i> Salvar
+    </button>
+    <button type="button" onclick="history.go(-1)" class="btn">
+	<i class="icon-arrow-left"></i> Voltar
+    </button>
+  </p>
+</form>
+
+{% endblock %}

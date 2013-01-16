@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'lethusbox',
     'lethusbox.municipios',
     'protocolo.common',
+    'protocolo.endr',
     'protocolo.unidades',
     'protocolo.accounts',
 )
