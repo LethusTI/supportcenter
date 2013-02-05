@@ -1,0 +1,45 @@
+<div class="endr-form">
+	{% block fields %}
+	{% include "master/message.error.html" %}
+
+  {% with field=form.log %}
+  {% include "master/field_snippet.html" %}
+  {% endwith %}
+  
+  {% if form.comp or form.num or form.cep %}
+  <div class="field-group">
+    {% with field=form.comp %}
+    {% include "master/field_snippet.html" %}
+    {% endwith %}
+    
+    {% with field=form.num %}
+    {% include "master/field_snippet.html" %}
+    {% endwith %}
+    
+    {% with field=form.cep %}
+    {% include "master/field_snippet.html" %}
+    {% endwith %}
+  </div>
+  {% endif %}
+
+  <div class="field-group">
+    {% with field=form.uf %}
+    {% include "master/field_snippet.html" %}
+    {% endwith %}
+    
+    {% with field=form.mun %}
+    {% include "master/field_snippet.html" %}
+    {% endwith %}
+  </div>
+
+  <div class="field-group">
+    {% with field=form.distrito %}
+    {% include "master/field_snippet.html" %}
+    {% endwith %}
+    
+    {% with field=form.bairro %}
+    {% include "master/field_snippet.html" %}
+    {% endwith %}
+  </div>
+  {% endblock %}
+</div>

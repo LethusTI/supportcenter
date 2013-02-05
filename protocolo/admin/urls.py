@@ -11,9 +11,13 @@ from protocolo.accounts.views import (
     AccountSettingView, AccountSetPasswordView)
 
 from views import AdminSettingsView
-
+from protocolo.endr.views import (ListBairroView, AddBairroView, UpdateBairroView)
 
 urlpatterns = patterns('',
+    url(r'^bairros/$', superuser_only(ListBairroView.as_view())),
+    url(r'^bairros/add/$', superuser_only(AddBairroView.as_view())),
+    url(r'^bairros/(?P<pk>\d+)/$', superuser_only(UpdateBairroView.as_view())),
+
     url(r'^superusers/$', superuser_only(ListSuperUserView.as_view())),
     url(r'^superusers/add/$', superuser_only(AddSuperUserView.as_view())),
     url(r'^superusers/(?P<pk>\w{24})/$', superuser_only(UpdateSuperUserView.as_view())),
