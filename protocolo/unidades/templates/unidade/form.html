@@ -5,15 +5,15 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>{% if object %}Editando{% else %}Adicionando{% endif %} unidade</h1>
+	<h3>{% if object %}Editando{% else %}Adicionando{% endif %} unidade</h3>
 </div>
 
 <form method="post" action=".">
-  {% include "master/form_snippet.html" %}
+	{% include "master/form_snippet.html" %}
 
-  <p>
-    <input type="submit" value="Salvar" class="btn btn-success" />
-    <input type="button" value="Voltar" onclick="history.go(-1)" class="btn" />
-  </p>
+	<p class="btn-group">
+		<input type="submit" value="Salvar" class="btn btn-primary" />
+		<input type="button" value="Voltar" onclick="history.go(-1)" class="btn" />
+	</p>
 </form>
 {% endblock %}

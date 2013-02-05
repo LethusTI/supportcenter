@@ -3,7 +3,7 @@ import sys
 import re
 import datetime
 
-from constants import *
+from .constants import *
 
 from mongoengine import *
 from mongoengine.queryset import QuerySet
@@ -179,7 +179,24 @@ class User(Document):
         log.save(cascade=False)
         return log
 
-    
+class UserGroup(Document):
+    nome = StringField(
+        verbose_name="Nome",
+        max_length=50,
+        required=True)
+
+    permissions = ListField(
+        StringField(max_length=128),
+        required=False)
+
+    meta = {'allow_inheritance': False,
+            'collection': 'unidade_group'}
+
+    def has_perm(self, perm):
+        return perm in self.permissions
+
+    def __unicode__(self):
+        return self.nome
 
 class UnidadeProfile(User):
     """
@@ -190,14 +207,26 @@ class UnidadeProfile(User):
                              reverse_delete_rule=NULLIFY,
                              required=True,
                              dbref=True)
+                             
     permissions = ListField(StringField(max_length=128),
                             required=False)
+    
+    group = ReferenceField(
+        UserGroup,
+        dbref=True,
+        verbose_name="Grupo",
+        required=False)
+        
+    group_flag = StringField(
+        verbose_name=u"Regras de permissão",
+        choices = USER_GROUP_FLAGS,
+        default='a')
 
     def has_perm(self, perm):
-        #if perm in UNID_PROFILE_PERMS:
-        #    return True
-
-        return perm in self.permissions
+        if self.group and self.group_flag == 'a':
+            return self.group.has_perm(perm)
+        else:
+            return perm in self.permissions
 
     def get_all_permissions(self):
         return self.permissions

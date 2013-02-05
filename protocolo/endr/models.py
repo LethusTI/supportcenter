@@ -38,6 +38,7 @@ class Bairro(Document):
     distrito = ReferenceField(
         Distrito,
         verbose_name="Distrito",
+        dbref=True,
         required=False)
 
     mun = IntField(
@@ -84,11 +85,13 @@ class EnderecoMixIn(object):
     bairro = ReferenceField(
         Bairro,
         verbose_name="Bairro",
+        dbref=True,
         required=False)
 
     distrito = ReferenceField(
         Distrito,
         verbose_name="Distrito",
+        dbref=True,
         required=False)
 
     mun = IntField(

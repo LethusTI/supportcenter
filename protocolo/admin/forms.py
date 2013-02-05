@@ -11,6 +11,7 @@ from lethusbox.municipios.models import MunicipioBrasil
 from lethusbox.municipios.constants import UF_CHOICES
 from lethusbox.django.models import SettingValue, ImageConstant
 from lethusbox.django.widgets import CepInput
+from lethusbox.django.fields import CepInput
 
 from django import forms
 from mongotools.forms import MongoForm
@@ -24,9 +25,10 @@ class AdminSettingsForm(forms.Form):
     cidade = forms.CharField(max_length=200,
                              label="Cidade")
     uf = forms.ChoiceField(label="Estado",
-                           choices=((('', '-----'),)+ UF_CHOICES))
+                           choices=((('', ''),)+ UF_CHOICES))
     cep = BRZipCodeField(
-        label="CEP")
+        label="CEP",
+        widget=CepInput(attrs={'class': 'cep'}))
     
     entidade = forms.CharField(max_length=300,
                                label=u"Nome completo da prefeitura")
@@ -35,13 +37,15 @@ class AdminSettingsForm(forms.Form):
                            label=u"Endereço da prefeitura",
                            widget=forms.Textarea)
 
-    sec_name = forms.CharField(max_length=300,
-                               label=u"Nome completo da secretaria responsável:",
-                               initial=u"")
+    sec_name = forms.CharField(
+        max_length=300,
+        label=u"Nome completo da secretaria responsável:",
+        initial=u"")
     
     brasao = forms.ImageField(
         label=u"Brasão do município",
-        help_text="Carregue o brasão do município que será usado nos relatórios, memorandos, ofícios, etc",
+        help_text=(u"Carregue o brasão do município que será usado"
+                   u" nos relatórios, memorandos, ofícios, etc"),
         required=False)
 
     def __init__(self, *args, **kwargs):
@@ -110,4 +114,8 @@ class AdminSettingsForm(forms.Form):
         SettingValue.set('DISTRIBUITOR_NAME', self.cleaned_data['entidade'])
         SettingValue.set('DISTRIBUITOR_ENDR', self.cleaned_data['endr'])
 
-
+    class Media:
+        js = ('js/bootstrap-combobox.js',)
+        css = {
+            'all': ('css/bootstrap-combobox.css',)
+            }

@@ -1,9 +1,9 @@
 <div id="field-{{ field.name }}" class="field{% if field.errors %} field-error{% endif %}{% if field.field.required %} required{% endif %}">
-  <label for="{{ field.auto_id }}">
-    {{ field.label }} {% if field.field.required %}*{% endif %}
-  </label>
-  {{ field }}
-  {% if field.help_text %}
- <span class="help-block">{{ field.help_text }}</span>
- {% endif %}
+	<label for="{{ field.auto_id }}">
+		{{ field.label }} {% if field.field.required %}*{% endif %}
+	</label>
+	{{ field }}
+	{% if field.help_text %}
+	<span class="help-block">{{ field.help_text }}</span>
+	{% endif %}
 </div>

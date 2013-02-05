@@ -117,6 +117,15 @@ class BairroForm(MongoForm):
         document = Bairro
         fields = ('nome',)
 
+    class Media:
+        js = ('js/bootstrap-combobox.js',
+              'js/bootstrap-relationbox.js',
+              'js/bairro.form.js')
+
+        css = {
+            'all': ('css/bootstrap-combobox.css',
+                    'css/bairro.form.css')
+            }
 
 class EnderecoForm(MongoForm):
     uf = forms.ChoiceField(
@@ -252,6 +261,16 @@ class EnderecoForm(MongoForm):
     class Meta:
         document = Endereco
         exclude = ('mun',)
+
+    class Media: 
+        js = ('js/bootstrap-combobox.js',
+              'js/bootstrap.municipio_completion.js',
+              'js/endr.form.js')
+
+        css = {
+            'all': ('css/endr.form.css',
+                    'css/bootstrap-combobox.css')
+              }
 
 class EndrSelectForm(forms.Form):
     uf = forms.ChoiceField(

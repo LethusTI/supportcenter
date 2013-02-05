@@ -2,83 +2,91 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>
-    {% if object %}Editando{% else %}Adicionando{% endif %} usuário
-    <small>* são obrigatórios</small>
-  </h1>
+	<h3>
+		{% if object %}Editando{% else %}Adicionando{% endif %} usuário
+		<small>* são obrigatórios</small>
+	</h3>
 </div>
 <form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST">
-  {% include "master/message.error.html" %}
-  {% csrf_token %}
-  
-  <p class="btn-group">
-    <button type="submit" class="btn btn-primary">
-    	<i class="icon-ok icon-white"></i> Salvar
-    </button>
-    <button type="button" onclick="history.go(-1)" class="btn">
-	<i class="icon-arrow-left"></i> Voltar
-    </button>
-  </p>
+	{% include "master/message.error.html" %}
+	{% csrf_token %}
+	
+	<p class="btn-group">
+		<button type="submit" class="btn btn-primary">
+    		<i class="icon-ok icon-white"></i> Salvar
+		</button>
+		<button type="button" onclick="history.go(-1)" class="btn">
+			<i class="icon-arrow-left"></i> Voltar
+		</button>
+	</p>
 
-  <ul class="nav nav-tabs">
-    <li{% if not password_tab %} class="active"{% endif %}><a href="#geral" data-toggle="tab">Dados básicos</a></li>
-    <li><a href="#permissions" data-toggle="tab">Permissões</a></li>
-    {% if object %}<li{% if password_tab %} class="active"{% endif %}><a href="#password" data-toggle="tab">Alterar senha</a></li>{% endif %}
-  </ul>
+	<ul class="nav nav-tabs">
+		<li{% if not password_tab %} class="active"{% endif %}><a href="#geral" data-toggle="tab">Dados básicos</a></li>
+		<li><a href="#permissions" data-toggle="tab">Permissões</a></li>
+		{% if object %}<li{% if password_tab %} class="active"{% endif %}><a href="#password" data-toggle="tab">Alterar senha</a></li>{% endif %}
+	</ul>
 
-  <div class="tab-content">
-    
-      <div class="tab-pane{% if not password_tab %} active{% endif %}" id="geral">
-        {% with field=form.full_name %}
-        {% include "master/field_snippet.html" %}
-        {% endwith %}
-        
-        {% with field=form.username %}
-        {% include "master/field_snippet.html" %}
-        {% endwith %}
-        
-        {% with field=form.email %}
-        {% include "master/field_snippet.html" %}
-        {% endwith %}
-        
-        {% with field=form.is_active %}
-        {% include "master/field_snippet.html" %}
-        {% endwith %}
-        
-        {% with field=form.unidade %}
-        {% include "master/field_snippet.html" %}
-        {% endwith %}
+	<div class="tab-content">
+		
+		<div class="tab-pane{% if not password_tab %} active{% endif %}" id="geral">
+			{% with field=form.full_name %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+			
+			{% with field=form.username %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+			
+			{% with field=form.email %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+			
+			{% with field=form.is_active %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+			
+			{% with field=form.unidade %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
 
-        {% if form.password1 %}
-        {% with field=form.password1 %}
-        {% include "master/field_snippet.html" %}
-        {% endwith %}
-        
-        {% with field=form.password2 %}
-        {% include "master/field_snippet.html" %}
-        {% endwith %}
-        {% endif %}
-      </div>
-      
-      <div class="tab-pane" id="permissions">
-        {% with field=form.permissions %}
-        {% include "master/field_snippet.html" %}
-        {% endwith %}
-      </div>
+			{% if form.password1 %}
+			{% with field=form.password1 %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+			
+			{% with field=form.password2 %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+			{% endif %}
+		</div>
+		
+		<div class="tab-pane" id="permissions">
+			{% with field=form.group %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+			
+			{% with field=form.group_flag %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+			
+			{% with field=form.permissions %}
+			{% include "master/field_snippet.html" %}
+			{% endwith %}
+		</div>
 </form>
 
-    {% if object %}
-    <div class="tab-pane{% if password_tab %} active{% endif %}" id="password">
-      <form id="form2" action="{{ object.get_absolute_url }}password/" method="POST">
+{% if object %}
+<div class="tab-pane{% if password_tab %} active{% endif %}" id="password">
+    <form id="form2" action="{{ object.get_absolute_url }}password/" method="POST">
         {% csrf_token %}
         {% with form=form2 %}
         {% include "master/form_snippet.html" %}
         {% endwith %}
         <p>
-          <input type="submit" value="Alterar senha" class="btn btn-success" />
+			<input type="submit" value="Alterar senha" class="btn btn-primary" />
         </p>
-      </form>
-    </div>
-    {% endif %}
-  </div>
+    </form>
+</div>
+{% endif %}
+</div>
 {% endblock %}

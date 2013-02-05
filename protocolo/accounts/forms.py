@@ -12,7 +12,7 @@ from mongotools.forms import MongoForm
 
 from lethusbox.django.forms import FilterForm
 
-from models import User, UnidadeProfile
+from models import User, UnidadeProfile, UserGroup
 from constants import PERMISSIONS
 from widgets import PermissionSelect, ActionSelect
 
@@ -294,6 +294,19 @@ class SuperUserForm(MongoForm):
 
         return username
 
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        filter_args = {'email': email}
+
+        if self.instance and self.instance.pk:
+            filter_args['pk__ne'] = self.instance.pk
+
+        if User.objects(**filter_args).count() > 0:
+            raise forms.ValidationError(
+                "Já existe um usuário com esse email.")
+
+        return email
+
     def save(self, *args, **kwargs):
         obj = super(SuperUserForm, self).save(commit=False)
 
@@ -360,6 +373,14 @@ class UnidadeProfileForm(MongoForm):
             self.initial['full_name'] = self.instance.get_full_name()
             self.initial['permissions'] = self.instance.permissions or None
 
+    def clean_permissions(self):
+        permissions = self.cleaned_data['permissions']
+
+        if self.cleaned_data.get('group_flag') == 'a':
+            return []
+
+        return permissions
+
     def save(self, *args, **kwargs):
         obj = super(UnidadeProfileForm, self).save(commit=False)
 
@@ -371,7 +392,7 @@ class UnidadeProfileForm(MongoForm):
             obj.first_name = parts[0]
             obj.last_name = None
 
-        obj.permissions = self.cleaned_data.get('permissions', None) or None
+        obj.permissions = self.cleaned_data['permissions']
 
         if kwargs.pop('commit', True):
             obj.save()
@@ -380,7 +401,11 @@ class UnidadeProfileForm(MongoForm):
 
     class Meta:
         document = UnidadeProfile
-        fields = ('username', 'email', 'is_active', 'unidade')
+        fields = ('username', 'email', 'is_active',
+                  'unidade', 'group', 'group_flag')
+
+    class Media:
+        js = ('js/user.form.js',)
 
 class AddUnidadeProfileForm(UnidadeProfileForm):
     password1 = forms.CharField(required=True, label="Senha",
@@ -406,7 +431,7 @@ class AddUnidadeProfileForm(UnidadeProfileForm):
 
     class Meta:
         document = UnidadeProfile
-        fields = ('username', 'email', 'is_active', 'unidade')
+        fields = UnidadeProfileForm.Meta.fields
 
 class HistoricFilterForm(FilterForm):                         
     module = forms.ChoiceField(label="Módulo",
@@ -429,3 +454,28 @@ class HistoricFilterForm(FilterForm):
 
         self.fields['action'].widget = ActionSelect(filter_module = filter_module,
                                                     filter_action = filter_action)
+
+class UserGroupForm(MongoForm):
+    permissions = forms.MultipleChoiceField(
+        label=u" ",
+        choices=list(chain(*[[(i, i) for i in x]
+                             for x in PERMISSIONS.values()])),
+        widget=PermissionSelect(attrs={'class':'permission'}),
+        required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(UserGroupForm, self).__init__(*args, **kwargs)
+        self.initial['permissions'] = self.instance.permissions or None
+
+    def save(self, commit=True, *args, **kwargs):
+        obj = super(UserGroupForm, self).save(commit=False)
+
+        obj.permissions = self.cleaned_data['permissions'] or None
+
+        if commit:
+            obj.save()
+
+        return obj
+
+    class Meta:
+        document = UserGroup

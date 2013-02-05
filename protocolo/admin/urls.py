@@ -8,12 +8,14 @@ from protocolo.accounts.views import (
     AddUnidadeProfileView, UpdateUnidadeProfileView,
     SetPasswordUnidadeProfileView, HistoricSuperUserView,
     HistoricUnidadeProfileView, GeneralHistoricView,
-    AccountSettingView, AccountSetPasswordView)
+    AccountSettingView, AccountSetPasswordView,
+    ListUserGroupView, AddUserGroupView, UpdateUserGroupView)
 
 from views import AdminSettingsView
 from protocolo.endr.views import (ListBairroView, AddBairroView, UpdateBairroView)
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^bairros/$', superuser_only(ListBairroView.as_view())),
     url(r'^bairros/add/$', superuser_only(AddBairroView.as_view())),
     url(r'^bairros/(?P<pk>\d+)/$', superuser_only(UpdateBairroView.as_view())),
@@ -29,6 +31,10 @@ urlpatterns = patterns('',
     url(r'^users/(?P<pk>\w{24})/$', superuser_only(UpdateUnidadeProfileView.as_view())),
     url(r'^users/(?P<pk>\w{24})/password/$', superuser_only(SetPasswordUnidadeProfileView.as_view())),
     url(r'^users/logs/(?P<pk>\w{24})/$', superuser_only(HistoricUnidadeProfileView.as_view())),
+
+    url(r'^users/groups/$', superuser_only(ListUserGroupView.as_view())),
+    url(r'^users/groups/add/$', superuser_only(AddUserGroupView.as_view())),
+    url(r'^users/groups/(?P<pk>\w{24})/$', superuser_only(UpdateUserGroupView.as_view())),
 
     url(r'^logs/',superuser_only(GeneralHistoricView.as_view())),
     

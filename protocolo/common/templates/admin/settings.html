@@ -64,8 +64,10 @@
           <label><i>Brasão atual:</i></label>
           <img src="/image_constant/brasao.jpg" title="Para selecionar um novo brasão, selecione abaixo e clique em salvar."/><br>
         {% endif %}
-        <img title="{{ form.brasao.help_text }}" src="/static/img/icon/help.png" class="tooltip help" />
-        <input type="file" name="brasao" id="id_brasao"><br><br>
+          <input type="file" name="brasao" id="id_brasao">
+		  <span class="help-block">{{ form.brasao.help_text }}</span>
+		  <br /><br />
+
       </div>
 
   <p>

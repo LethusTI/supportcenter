@@ -19,9 +19,11 @@ from protocolo.common.output import json_response
 from forms import (
     AccountForm, SuperUserForm, AddSuperUserForm,
     UnidadeProfileForm, AddUnidadeProfileForm,
-    HistoricFilterForm, AdminPasswordChangeForm)
+    HistoricFilterForm, AdminPasswordChangeForm,
+    UserGroupForm)
 
-from models import User, UnidadeProfile, Historic
+from models import (
+    User, UnidadeProfile, Historic, UserGroup)
 from constants import *
 from lethusbox.django.responses import HybridListView
 
@@ -191,6 +193,23 @@ class UnidadeProfileViewMixIn(object):
     form_class = UnidadeProfileForm
     template_name = "user/form.html"
     success_url = "/admin/users/"
+    get_services = ('get_group_perms',)
+
+    def get(self, *args, **kwargs):
+        cmd = self.request.GET.get('cmd')
+
+        if cmd and cmd in self.get_services:
+            return getattr(self, "_%s" % cmd)()
+
+        return super(UnidadeProfileViewMixIn, self).get(*args, **kwargs)
+
+    @json_response
+    def _get_group_perms(self):
+        group = get_document_or_404(
+            UserGroup,
+            pk=self.request.GET.get('group_id'))
+
+        return group.permissions
 
 class ListUnidadeProfileView(UnidadeProfileViewMixIn, HybridListView):
     paginate_by = 20
@@ -434,3 +453,25 @@ class GeneralHistoricView(CoreHistoricView):
 
     def build_main_queryset(self):
         return self.model.objects
+
+class ListUserGroupView(HybridListView):
+    document = UserGroup
+    paginate_by = 20
+    allow_empty = True
+    json_object_list_fields = ['id', 'nome']
+    filter_fields = ['nome']
+    template_name = "user/group_list.html"
+
+class UserGroupMixInView(object):
+    document = UserGroup
+    form_class = UserGroupForm
+    template_name = "user/group_form.html"
+    success_url = '/admin/users/groups/'
+
+class AddUserGroupView(UserGroupMixInView, CreateView):
+    historic_action = "usergroup.add"
+    success_message = "O grupo de usuários \"%s\" foi criado com sucesso"
+
+class UpdateUserGroupView(UserGroupMixInView, UpdateView):
+    historic_action = "usergroup.update"
+    success_message = "O grupo de usuários \"%s\" foi atualizado com sucesso"

@@ -30,10 +30,10 @@
 <div class="row">
     <div class="span6">
         <div class="page-header">
-          <h1>
+          <h3>
             Alterar dados
             <small>* são obrigatórios</small>
-          </h1>
+          </h3>
         </div>    
         
         <form id="form" novalidate action="/account/" method="POST" class="well pull-left">
@@ -44,18 +44,18 @@
             </div>
 
             {% include "master/form_snippet.html" %}
-            <p>
-              <input class="btn btn-success" type="submit" value="Salvar" class="green">
+            <p class="btn-group">
+              <input class="btn btn-primary" type="submit" value="Salvar" />
               <input class="btn" type="button" value="Voltar" onclick="history.go(-1)">
             </p>
         </form>
     </div>
     <div class="span6">
         <div class="page-header">
-          <h1>
+          <h3>
             Alterar senha
             <small>* são obrigatórios</small>
-          </h1>
+          </h3>
         </div> 
         {% if object %}
         <form id="form2" action="/account/set_password/" method="POST" class="well pull-left">
@@ -64,7 +64,7 @@
             {% include "master/form_snippet.html" %}
             {% endwith %}
             <p>
-              <input type="submit" value="Alterar" class="btn btn-success" />
+              <input type="submit" value="Alterar" class="btn btn-primary" />
             </p>
         </form>
         {% endif %}
