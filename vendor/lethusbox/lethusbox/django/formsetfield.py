@@ -7,7 +7,7 @@ except ImportError:
 
 from django.forms.forms import Form, BoundField
 from django.forms.fields import Field
-from django.forms.widgets import Widget
+from django.forms.widgets import Widget, Media
 from django.forms.formsets import BaseFormSet, formset_factory
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
@@ -46,7 +46,7 @@ class FormsetWidget(Widget):
     field = None
     
     def value_from_datadict(self, data, files, name):
-        return self.get_formset(data=data, prefix=name)
+        return self.get_formset(data=data, files=files, prefix=name)
     
     def get_formset(self, *args, **kwargs):
         return self.field.formset_class(*args, **kwargs)
@@ -74,6 +74,9 @@ class FormsetWidget(Widget):
 
         return mark_safe(t.render(Context(data)))
 
+    @property
+    def media(self):
+        return Media(getattr(self.field.form_class, "Media", None))
 
 class FormsetField(Field):
     widget = FormsetWidget
@@ -81,12 +84,14 @@ class FormsetField(Field):
     class_name = "formset"
     template_name = 'lethusbox/formsetwidget.html'
 
-    def __init__(self, form, formset=AutoBaseFormSet, extra=1,
+    def __init__(self, form_class, formset=AutoBaseFormSet, extra=1,
                  max_num=None, class_name=None,
                  template_name=None,
                  validate=True, **kwargs):
         
         super(FormsetField, self).__init__(**kwargs)
+        
+        self.form_class = form_class
 
         if class_name:
             self.class_name = class_name
@@ -95,11 +100,14 @@ class FormsetField(Field):
             self.template_name = template_name
 
         self.validate = validate
-        self.set_formset(form, formset, extra, max_num=max_num)
+        self.set_formset(form_class, formset, extra, max_num=max_num)
         self.widget.field = self
         
-    def set_formset(self, form, formset=AutoBaseFormSet, extra=1, max_num=None):
-        self.formset_class = formset_factory(form, formset, extra, max_num=max_num)
+    def set_formset(self, form, formset=AutoBaseFormSet,
+                    extra=1, max_num=None):
+
+        self.formset_class = formset_factory(
+            form, formset, extra, max_num=max_num)
 
     def save_fields(self, formset):
         return [i.save(commit=False) for i in formset.forms]
@@ -117,4 +125,4 @@ class FormsetField(Field):
         if formset.is_valid():
             return self.to_python(formset)
         
-        raise ValidationError("Formulário Inválido")
+        raise ValidationError(u"Formulário Inválido")

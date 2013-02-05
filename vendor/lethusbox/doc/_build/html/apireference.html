@@ -832,6 +832,33 @@ css/folder.uploadfiles.jqueryui.css.</p>
 </div>
 </div>
 </div>
+<div class="section" id="captcha">
+<h2>Captcha<a class="headerlink" href="#captcha" title="Permalink to this headline">¶</a></h2>
+<p>O Lethusbox também conta com um plugin de gerar capcha para evitar ataques de bots.</p>
+<div class="section" id="id6">
+<h3>Instalação<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>Abra o arquivo urls.py principal e adicione mais uma url como abaixo</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span>
+    <span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^captcha/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">&#39;lethusbox.captcha.urls&#39;</span><span class="p">)),</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>Utilização<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>A utilização é mais simples ainda, veja um exemplo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lethusbox.captcha</span> <span class="kn">import</span> <span class="n">CaptchaField</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">TestForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">captcha</span> <span class="o">=</span> <span class="n">CaptchaField</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="plugins-javascript">
 <h2>Plugins javascript<a class="headerlink" href="#plugins-javascript" title="Permalink to this headline">¶</a></h2>
 <p>O LethusBox já possui os plugins atualizados no acervo</p>
@@ -927,6 +954,11 @@ css/folder.uploadfiles.jqueryui.css.</p>
 <li><a class="reference internal" href="#models">Models</a></li>
 <li><a class="reference internal" href="#views-mixins">Views MixIns</a></li>
 <li><a class="reference internal" href="#javascript-e-template">Javascript e Template</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#captcha">Captcha</a><ul>
+<li><a class="reference internal" href="#id6">Instalação</a></li>
+<li><a class="reference internal" href="#id7">Utilização</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#plugins-javascript">Plugins javascript</a></li>

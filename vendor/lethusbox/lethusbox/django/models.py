@@ -28,6 +28,18 @@ class SettingValue(Document):
         return cls._dict_cache.get(key, default)
 
     @classmethod
+    def get_uncached(cls, key, default=None):
+        """
+        Busca valores do banco sem consultar o cache
+        """
+        obj = cls.objects(key=key).first()
+
+        if obj:
+            return obj.value
+
+        return default
+
+    @classmethod
     def unset(cls, key):
         """
         Remove uma configuração do banco de dados

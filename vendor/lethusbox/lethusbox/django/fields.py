@@ -7,18 +7,21 @@ __all__ = ('MongoObjectIdChoiceField',
            'MoneyInput')
 
 import re
+import datetime
 
 from django.forms.fields import (
     ChoiceField, MultipleChoiceField, DateField,
     Field, DecimalField)
 
 from django.utils.translation import ugettext_lazy as _
-
+from django.core.validators import EMPTY_VALUES
+from django.utils.encoding import smart_unicode
 from .widgets import *
 
 MONEY_RE = re.compile(r'(R\$)? (?P<value>.*)')
 MONGO_RE = re.compile(r'^[[0-9]|[a-f]]{24}$')
 phone_digits_re = re.compile(r'^(\d{2})[-\.]?(\d{4})[-\.]?(\d{4}\d?)$')
+id_choice_re = re.compile(r'\d+')
 
 class MongoObjectIdFieldMixIn(object):
     """
@@ -184,3 +187,11 @@ class BRPhoneNumberField(Field):
         if m:
             return u'%s-%s-%s' % (m.group(1), m.group(2), m.group(3))
         raise ValidationError(self.error_messages['invalid'])
+
+class IdChoiceField(ChoiceField):
+    def valid_value(self, value):
+        if id_choice_re.match(value):
+            return True
+
+        return False
+

@@ -6,7 +6,7 @@ except ImportError:
     BaseDocumentMongoengine = None
 
 from django.forms.fields import Field
-from django.forms.widgets import Widget
+from django.forms.widgets import Widget, Media
 from django.utils.safestring import mark_safe
 from django.template import loader, Context
 from django.forms import ValidationError, BaseForm
@@ -41,12 +41,16 @@ class FormWidget(Widget):
         t = loader.get_template(self.field.template_name)
         
         data = {'form': form,
+                'parent_field': self.field,
                 'class_name': self.field.class_name,
                 'STATIC_URL': settings.STATIC_URL}
                 
         return mark_safe(t.render(Context(data)))
 
-
+    @property
+    def media(self):
+        return Media(getattr(self.field.form_class, "Media", None))
+    
 class FormField(Field):
     widget = FormWidget
     form_class = None

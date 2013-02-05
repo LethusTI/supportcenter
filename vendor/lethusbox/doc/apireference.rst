@@ -457,6 +457,40 @@ devemos também inicializar o plugin em javascript do proprio template da seguin
         });
     </script>
 
+Captcha
+=======
+
+O Lethusbox também conta com um plugin de gerar capcha para evitar ataques de bots.
+
+Instalação
+----------
+
+Abra o arquivo urls.py principal e adicione mais uma url como abaixo
+
+.. code-block:: python
+
+    urlpatterns = patterns(
+        '',
+        ...
+        url(r'^captcha/', include('lethusbox.captcha.urls')),
+        ...
+    )
+
+Utilização
+----------
+
+A utilização é mais simples ainda, veja um exemplo:
+
+.. code-block:: python
+
+    from lethusbox.captcha import CaptchaField
+    from django import forms
+
+    class TestForm(forms.Form):
+        captcha = CaptchaField()
+
+
+
 Plugins javascript
 ==================
 
