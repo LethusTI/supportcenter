@@ -3,10 +3,10 @@
 import os
 import sys
 import re
-from protocolo import connect_db, setup_paths
+from supportcenter import connect_db, setup_paths
 setup_paths()
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'protocolo.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'supportcenter.settings'
 __import__(os.environ['DJANGO_SETTINGS_MODULE'])
 settings = sys.modules[os.environ['DJANGO_SETTINGS_MODULE']]
 connect_db()

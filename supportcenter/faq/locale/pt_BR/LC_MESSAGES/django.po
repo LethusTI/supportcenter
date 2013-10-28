@@ -1,0 +1,120 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Support Center\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-28 15:13-0200\n"
+"PO-Revision-Date: 2013-11-28 15:11-03:00\n"
+"Last-Translator: Wilson Pinto Júnior <wilsonpjunior@gmail.com>\n"
+"Language: Português\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: models.py:18
+msgid "Public"
+msgstr "Público"
+
+#: models.py:19
+msgid "Private"
+msgstr "Privado"
+
+#: models.py:20
+msgid "Internal"
+msgstr "Interno"
+
+#: models.py:25
+msgid "Inherit"
+msgstr "Herança"
+
+#: models.py:167
+msgid "Question"
+msgstr "Questão"
+
+#: models.py:169
+msgid "Enter your question or suggestion."
+msgstr "Entre com sua questão ou sugestão."
+
+#: models.py:173
+msgid "Description"
+msgstr "Descrição"
+
+#: models.py:174
+msgid "Please offer details. Markdown enabled."
+msgstr "Por utilize detalhes. Marcação ativada."
+
+#: models.py:177 models.py:269
+msgid "Status"
+msgstr "Estado"
+
+#: models.py:265
+msgid "Response"
+msgstr "Resposta"
+
+#: models.py:266
+msgid "Please enter your response. Markdown enabled."
+msgstr "Entre com sua resposta. Marcação ativada."
+
+#: templates/faq/index.html:6
+msgid "Support"
+msgstr "Suporte"
+
+#: templates/faq/index.html:11
+#, python-format
+msgid "Top %(count)s Questions"
+msgstr "%(count)s Questões mais acessadas."
+
+#: templates/faq/inner.html:14
+msgid "Start typing your question here."
+msgstr "Inicie digitando sua questão aqui."
+
+#: templates/faq/inner.html:14
+msgid "Search"
+msgstr "Encontrar"
+
+#: templates/faq/question_list.html:6
+msgid "no responses"
+msgstr "sem respostas"
+
+#: templates/faq/question_list.html:6
+msgid "accepted"
+msgstr "aceita"
+
+#: templates/faq/question_list.html:6
+msgid "staff"
+msgstr "administração"
+
+#: templates/faq/sidebar.html:6
+msgid "My Questions"
+msgstr "Minhas questões"
+
+#: templates/faq/sidebar.html:19
+msgid "Categories"
+msgstr "Categorias"
+
+#: templates/faq/sidebar.html:30
+msgid "Navigate"
+msgstr "Navegue"
+
+#: templates/faq/sidebar.html:34
+msgid "Ask a question or give suggestion."
+msgstr "Faça sua pergunta ou sugestão."
+
+#: templates/faq/sidebar.html:35
+msgid "Return to homepage."
+msgstr "Retorne a página inicial."
+
+#: templates/faq/welcome.html:5
+msgid "Welcome to our Support Center."
+msgstr "Bem vindo ao Centro de suporte."
+
+#: templates/faq/welcome.html:6
+msgid "Search for answers to your questions below, or ask your own."
+msgstr ""
+"Procure respostas para suas questões primeiro, ou perguente você mesmo."

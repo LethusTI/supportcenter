@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-protocolo
-=========
-
-Sistema de controle de protocolos de documentos
-=======
 suportcenter
 ============
->>>>>>> 8b66fe4cfa233826efb2105833d84d6de867a756
+
+Central de suporte da Lethus TI, originalmente baseado no django knowledge(http://django-knowledge.org/)
+
+
