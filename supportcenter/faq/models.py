@@ -31,7 +31,7 @@ class Category(Document):
     lastchanged = DateTimeField(default=datetime.datetime.now)
 
     title = StringField(max_length=255, required=True)
-    slug = StringField(unique=True)
+    slug = StringField(required=True)
 
     def clean(self):
         self.lastchanged = datetime.datetime.now()
@@ -43,6 +43,34 @@ class Category(Document):
         'ordering': ['title']
     }
 
+class KnowledgeBase(Document):
+    added = DateTimeField(default=datetime.datetime.now)
+    lastchanged = DateTimeField(default=datetime.datetime.now)
+    
+    user = ReferenceField(
+        'User',
+        verbose_name=u"Criado por usuário",
+        required=True)
+    
+    def clean(self):
+        self.lastchanged = datetime.datetime.now()
+
+    def get_name(self):
+        """
+        Get local name, then self.user's first/last, and finally
+        their username if all else fails.
+        """
+        name = self.user and (
+             u'{0} {1}'.format(self.user.first_name, self.user.last_name or '').strip()\
+             or self.user.username
+         )
+        return name.strip() or _("Anonymous")
+        
+    meta = {
+        'abstract': True
+    }
+    
+        
 ## class KnowledgeBase(Document):
 ##     """
 ##     The base class for Knowledge models.
@@ -59,13 +87,7 @@ class Category(Document):
 ##         help_text=_('Check this if you want to be alerted when a new'
 ##                         ' response is added.'))
 
-##     # for anonymous posting, if permitted
-##     name = models.CharField(max_length=64, blank=True, null=True,
-##         verbose_name=_('Name'),
-##         help_text=_('Enter your first and last name.'))
-##     email = models.EmailField(blank=True, null=True,
-##         verbose_name=_('Email'),
-##         help_text=_('Enter a valid email address.'))
+##     
 
 ##     class Meta:
 ##         abstract = True
@@ -85,16 +107,7 @@ class Category(Document):
 ##     #### GENERIC GETTERS ####
 ##     #########################
 
-##     def get_name(self):
-##         """
-##         Get local name, then self.user's first/last, and finally
-##         their username if all else fails.
-##         """
-##         name = (self.name or (self.user and (
-##             u'{0} {1}'.format(self.user.first_name, self.user.last_name).strip()\
-##             or self.user.username
-##         )))
-##         return name.strip() or _("Anonymous")
+
 
 ##     get_email = lambda s: s.email or (s.user and s.user.email)
 ##     get_pair = lambda s: (s.get_name(), s.get_email())
@@ -161,7 +174,7 @@ class QuestionQuerySet(QuerySet):
             Q(status='public') | Q(status='private', user=user)
         )
 
-class Question(Document):
+class Question(KnowledgeBase):
     title = StringField(
         max_length=255,
         verbose_name=_('Question'),
@@ -209,7 +222,8 @@ class Question(Document):
     ###################
 
     def get_responses(self, user=None):
-        user = user or self._requesting_user
+        return []
+        #user = user or self._requesting_user
         if user:
             return [r for r in self.responses.all().select_related('user') if r.can_view(user)]
         else:

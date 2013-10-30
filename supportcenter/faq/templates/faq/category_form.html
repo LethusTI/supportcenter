@@ -1,0 +1,24 @@
+{% extends "master/base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="page-header">
+	<h3>
+		{% if object %}{% trans "Update" %}{% else %}{% trans "Add" %}{% endif %} {% trans "category" %}
+		<small>* são obrigatórios</small>
+	</h3>
+</div>
+<form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST">
+	{% include "master/message.error.html" %}
+	{% csrf_token %}
+	
+	<p class="btn-group">
+		<button type="submit" class="btn btn-primary">
+    		<i class="icon-ok icon-white"></i> Salvar
+		</button>
+		<button type="button" onclick="history.go(-1)" class="btn">
+			<i class="icon-arrow-left"></i> Voltar
+		</button>
+	</p>
+	{% include "master/form_snippet.html" %}
+</form>
+{% endblock %}

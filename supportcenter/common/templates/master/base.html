@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,27 +34,20 @@
 		<div class="wrapper">
 			<div class="container header">
 				<div>
-					<h2 id="logo">Lethus Projeto XXX</h2>
+					<h2 id="logo">{% trans "Support Center" %} - {% trans "Dashboard" %}</h2>
 				</div>
 				<div id="menu" class="subnav">
 					<ul class="nav nav-pills">
-						<li><a href="/"><i style="opacity:0.8" class="icon-home"></i>Inicio</a></li>
+						<li><a href="/admin/"><i style="opacity:0.8" class="icon-home"></i>{% trans "Home" %}</a></li>
 						{% if user.is_superuser %}
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								Administração
+								{% trans "Administration" %}
 								<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="/admin/bairros/">Bairros</a></li>
-								<li><a href="/admin/unidades/">Unidades</a></li>
-								<li class="divider"></li>
-								<li><a href="/admin/superusers/">Administradores</a></li>
-								<li><a href="/admin/users/groups/">Grupo de usuários</a></li>
-								<li><a href="/admin/users/">Usuários</a></li>
-								<li><a href="/admin/logs/">Histórico geral</a></li>
-								<li class="divider"></li>
-								<li><a href="/admin/settings/">Configurações gerais</a></li>
+								<li><a href="/admin/categories/">{% trans "Categories" %}</a></li>
+								<li><a href="/admin/superusers/">{% trans "Super users" %}</a></li>
 							</ul>
 						</li>
 						{% endif %}

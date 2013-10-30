@@ -1,5 +1,5 @@
 import pymongo
-from pymongo import Connection, ReplicaSetConnection, uri_parser
+from pymongo import MongoClient, MongoReplicaSetClient, uri_parser
 
 
 __all__ = ['ConnectionError', 'connect', 'register_connection',
@@ -28,8 +28,10 @@ def register_connection(alias, name, host='localhost', port=27017,
     :param name: the name of the specific database to use
     :param host: the host name of the :program:`mongod` instance to connect to
     :param port: the port that the :program:`mongod` instance is running on
-    :param is_slave: whether the connection can act as a slave ** Depreciated pymongo 2.0.1+
-    :param read_preference: The read preference for the collection ** Added pymongo 2.1
+    :param is_slave: whether the connection can act as a slave
+      ** Depreciated pymongo 2.0.1+
+    :param read_preference: The read preference for the collection
+       ** Added pymongo 2.1
     :param slaves: a list of aliases of slave connections; each of these must
         be a registered connection that has :attr:`is_slave` set to ``True``
     :param username: username to authenticate with
@@ -53,12 +55,9 @@ def register_connection(alias, name, host='localhost', port=27017,
     # Handle uri style connections
     if "://" in host:
         uri_dict = uri_parser.parse_uri(host)
-        if uri_dict.get('database') is None:
-            raise ConnectionError("If using URI style connection include "\
-                                  "database name in string")
         conn_settings.update({
             'host': host,
-            'name': uri_dict.get('database'),
+            'name': uri_dict.get('database') or name,
             'username': uri_dict.get('username'),
             'password': uri_dict.get('password'),
             'read_preference': read_preference,
@@ -110,15 +109,15 @@ def get_connection(alias=DEFAULT_CONNECTION_NAME, reconnect=False):
                 conn_settings['slaves'] = slaves
                 conn_settings.pop('read_preference', None)
 
-        connection_class = Connection
+        connection_class = MongoClient
         if 'replicaSet' in conn_settings:
             conn_settings['hosts_or_uri'] = conn_settings.pop('host', None)
-            # Discard port since it can't be used on ReplicaSetConnection
+            # Discard port since it can't be used on MongoReplicaSetClient
             conn_settings.pop('port', None)
             # Discard replicaSet if not base string
             if not isinstance(conn_settings['replicaSet'], basestring):
                 conn_settings.pop('replicaSet', None)
-            connection_class = ReplicaSetConnection
+            connection_class = MongoReplicaSetClient
 
         try:
             _connections[alias] = connection_class(**conn_settings)
@@ -135,11 +134,12 @@ def get_db(alias=DEFAULT_CONNECTION_NAME, reconnect=False):
     if alias not in _dbs:
         conn = get_connection(alias)
         conn_settings = _connection_settings[alias]
-        _dbs[alias] = conn[conn_settings['name']]
+        db = conn[conn_settings['name']]
         # Authenticate if necessary
         if conn_settings['username'] and conn_settings['password']:
-            _dbs[alias].authenticate(conn_settings['username'],
-                                     conn_settings['password'])
+            db.authenticate(conn_settings['username'],
+                            conn_settings['password'])
+        _dbs[alias] = db
     return _dbs[alias]
 
 
@@ -160,6 +160,7 @@ def connect(db, alias=DEFAULT_CONNECTION_NAME, **kwargs):
         register_connection(alias, db, **kwargs)
 
     return get_connection(alias)
+
 
 # Support old naming convention
 _get_connection = get_connection

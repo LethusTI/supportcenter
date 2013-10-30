@@ -24,6 +24,9 @@ objects** as class attributes to the document class::
         title = StringField(max_length=200, required=True)
         date_modified = DateTimeField(default=datetime.datetime.now)
 
+As BSON (the binary format for storing data in mongodb) is order dependent,
+documents are serialized based on their field order.
+
 Dynamic document schemas
 ========================
 One of the benefits of MongoDb is dynamic schemas for a collection, whilst data
@@ -47,10 +50,11 @@ be saved ::
     >>> Page.objects(tags='mongoengine').count()
     >>> 1
 
-..note::
+.. note::
 
    There is one caveat on Dynamic Documents: fields cannot start with `_`
 
+Dynamic fields are stored in creation order *after* any declared fields.
 
 Fields
 ======
@@ -62,31 +66,31 @@ not provided. Default values may optionally be a callable, which will be called
 to retrieve the value (such as in the above example). The field types available
 are as follows:
 
-* :class:`~mongoengine.BinaryField`
-* :class:`~mongoengine.BooleanField`
-* :class:`~mongoengine.ComplexDateTimeField`
-* :class:`~mongoengine.DateTimeField`
-* :class:`~mongoengine.DecimalField`
-* :class:`~mongoengine.DictField`
-* :class:`~mongoengine.DynamicField`
-* :class:`~mongoengine.EmailField`
-* :class:`~mongoengine.EmbeddedDocumentField`
-* :class:`~mongoengine.FileField`
-* :class:`~mongoengine.FloatField`
-* :class:`~mongoengine.GenericEmbeddedDocumentField`
-* :class:`~mongoengine.GenericReferenceField`
-* :class:`~mongoengine.GeoPointField`
-* :class:`~mongoengine.ImageField`
-* :class:`~mongoengine.IntField`
-* :class:`~mongoengine.ListField`
-* :class:`~mongoengine.MapField`
-* :class:`~mongoengine.ObjectIdField`
-* :class:`~mongoengine.ReferenceField`
-* :class:`~mongoengine.SequenceField`
-* :class:`~mongoengine.SortedListField`
-* :class:`~mongoengine.StringField`
-* :class:`~mongoengine.URLField`
-* :class:`~mongoengine.UUIDField`
+* :class:`~mongoengine.fields.BinaryField`
+* :class:`~mongoengine.fields.BooleanField`
+* :class:`~mongoengine.fields.ComplexDateTimeField`
+* :class:`~mongoengine.fields.DateTimeField`
+* :class:`~mongoengine.fields.DecimalField`
+* :class:`~mongoengine.fields.DictField`
+* :class:`~mongoengine.fields.DynamicField`
+* :class:`~mongoengine.fields.EmailField`
+* :class:`~mongoengine.fields.EmbeddedDocumentField`
+* :class:`~mongoengine.fields.FileField`
+* :class:`~mongoengine.fields.FloatField`
+* :class:`~mongoengine.fields.GenericEmbeddedDocumentField`
+* :class:`~mongoengine.fields.GenericReferenceField`
+* :class:`~mongoengine.fields.GeoPointField`
+* :class:`~mongoengine.fields.ImageField`
+* :class:`~mongoengine.fields.IntField`
+* :class:`~mongoengine.fields.ListField`
+* :class:`~mongoengine.fields.MapField`
+* :class:`~mongoengine.fields.ObjectIdField`
+* :class:`~mongoengine.fields.ReferenceField`
+* :class:`~mongoengine.fields.SequenceField`
+* :class:`~mongoengine.fields.SortedListField`
+* :class:`~mongoengine.fields.StringField`
+* :class:`~mongoengine.fields.URLField`
+* :class:`~mongoengine.fields.UUIDField`
 
 Field arguments
 ---------------
@@ -95,9 +99,6 @@ arguments can be set on all fields:
 
 :attr:`db_field` (Default: None)
     The MongoDB field name.
-
-:attr:`name` (Default: None)
-    The mongoengine field name.
 
 :attr:`required` (Default: False)
     If set to True and the field is not set on the document instance, a
@@ -110,7 +111,7 @@ arguments can be set on all fields:
     The definion of default parameters follow `the general rules on Python
     <http://docs.python.org/reference/compound_stmts.html#function-definitions>`__,
     which means that some care should be taken when dealing with default mutable objects
-    (like in :class:`~mongoengine.ListField` or :class:`~mongoengine.DictField`)::
+    (like in :class:`~mongoengine.fields.ListField` or :class:`~mongoengine.fields.DictField`)::
 
         class ExampleFirst(Document):
             # Default an empty list
@@ -125,6 +126,7 @@ arguments can be set on all fields:
             # instead to just an object
             values = ListField(IntField(), default=[1,2,3])
 
+    .. note:: Unsetting a field with a default value will revert back to the default.
 
 :attr:`unique` (Default: False)
     When True, no documents in the collection will have the same value for this
@@ -135,7 +137,8 @@ arguments can be set on all fields:
     field, will not have two documents in the collection with the same value.
 
 :attr:`primary_key` (Default: False)
-    When True, use this field as a primary key for the collection.
+    When True, use this field as a primary key for the collection.  `DictField`
+    and `EmbeddedDocuments` both support being the primary key for a document.
 
 :attr:`choices` (Default: None)
     An iterable (e.g. a list or tuple) of choices to which the value of this
@@ -171,8 +174,8 @@ arguments can be set on all fields:
 List fields
 -----------
 MongoDB allows the storage of lists of items. To add a list of items to a
-:class:`~mongoengine.Document`, use the :class:`~mongoengine.ListField` field
-type. :class:`~mongoengine.ListField` takes another field object as its first
+:class:`~mongoengine.Document`, use the :class:`~mongoengine.fields.ListField` field
+type. :class:`~mongoengine.fields.ListField` takes another field object as its first
 argument, which specifies which type elements may be stored within the list::
 
     class Page(Document):
@@ -190,7 +193,7 @@ inherit from :class:`~mongoengine.EmbeddedDocument` rather than
         content = StringField()
 
 To embed the document within another document, use the
-:class:`~mongoengine.EmbeddedDocumentField` field type, providing the embedded
+:class:`~mongoengine.fields.EmbeddedDocumentField` field type, providing the embedded
 document class as the first argument::
 
     class Page(Document):
@@ -205,7 +208,7 @@ Dictionary Fields
 Often, an embedded document may be used instead of a dictionary -- generally
 this is recommended as dictionaries don't support validation or custom field
 types. However, sometimes you will not know the structure of what you want to
-store; in this situation a :class:`~mongoengine.DictField` is appropriate::
+store; in this situation a :class:`~mongoengine.fields.DictField` is appropriate::
 
     class SurveyResponse(Document):
         date = DateTimeField()
@@ -223,7 +226,7 @@ other objects, so are the most flexible field type available.
 Reference fields
 ----------------
 References may be stored to other documents in the database using the
-:class:`~mongoengine.ReferenceField`. Pass in another document class as the
+:class:`~mongoengine.fields.ReferenceField`. Pass in another document class as the
 first argument to the constructor, then simply assign document objects to the
 field::
 
@@ -244,9 +247,9 @@ field::
 The :class:`User` object is automatically turned into a reference behind the
 scenes, and dereferenced when the :class:`Page` object is retrieved.
 
-To add a :class:`~mongoengine.ReferenceField` that references the document
+To add a :class:`~mongoengine.fields.ReferenceField` that references the document
 being defined, use the string ``'self'`` in place of the document class as the
-argument to :class:`~mongoengine.ReferenceField`'s constructor. To reference a
+argument to :class:`~mongoengine.fields.ReferenceField`'s constructor. To reference a
 document that has not yet been defined, use the name of the undefined document
 as the constructor's argument::
 
@@ -287,6 +290,12 @@ instance of the object to the query::
     # Find all pages that both Bob and John have authored
     Page.objects(authors__all=[bob, john])
 
+    # Remove Bob from the authors for a page.
+    Page.objects(id='...').update_one(pull__authors=bob)
+
+    # Add John to the authors for a page.
+    Page.objects(id='...').update_one(push__authors=john)
+
 
 Dealing with deletion of referred documents
 '''''''''''''''''''''''''''''''''''''''''''
@@ -324,7 +333,7 @@ Its value can take any of the following constants:
 :const:`mongoengine.PULL`
   Removes the reference to the object (using MongoDB's "pull" operation)
   from any object's fields of
-  :class:`~mongoengine.ListField` (:class:`~mongoengine.ReferenceField`).
+  :class:`~mongoengine.fields.ListField` (:class:`~mongoengine.fields.ReferenceField`).
 
 
 .. warning::
@@ -351,7 +360,7 @@ Its value can take any of the following constants:
 Generic reference fields
 ''''''''''''''''''''''''
 A second kind of reference field also exists,
-:class:`~mongoengine.GenericReferenceField`. This allows you to reference any
+:class:`~mongoengine.fields.GenericReferenceField`. This allows you to reference any
 kind of :class:`~mongoengine.Document`, and hence doesn't take a
 :class:`~mongoengine.Document` subclass as a constructor argument::
 
@@ -375,15 +384,15 @@ kind of :class:`~mongoengine.Document`, and hence doesn't take a
 
 .. note::
 
-   Using :class:`~mongoengine.GenericReferenceField`\ s is slightly less
-   efficient than the standard :class:`~mongoengine.ReferenceField`\ s, so if
+   Using :class:`~mongoengine.fields.GenericReferenceField`\ s is slightly less
+   efficient than the standard :class:`~mongoengine.fields.ReferenceField`\ s, so if
    you will only be referencing one document type, prefer the standard
-   :class:`~mongoengine.ReferenceField`.
+   :class:`~mongoengine.fields.ReferenceField`.
 
 Uniqueness constraints
 ----------------------
 MongoEngine allows you to specify that a field should be unique across a
-collection by providing ``unique=True`` to a :class:`~mongoengine.Field`\ 's
+collection by providing ``unique=True`` to a :class:`~mongoengine.fields.Field`\ 's
 constructor. If you try to save a document that has the same value for a unique
 field as a document that is already in the database, a
 :class:`~mongoengine.OperationError` will be raised. You may also specify
@@ -398,7 +407,7 @@ either a single field name, or a list or tuple of field names::
 Skipping Document validation on save
 ------------------------------------
 You can also skip the whole document validation process by setting
-``validate=False`` when caling the :meth:`~mongoengine.document.Document.save`
+``validate=False`` when calling the :meth:`~mongoengine.document.Document.save`
 method::
 
     class Recipient(Document):
@@ -439,15 +448,18 @@ The following example shows a :class:`Log` document that will be limited to
         ip_address = StringField()
         meta = {'max_documents': 1000, 'max_size': 2000000}
 
+.. defining-indexes_
+
 Indexes
 =======
+
 You can specify indexes on collections to make querying faster. This is done
 by creating a list of index specifications called :attr:`indexes` in the
 :attr:`~mongoengine.Document.meta` dictionary, where an index specification may
 either be a single field name, a tuple containing multiple field names, or a
 dictionary containing a full index definition. A direction may be specified on
-fields by prefixing the field name with a **+** or a **-** sign. Note that
-direction only matters on multi-field indexes. ::
+fields by prefixing the field name with a **+** (for ascending) or a **-** sign
+(for descending). Note that direction only matters on multi-field indexes. ::
 
     class Page(Document):
         title = StringField()
@@ -461,9 +473,11 @@ If a dictionary is passed then the following options are available:
 :attr:`fields` (Default: None)
     The fields to index. Specified in the same format as described above.
 
-:attr:`types` (Default: True)
-    Whether the index should have the :attr:`_types` field added automatically
-    to the start of the index.
+:attr:`cls` (Default: True)
+    If you have polymorphic models that inherit and have
+    :attr:`allow_inheritance` turned on, you can configure whether the index
+    should have the :attr:`_cls` field added automatically to the start of the
+    index.
 
 :attr:`sparse` (Default: False)
     Whether the index should be sparse.
@@ -471,26 +485,89 @@ If a dictionary is passed then the following options are available:
 :attr:`unique` (Default: False)
     Whether the index should be unique.
 
-.. note ::
+:attr:`expireAfterSeconds` (Optional)
+    Allows you to automatically expire data from a collection by setting the
+    time in seconds to expire the a field.
 
-    To index embedded files / dictionary fields use 'dot' notation eg:
-    `rank.title`
+.. note::
 
-.. warning::
+    Inheritance adds extra fields indices see: :ref:`document-inheritance`.
 
-    Inheritance adds extra indices.
-    If don't need inheritance for a document turn inheritance off -
-    see :ref:`document-inheritance`.
+Global index default options
+----------------------------
 
+There are a few top level defaults for all indexes that can be set::
+
+    class Page(Document):
+        title = StringField()
+        rating = StringField()
+        meta = {
+            'index_options': {},
+            'index_background': True,
+            'index_drop_dups': True,
+            'index_cls': False
+        }
+
+
+:attr:`index_options` (Optional)
+    Set any default index options - see the `full options list <http://docs.mongodb.org/manual/reference/method/db.collection.ensureIndex/#db.collection.ensureIndex>`_
+
+:attr:`index_background` (Optional)
+    Set the default value for if an index should be indexed in the background
+
+:attr:`index_drop_dups` (Optional)
+    Set the default value for if an index should drop duplicates
+
+:attr:`index_cls` (Optional)
+    A way to turn off a specific index for _cls.
+
+
+Compound Indexes and Indexing sub documents
+-------------------------------------------
+
+Compound indexes can be created by adding the Embedded field or dictionary
+field name to the index definition.
+
+Sometimes its more efficient to index parts of Embedded / dictionary fields,
+in this case use 'dot' notation to identify the value to index eg: `rank.title`
 
 Geospatial indexes
----------------------------
+------------------
+
+The best geo index for mongodb is the new "2dsphere", which has an improved
+spherical model and provides better performance and more options when querying.
+The following fields will explicitly add a "2dsphere" index:
+
+    - :class:`~mongoengine.fields.PointField`
+    - :class:`~mongoengine.fields.LineStringField`
+    - :class:`~mongoengine.fields.PolygonField`
+
+As "2dsphere" indexes can be part of a compound index, you may not want the
+automatic index but would prefer a compound index.  In this example we turn off
+auto indexing and explicitly declare a compound index on ``location`` and ``datetime``::
+
+    class Log(Document):
+        location = PointField(auto_index=False)
+        datetime = DateTimeField()
+
+        meta = {
+            'indexes': [[("location", "2dsphere"), ("datetime", 1)]]
+        }
+
+
+Pre MongoDB 2.4 Geo
+'''''''''''''''''''
+
+.. note:: For MongoDB < 2.4 this is still current, however the new 2dsphere
+    index is a big improvement over the previous 2D model - so upgrading is
+    advised.
+
 Geospatial indexes will be automatically created for all
-:class:`~mongoengine.GeoPointField`\ s
+:class:`~mongoengine.fields.GeoPointField`\ s
 
 It is also possible to explicitly define geospatial indexes. This is
 useful if you need to define a geospatial index on a subfield of a
-:class:`~mongoengine.DictField` or a custom field that contains a
+:class:`~mongoengine.fields.DictField` or a custom field that contains a
 point. To create a geospatial index you must prefix the field with the
 ***** sign. ::
 
@@ -501,6 +578,35 @@ point. To create a geospatial index you must prefix the field with the
                 '*location.point',
             ],
         }
+
+Time To Live indexes
+--------------------
+
+A special index type that allows you to automatically expire data from a
+collection after a given period. See the official
+`ttl <http://docs.mongodb.org/manual/tutorial/expire-data/#expire-data-from-collections-by-setting-ttl>`_
+documentation for more information.  A common usecase might be session data::
+
+    class Session(Document):
+        created = DateTimeField(default=datetime.now)
+        meta = {
+            'indexes': [
+                {'fields': ['created'], 'expireAfterSeconds': 3600}
+            ]
+        }
+
+.. warning:: TTL indexes happen on the MongoDB server and not in the application
+    code, therefore no signals will be fired on document deletion.
+    If you need signals to be fired on deletion, then you must handle the
+    deletion of Documents in your application code.
+
+Comparing Indexes
+-----------------
+
+Use :func:`mongoengine.Document.compare_indexes` to compare actual indexes in
+the database to those that your document definitions define.  This is useful
+for maintenance purposes and ensuring you have the correct indexes for your
+schema.
 
 Ordering
 ========
@@ -572,7 +678,9 @@ defined, you may subclass it and add any extra fields or methods you may need.
 As this is new class is not a direct subclass of
 :class:`~mongoengine.Document`, it will not be stored in its own collection; it
 will use the same collection as its superclass uses. This allows for more
-convenient and efficient retrieval of related documents::
+convenient and efficient retrieval of related documents - all you need do is
+set :attr:`allow_inheritance` to True in the :attr:`meta` data for a
+document.::
 
     # Stored in a collection named 'page'
     class Page(Document):
@@ -584,25 +692,47 @@ convenient and efficient retrieval of related documents::
     class DatedPage(Page):
         date = DateTimeField()
 
-.. note:: From 0.7 onwards you must declare `allow_inheritance` in the document meta.
-
+.. note:: From 0.8 onwards you must declare :attr:`allow_inheritance` defaults
+          to False, meaning you must set it to True to use inheritance.
 
 Working with existing data
 --------------------------
-To enable correct retrieval of documents involved in this kind of heirarchy,
-two extra attributes are stored on each document in the database: :attr:`_cls`
-and :attr:`_types`. These are hidden from the user through the MongoEngine
-interface, but may not be present if you are trying to use MongoEngine with
-an existing database. For this reason, you may disable this inheritance
-mechansim, removing the dependency of :attr:`_cls` and :attr:`_types`, enabling
-you to work with existing databases. To disable inheritance on a document
-class, set :attr:`allow_inheritance` to ``False`` in the :attr:`meta`
-dictionary::
+As MongoEngine no longer defaults to needing :attr:`_cls` you can quickly and
+easily get working with existing data.  Just define the document to match
+the expected schema in your database ::
 
     # Will work with data in an existing collection named 'cmsPage'
     class Page(Document):
         title = StringField(max_length=200, required=True)
         meta = {
-            'collection': 'cmsPage',
-            'allow_inheritance': False,
+            'collection': 'cmsPage'
         }
+
+If you have wildly varying schemas then using a
+:class:`~mongoengine.DynamicDocument` might be more appropriate, instead of
+defining all possible field types.
+
+If you use :class:`~mongoengine.Document` and the database contains data that
+isn't defined then that data will be stored in the `document._data` dictionary.
+
+Abstract classes
+================
+
+If you want to add some extra functionality to a group of Document classes but
+you don't need or want the overhead of inheritance you can use the
+:attr:`abstract` attribute of :attr:`-mongoengine.Document.meta`.
+This won't turn on :ref:`document-inheritance` but will allow you to keep your
+code DRY::
+
+        class BaseDocument(Document):
+            meta = {
+                'abstract': True,
+            }
+            def check_permissions(self):
+                ...
+
+        class User(BaseDocument):
+           ...
+
+Now the User class will have access to the inherited `check_permissions` method
+and won't store any of the extra `_cls` information.

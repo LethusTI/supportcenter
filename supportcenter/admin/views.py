@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 from django.contrib import messages
 from django.shortcuts import HttpResponse
 from django.core.servers.basehttp import FileWrapper
@@ -26,6 +26,9 @@ class AdminSettingsView(FormView):
         ctx['brasao_atual'] = ImageConstant.has('brasao')
 
         return ctx
+
+class SuperMainView(TemplateView):
+    template_name = "ok.html"
 
 def image_constant(request, key):
     mimetypes = {'jpg': 'image/jpeg',

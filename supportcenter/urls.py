@@ -13,6 +13,9 @@ urlpatterns = patterns(
     
     url(r'^$', FaqIndexView.as_view(), name="knowledge_index"),
     url(r'^questions/$', ListQuestionView.as_view(), name='knowledge_list'),
+    url(r'^questions/(?P<category_slug>[a-z0-9-_]+)/$', ListQuestionView.as_view(),
+        name='knowledge_list_category'),
+        
     url(r'^ask/$', AddQuestionView.as_view(), name='knowledge_ask'),
     
     url(r'^account/$', login_required(AccountSettingView.as_view())),

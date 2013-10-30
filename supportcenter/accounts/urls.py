@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns(
     'supportcenter.accounts.fviews',
     url(r'^login/$', 'login'),
-    url(r'^logout/$', 'logout_then_login'),
+    url(r'^logout/$', 'logout_then_login', {'login_url': '/'}),
     url(r'^password_change/$', 'password_change'),
     url(r'^password_change/done/$', 'password_change_done'),
     url(r'^password_reset/$', 'password_reset'),

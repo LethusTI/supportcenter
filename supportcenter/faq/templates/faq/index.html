@@ -8,7 +8,7 @@
 {% block knowledge_widgets %}
 
 <div class="dk-widget">
-  <h3>{% blocktrans with count=questions|length %}Top {{ count }} Questions{% endblocktrans %}</h3>
+  <h3>{% blocktrans with count=object_list|length %}Top {{ count }} Questions{% endblocktrans %}</h3>
   <hr />
 
   {% include "faq/question_list.html" %}
