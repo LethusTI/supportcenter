@@ -11,7 +11,7 @@
   <hr />
 
   {% if form %}
-    {% include "faq/form.html" with submit_value="Submit this support request" submit_and="and we'll get back to you as soon as possible." %}
+    {% include "faq/form.html" with submit_value="{% trans Submit this support request %}" submit_and="and we'll get back to you as soon as possible." %}
   {% else %}
     <p class="center"><em>{% trans "Please log in to ask a question." %}</em></p>
   {% endif %}

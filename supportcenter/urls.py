@@ -5,7 +5,8 @@ from django.conf import settings
 
 from supportcenter.accounts.views import (AccountSettingView, AccountSetPasswordView)
 from supportcenter.faq.views import (
-    FaqIndexView, ListQuestionView, AddQuestionView)
+    FaqIndexView, ListQuestionView, AddQuestionView,
+    DetailQuestionView)
 
 urlpatterns = patterns(
     '',
@@ -13,6 +14,10 @@ urlpatterns = patterns(
     
     url(r'^$', FaqIndexView.as_view(), name="knowledge_index"),
     url(r'^questions/$', ListQuestionView.as_view(), name='knowledge_list'),
+    
+    url(r'^questions/(?P<pk>\d+)/$',
+        DetailQuestionView.as_view(), name='knowledge_thread_no_slug'),
+        
     url(r'^questions/(?P<category_slug>[a-z0-9-_]+)/$', ListQuestionView.as_view(),
         name='knowledge_list_category'),
         

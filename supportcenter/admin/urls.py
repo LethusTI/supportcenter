@@ -19,7 +19,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', superuser_only(ListQuestionAdminView.as_view())),
     url(r'^add/$', superuser_only(AddQuestionAdminView.as_view())),
-    url(r'^(?P<pk>\w{24})/$', superuser_only(UpdateQuestionAdminView.as_view())),
+    url(r'^(?P<pk>\d+)/$', superuser_only(UpdateQuestionAdminView.as_view())),
 
     url(r'^categories/$', superuser_only(ListCategoryView.as_view())),
     url(r'^categories/add/$', superuser_only(AddCategoryView.as_view())),

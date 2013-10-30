@@ -50,7 +50,17 @@ class KnowledgeBase(Document):
     user = ReferenceField(
         'User',
         verbose_name=u"Criado por usuário",
-        required=True)
+        required=False)
+
+    name = StringField(
+        max_length=64, required=False,
+        verbose_name=_('Name'),
+        help_text=_('Enter your first and last name.'))
+    
+    email = EmailField(
+        required=False,
+        verbose_name=_('Email'),
+        help_text=_('Enter a valid email address.'))
     
     def clean(self):
         self.lastchanged = datetime.datetime.now()
@@ -64,7 +74,10 @@ class KnowledgeBase(Document):
              u'{0} {1}'.format(self.user.first_name, self.user.last_name or '').strip()\
              or self.user.username
          )
-        return name.strip() or _("Anonymous")
+        if name:
+            return name.strip()
+        else:
+            return _("Anonymous")
         
     meta = {
         'abstract': True
@@ -175,6 +188,10 @@ class QuestionQuerySet(QuerySet):
         )
 
 class Question(KnowledgeBase):
+    id = SequenceField(
+        verbose_name="Identification",
+        primary_key=True)
+    
     title = StringField(
         max_length=255,
         verbose_name=_('Question'),
@@ -271,7 +288,9 @@ class Question(KnowledgeBase):
     def url(self):
         return self.get_absolute_url()
 
-
+    def get_absolute_url(self):
+        return '/questions/%d/' % self.id
+    
 class Response(Document):
     is_response = True
     body = StringField(

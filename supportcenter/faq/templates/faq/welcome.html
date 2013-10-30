@@ -5,3 +5,13 @@
   <h2 class="primary"><a href="{% url "knowledge_index" %}">{% trans "Welcome to our Support Center." %}</a></h2>
   <h4>{% trans "Search for answers to your questions below, or ask your own." %}</h4>
 </div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert {{ message.tags }}">
+	<a class="close" data-dismiss="alert" href="#">×</a>
+	
+	{{ message|safe }}
+</div>
+{% endfor %}
+{% endif %}

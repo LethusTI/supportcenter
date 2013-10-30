@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Support Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-29 22:14-0200\n"
-"PO-Revision-Date: 2013-10-29 22:14-0200\n"
+"POT-Creation-Date: 2013-10-30 16:32-0200\n"
+"PO-Revision-Date: 2013-10-30 16:33-0200\n"
 "Last-Translator: Wilson Júnior <wilsonpjunior@gmail.com>\n"
 "Language-Team: Português <>\n"
 "Language: Português\n"
@@ -35,37 +35,79 @@ msgstr "Interno"
 msgid "Inherit"
 msgstr "Herança"
 
-#: models.py:67
-msgid "Anonymous"
-msgstr "Anonimo"
+#: models.py:57
+msgid "Name"
+msgstr "Nome"
 
-#: models.py:180
+#: models.py:58
+msgid "Enter your first and last name."
+msgstr "Digite seu nome completo"
+
+#: models.py:62
+msgid "Email"
+msgstr "E-Mail"
+
+#: models.py:63
+msgid "Enter a valid email address."
+msgstr "Digite um endereço de e-mail válido"
+
+#: models.py:80
+msgid "Anonymous"
+msgstr "Anônimo"
+
+#: models.py:197
 msgid "Question"
 msgstr "Questão"
 
-#: models.py:182
+#: models.py:199
 msgid "Enter your question or suggestion."
 msgstr "Entre com sua questão ou sugestão."
 
-#: models.py:186
+#: models.py:203
 msgid "Description"
 msgstr "Descrição"
 
-#: models.py:187
+#: models.py:204
 msgid "Please offer details. Markdown enabled."
 msgstr "Por utilize detalhes. Marcação ativada."
 
-#: models.py:190 models.py:283 templates/faq/admin_list.html:37
+#: models.py:207 models.py:302 templates/faq/admin_list.html:37
 msgid "Status"
 msgstr "Estado"
 
-#: models.py:279
+#: models.py:298
 msgid "Response"
 msgstr "Resposta"
 
-#: models.py:280
+#: models.py:299
 msgid "Please enter your response. Markdown enabled."
 msgstr "Entre com sua resposta. Marcação ativada."
+
+#: views.py:82
+msgid "Your question has been added"
+msgstr "Sua questão foi adicionada com sucesso"
+
+#: templates/faq/admin_form.html:6 templates/faq/category_form.html:6
+#: templates/faq/category_list.html:26
+msgid "Update"
+msgstr "Atualizar"
+
+#: templates/faq/admin_form.html:6 templates/faq/category_form.html:6
+#: templates/faq/category_list.html:23
+msgid "Add"
+msgstr "Adicionar"
+
+#: templates/faq/admin_form.html:7
+msgid "is required"
+msgstr "é obrigatório"
+
+#: templates/faq/admin_form.html:16
+msgid "Save"
+msgstr "Salvar"
+
+#: templates/faq/admin_form.html:19
+msgid "Back"
+msgstr "Voltar"
 
 #: templates/faq/admin_list.html:36 templates/faq/category_list.html:36
 msgid "Title"
@@ -76,20 +118,13 @@ msgid "Categories"
 msgstr "Categorias"
 
 #: templates/faq/ask.html:6 templates/faq/ask.html.py:10
+#: templates/faq/list.html:43
 msgid "Ask a Question"
 msgstr "Faça uma pergunta"
 
 #: templates/faq/ask.html:16
 msgid "Please log in to ask a question."
 msgstr "Por favor faça login para fazer uma pergunta"
-
-#: templates/faq/category_form.html:6 templates/faq/category_list.html:26
-msgid "Update"
-msgstr "Atualizar"
-
-#: templates/faq/category_form.html:6 templates/faq/category_list.html:23
-msgid "Add"
-msgstr "Adicionar"
 
 #: templates/faq/category_form.html:6
 msgid "category"
@@ -120,6 +155,23 @@ msgstr "Inicie digitando sua questão aqui."
 msgid "Search"
 msgstr "Encontrar"
 
+#: templates/faq/list.html:21
+msgid "No results found."
+msgstr "Nenhum resultado encontrado"
+
+#: templates/faq/list.html:29
+msgid "previous"
+msgstr "anterior"
+
+#: templates/faq/list.html:32
+#, python-format
+msgid "page %(number)s of %(pages)s"
+msgstr "página %(number)s de %(pages)s"
+
+#: templates/faq/list.html:35
+msgid "next"
+msgstr "proxima"
+
 #: templates/faq/question_list.html:6
 msgid "no responses"
 msgstr "sem respostas"
@@ -128,7 +180,8 @@ msgstr "sem respostas"
 msgid "accepted"
 msgstr "aceita"
 
-#: templates/faq/question_list.html:6
+#: templates/faq/question_list.html:6 templates/faq/thread.html:20
+#: templates/faq/thread.html.py:45
 msgid "staff"
 msgstr "administração"
 
@@ -151,6 +204,34 @@ msgstr "Faça sua pergunta ou sugestão."
 #: templates/faq/sidebar.html:35
 msgid "Return to homepage."
 msgstr "Retorne a página inicial."
+
+#: templates/faq/sidebar.html:36
+msgid "Admin dashboard"
+msgstr "Painel de administração"
+
+#: templates/faq/thread.html:21 templates/faq/thread.html.py:46
+msgid "user"
+msgstr "usuário"
+
+#: templates/faq/thread.html:42
+msgid "accepted answer"
+msgstr "pergunta aceita"
+
+#: templates/faq/thread.html:43
+msgid "poster"
+msgstr "postado por"
+
+#: templates/faq/thread.html:57
+msgid "No responses yet."
+msgstr "Sem respostas no momento"
+
+#: templates/faq/thread.html:70
+msgid "This object has been closed."
+msgstr "Essa questão já está fechada"
+
+#: templates/faq/thread.html:72
+msgid "Please log in to respond."
+msgstr "Por favor faça login para responder"
 
 #: templates/faq/welcome.html:5
 msgid "Welcome to our Support Center."

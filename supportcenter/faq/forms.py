@@ -8,24 +8,34 @@ from mongotools.forms import MongoForm
 from .utils import slugify
 from .models import *
 
-class AddQuestionForm(MongoForm):
-    def __init__(self, user, *args, **kwargs):
-        super(AddQuestionForm, self).__init__(*args, **kwargs)
+def AddQuestionForm(user, *args, **kwargs):
 
-        self.user = user
+    if user.is_anonymous():
+        sfields = ['name', 'email', 'title', 'body']
+    else:
+        sfields = ['title', 'body']
 
-    def save(self, commit=True):
-        obj = super(AddQuestionForm, self).save(commit=False)
-        obj.user = self.user
+    class _AddQuestionForm(MongoForm):
+        def __init__(self, user, *args, **kwargs):
+            super(_AddQuestionForm, self).__init__(*args, **kwargs)
+
+            self.user = user
+
+        def save(self, commit=True):
+            obj = super(_AddQuestionForm, self).save(commit=False)
+            if not obj.user and not self.user.is_anonymous():
+                obj.user = self.user
         
-        if commit:
-            obj.save()
+            if commit:
+                obj.save()
         
-        return obj
+            return obj
     
-    class Meta:
-        document = Question
-        fields = ('title', 'body')
+        class Meta:
+            document = Question
+            fields = sfields
+
+    return _AddQuestionForm(user, *args, **kwargs)
 
 class AdminQuestionForm(MongoForm):
     def __init__(self, user, *args, **kwargs):
