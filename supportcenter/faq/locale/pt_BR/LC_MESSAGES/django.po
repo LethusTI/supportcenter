@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Support Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 11:27-0200\n"
+"POT-Creation-Date: 2013-10-31 12:11-0200\n"
 "PO-Revision-Date: 2013-10-31 11:34-0200\n"
 "Last-Translator: Wilson Júnior <wilsonpjunior@gmail.com>\n"
 "Language-Team: Português <>\n"
@@ -71,15 +71,15 @@ msgstr "Descrição"
 msgid "Please offer details. Markdown enabled."
 msgstr "Por utilize detalhes. Marcação ativada."
 
-#: models.py:210 models.py:305 templates/faq/admin_list.html:37
+#: models.py:210 models.py:310 templates/faq/admin_list.html:37
 msgid "Status"
 msgstr "Estado"
 
-#: models.py:301
+#: models.py:306
 msgid "Response"
 msgstr "Resposta"
 
-#: models.py:302
+#: models.py:307
 msgid "Please enter your response. Markdown enabled."
 msgstr "Entre com sua resposta. Marcação ativada."
 
@@ -122,7 +122,7 @@ msgstr "Categorias"
 msgid "Ask a Question"
 msgstr "Faça uma pergunta"
 
-#: templates/faq/ask.html:16
+#: templates/faq/ask.html:17
 msgid "Please log in to ask a question."
 msgstr "Por favor faça login para fazer uma pergunta"
 
