@@ -18,6 +18,7 @@ from supportcenter.common.output import json_response
 
 from forms import (
     AccountForm, SuperUserForm, AddSuperUserForm,
+    AdminPasswordChangeForm,
     UserGroupForm, HistoricFilterForm)
 
 from models import (

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Support Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-30 16:32-0200\n"
-"PO-Revision-Date: 2013-10-30 16:33-0200\n"
+"POT-Creation-Date: 2013-10-31 11:27-0200\n"
+"PO-Revision-Date: 2013-10-31 11:34-0200\n"
 "Last-Translator: Wilson Júnior <wilsonpjunior@gmail.com>\n"
 "Language-Team: Português <>\n"
 "Language: Português\n"
@@ -19,67 +19,67 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
-#: models.py:18
+#: models.py:19
 msgid "Public"
 msgstr "Público"
 
-#: models.py:19
+#: models.py:20
 msgid "Private"
 msgstr "Privado"
 
-#: models.py:20
+#: models.py:21
 msgid "Internal"
 msgstr "Interno"
 
-#: models.py:25
+#: models.py:26
 msgid "Inherit"
 msgstr "Herança"
 
-#: models.py:57
+#: models.py:58
 msgid "Name"
 msgstr "Nome"
 
-#: models.py:58
+#: models.py:59
 msgid "Enter your first and last name."
 msgstr "Digite seu nome completo"
 
-#: models.py:62
+#: models.py:63
 msgid "Email"
 msgstr "E-Mail"
 
-#: models.py:63
+#: models.py:64
 msgid "Enter a valid email address."
 msgstr "Digite um endereço de e-mail válido"
 
-#: models.py:80
+#: models.py:83
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: models.py:197
+#: models.py:200
 msgid "Question"
 msgstr "Questão"
 
-#: models.py:199
+#: models.py:202
 msgid "Enter your question or suggestion."
 msgstr "Entre com sua questão ou sugestão."
 
-#: models.py:203
+#: models.py:206
 msgid "Description"
 msgstr "Descrição"
 
-#: models.py:204
+#: models.py:207
 msgid "Please offer details. Markdown enabled."
 msgstr "Por utilize detalhes. Marcação ativada."
 
-#: models.py:207 models.py:302 templates/faq/admin_list.html:37
+#: models.py:210 models.py:305 templates/faq/admin_list.html:37
 msgid "Status"
 msgstr "Estado"
 
-#: models.py:298
+#: models.py:301
 msgid "Response"
 msgstr "Resposta"
 
-#: models.py:299
+#: models.py:302
 msgid "Please enter your response. Markdown enabled."
 msgstr "Entre com sua resposta. Marcação ativada."
 
@@ -241,3 +241,98 @@ msgstr "Bem vindo ao Centro de suporte."
 msgid "Search for answers to your questions below, or ask your own."
 msgstr ""
 "Procure respostas para suas questões primeiro, ou perguente você mesmo."
+
+#: templates/faq/emails/message.html:7 templates/faq/emails/message.txt:4
+#, python-format
+msgid "Hello %(name)s,"
+msgstr "Olá %(name)s,"
+
+#: templates/faq/emails/message.html:10
+#, python-format
+msgid ""
+"\n"
+"        We just wanted to let you know that a new response has been added to "
+"the question \"%(title)s\". You can visit it here: <a href=\"%(domain)s"
+"%(url \")s\"\">%(domain)s%(url \")s</a\">.\n"
+"        "
+msgstr ""
+"\n"
+"        Você está notificado sobre uma nova resposta para a questão "
+"\"%(title)s\". Você pode visita-la aqui: <a href=\"%(domain)s%(url \")s\"\">"
+"%(domain)s%(url \")s</a\">.\n"
+"        "
+
+#: templates/faq/emails/message.html:18 templates/faq/emails/message.txt:13
+msgid ""
+"You are receiving these messages because you checked the 'alert' box when "
+"you originally posted."
+msgstr ""
+
+#: templates/faq/emails/message.html:22
+#, python-format
+msgid ""
+"\n"
+"        We just wanted to let you know that a new question has been added: "
+"\"%(title)s\". You can visit it here: \n"
+"\t\t\t<a href=\"%(domain)s%(url)s\">%(domain)s%(url)s</a>\n"
+"        "
+msgstr ""
+"\n"
+"        Você está notificado pois uma nova questão com o título: \"%(title)s"
+"\" foi adicionada. Você pode acessa-la aqui: \n"
+"\t\t\t<a href=\"%(domain)s%(url)s\">%(domain)s%(url)s</a>\n"
+"        "
+
+#: templates/faq/emails/message.html:31 templates/faq/emails/message.txt:23
+msgid "You are receiving these messages because you are a staff member."
+msgstr "Você está recebendo essa mensagem porque é um membro administrador."
+
+#: templates/faq/emails/message.html:34
+#, python-format
+msgid ""
+"Thank you,\n"
+"    %(name)s team"
+msgstr "Obrigado %(name)s"
+
+#: templates/faq/emails/message.txt:7
+#, python-format
+msgid ""
+"\n"
+"    We just wanted to let you know that a new response has been added to the "
+"question \"%(title)s\". You can visit it here: %(domain)s%(url \")s\"\n"
+"    "
+msgstr ""
+"\n"
+"    Você foi notificado por que uma nova resposta foi adicionada para a "
+"questão \"%(title)s\". Você pode visita-la aqui:  %(domain)s%(url \")s\"\n"
+"    "
+
+#: templates/faq/emails/message.txt:17
+#, python-format
+msgid ""
+"\n"
+"    We just wanted to let you know that a new question has been added: "
+"\"%(title)s\". You can visit it here: %(domain)s%(url \")s\"\n"
+"    "
+msgstr ""
+"\n"
+"    Você foi notificado devido a uma nova resposta para a questão \"%(title)s"
+"\". Você pode visitá-la aqui: %(domain)s%(url \")s\"\n"
+"    "
+
+#: templates/faq/emails/message.txt:26
+#, python-format
+msgid ""
+"Thank you,\n"
+"%(name)s team"
+msgstr "Obrigado, %(name)s"
+
+#: templates/faq/emails/subject.txt:1
+#, python-format
+msgid "New response on \"%(title)s\" on %(name)s."
+msgstr "New response on \"%(title)s\" on %(name)s."
+
+#: templates/faq/emails/subject.txt:1
+#, python-format
+msgid "New question \"%(title)s\" on %(name)s."
+msgstr "Nova questão \"%(title)s\" em %(name)s."

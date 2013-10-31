@@ -10,9 +10,10 @@ from django.conf import settings as django_settings
 
 from mongoengine import *
 from mongoengine.queryset import QuerySet, Q
+from mongoengine import signals
 
 #from knowledge.managers import QuestionManager, ResponseManager
-#from knowledge.signals import knowledge_post_save
+from .signals import knowledge_post_save
 
 STATUSES = (
     ('public', _('Public')),
@@ -61,6 +62,8 @@ class KnowledgeBase(Document):
         required=False,
         verbose_name=_('Email'),
         help_text=_('Enter a valid email address.'))
+    
+    get_email = lambda s: s.email or (s.user and s.user.email)
     
     def clean(self):
         self.lastchanged = datetime.datetime.now()
@@ -122,7 +125,7 @@ class KnowledgeBase(Document):
 
 
 
-##     get_email = lambda s: s.email or (s.user and s.user.email)
+##     
 ##     get_pair = lambda s: (s.get_name(), s.get_email())
 ##     get_user_or_pair = lambda s: s.user or s.get_pair()
 
@@ -290,6 +293,11 @@ class Question(KnowledgeBase):
 
     def get_absolute_url(self):
         return '/questions/%d/' % self.id
+
+    def get_categories_display(self):
+        if self.categories:
+            return ', '.join([str(c) for c in self.categories])
+        return ''
     
 class Response(Document):
     is_response = True
@@ -324,5 +332,5 @@ class Response(Document):
 
 
 # cannot attach on abstract = True... derp
-#models.signals.post_save.connect(knowledge_post_save, sender=Question)
+signals.post_save.connect(knowledge_post_save, sender=Question)
 #models.signals.post_save.connect(knowledge_post_save, sender=Response)

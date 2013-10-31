@@ -10,6 +10,8 @@ ADMINS = (
     ('Lethus', 'suporte@lethus.com.br'),
 )
 
+DEPLOY_URL = 'http://supportcenter.lethussaude.com.br'
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'suporte@lethus.com.br'
