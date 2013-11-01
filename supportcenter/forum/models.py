@@ -37,3 +37,8 @@ class Forum(Document):
 		verbose_name=_('Comment'),
 		required=False,
 		)
+	title = StringField(
+		verbose_name=_('Post Title'),
+		required=True,
+		)
+	
