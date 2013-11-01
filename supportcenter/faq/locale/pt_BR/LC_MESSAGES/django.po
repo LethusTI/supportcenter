@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Support Center\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-31 12:11-0200\n"
-"PO-Revision-Date: 2013-10-31 12:35-0200\n"
+"PO-Revision-Date: 2013-11-01 08:20-0200\n"
 "Last-Translator: Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>\n"
 "Language-Team: Português <paolla.ocoutinho@gmail.com>\n"
 "Language: Português\n"
@@ -240,8 +240,7 @@ msgstr "Bem vindo ao Centro de suporte"
 
 #: templates/faq/welcome.html:6
 msgid "Search for answers to your questions below, or ask your own."
-msgstr ""
-"Procure respostas para suas questões primeiro, ou perguente você mesmo"
+msgstr "Procure respostas para suas questões primeiro, ou perguente você mesmo"
 
 #: templates/faq/emails/message.html:7 templates/faq/emails/message.txt:4
 #, python-format
@@ -268,6 +267,8 @@ msgid ""
 "You are receiving these messages because you checked the 'alert' box when "
 "you originally posted."
 msgstr ""
+"Você está recebendo está mensagem pois marcou a caixa de 'alerta' quando "
+"publicada originalmente."
 
 #: templates/faq/emails/message.html:22
 #, python-format

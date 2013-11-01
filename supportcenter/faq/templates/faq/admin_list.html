@@ -1,6 +1,6 @@
 {% extends "master/base.html" %}
 {% load i18n %}
-{% block title %}Gerenciar questões{% endblock %}
+{% block title %}{% trans "Manage questions" %}{% endblock %}
 
 {% block header %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.js"></script>
@@ -15,15 +15,15 @@
 
 {% block content %}
 <div class="page-header">
-  <h3>Gerenciando questões</h3>
+  <h3>{% trans "Manage questions" %}</h3>
 </div>
 
 <div id="toolbar" class="btn-group">
   <a id="add-btn" class="btn" href="/admin/add/">
-    <i class="icon-plus"></i> Adicionar
+    <i class="icon-plus"></i> {% trans "Add" %}
   </a>
   <a id="edit-btn" class="btn alone-action dblclick" href="/admin/%d/">
-    <i class="icon-pencil"></i> Editar
+    <i class="icon-pencil"></i> {% trans "Edit" %}
   </a>
 </div>
 
