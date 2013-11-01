@@ -31,7 +31,7 @@ class Category(Document):
     added = DateTimeField(default=datetime.datetime.now)
     lastchanged = DateTimeField(default=datetime.datetime.now)
 
-    title = StringField(max_length=255, required=True)
+    title = StringField(max_length=255, required=True, verbose_name=_('Title'))
     slug = StringField(required=True)
 
     def clean(self):
