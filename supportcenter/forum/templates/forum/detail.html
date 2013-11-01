@@ -1,0 +1,65 @@
+{% extends 'faq/inner.html' %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% load knowledge_tags %}
+
+{% block title %}{% trans "Topic" %}{% endblock title %}
+
+{% block knowledge_widgets %}
+
+<div class="dk-widget">
+  {# dunno how to do translation on this nasty block... #}
+  <h3>{% trans "Topic" %}</h3>
+            
+            <button><a  type="button" id="edit-btn" class="btn alone-action dblclick" href="/forum/reply/%d/">{% trans "Reply" %}
+            </a>
+            </button>
+            <button type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}
+            </button>
+  <hr/>
+<ol class="topic-list">
+    
+    
+    <span>
+        {{ object.title }}
+    </span>
+    <br />
+    <hr/>
+
+    <span>
+        {{ object.comment }}
+    </span>
+    <br />
+    <hr/>
+
+    <span>
+        {% if object.user %}
+        {% trans "User" %}
+            {{ object.user }}
+        <br />
+        {% endif %}
+    </span>
+
+    <span>
+       {% trans "Name" %} - {{ object.name }}
+    </span>&nbsp;
+        
+    <span>
+        {% trans "email" %} - {{ object.email }}
+    </span>&nbsp;
+    
+    <span>
+        {% trans "phone" %} - {{ object.phone }}
+    </span>
+    <br />
+    
+    <span>
+        {% trans "Date" %} - {{ object.date }}
+    </span>
+    <br />
+
+</ol>
+</div>
+{% endblock knowledge_widgets %}

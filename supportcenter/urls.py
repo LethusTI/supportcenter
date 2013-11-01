@@ -32,4 +32,7 @@ urlpatterns = patterns(
 
     #FAQ
     url(r'^faq/', include('supportcenter.faq.urls')),
+
+    #Forum
+    url(r'^forum/', include('supportcenter.forum.urls')),
 )

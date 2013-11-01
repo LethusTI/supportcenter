@@ -112,7 +112,8 @@ INSTALLED_APPS = (
     'lethusbox',
     'supportcenter.common',
     'supportcenter.accounts',
-    'supportcenter.faq'
+    'supportcenter.faq',
+    'supportcenter.forum'
 )
 
 LOGGING = {

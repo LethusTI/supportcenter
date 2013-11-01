@@ -1,0 +1,34 @@
+{% extends 'faq/inner.html' %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% load knowledge_tags %}
+
+{% block title %}{% trans "Topic" %}{% endblock title %}
+
+{% block knowledge_widgets %}
+
+<div class="dk-widget">
+<div class="page-header">
+	<h3>
+		{% if object %}{% trans "Update" %}{% else %}{% trans "Add" %}{% endif %} {% trans "topic" %}
+	</h3>
+</div>
+<form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST">
+	{% include "master/message.error.html" %}
+	{% csrf_token %}
+	
+	<p class="btn-group">
+		<button type="submit" class="btn btn-primary">
+    		<i class="icon-ok icon-white"></i> {% trans "Save" %}
+		</button>
+		<button type="button" onclick="history.go(-1)" class="btn">
+			<i class="icon-arrow-left"></i> {% trans "Back" %}
+		</button>
+	</p>
+	{% include "master/form_snippet.html" %}
+</form>
+
+</div>
+{% endblock knowledge_widgets %}
