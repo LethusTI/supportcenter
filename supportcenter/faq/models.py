@@ -85,98 +85,6 @@ class KnowledgeBase(Document):
     meta = {
         'abstract': True
     }
-    
-        
-## class KnowledgeBase(Document):
-##     """
-##     The base class for Knowledge models.
-##     """
-##     is_question, is_response = False, False
-
-##     added = models.DateTimeField(auto_now_add=True)
-##     lastchanged = models.DateTimeField(auto_now=True)
-
-##     user = models.ForeignKey('auth.User' if django.VERSION < (1, 5, 0) else django_settings.AUTH_USER_MODEL, blank=True,
-##                              null=True, db_index=True)
-##     alert = models.BooleanField(default=settings.ALERTS,
-##         verbose_name=_('Alert'),
-##         help_text=_('Check this if you want to be alerted when a new'
-##                         ' response is added.'))
-
-##     
-
-##     class Meta:
-##         abstract = True
-
-##     def save(self, *args, **kwargs):
-##         if not self.user and self.name and self.email \
-##                 and not self.id:
-##             # first time because no id
-##             self.public(save=False)
-
-##         if settings.AUTO_PUBLICIZE and not self.id:
-##             self.public(save=False)
-
-##         super(KnowledgeBase, self).save(*args, **kwargs)
-
-##     #########################
-##     #### GENERIC GETTERS ####
-##     #########################
-
-
-
-##     
-##     get_pair = lambda s: (s.get_name(), s.get_email())
-##     get_user_or_pair = lambda s: s.user or s.get_pair()
-
-##     ########################
-##     #### STATUS METHODS ####
-##     ########################
-
-##     def can_view(self, user):
-##         """
-##         Returns a boolean dictating if a User like instance can
-##         view the current Model instance.
-##         """
-
-##         if self.status == 'inherit' and self.is_response:
-##             return self.question.can_view(user)
-
-##         if self.status == 'internal' and user.is_staff:
-##             return True
-
-##         if self.status == 'private':
-##             if self.user == user or user.is_staff:
-##                 return True
-##             if self.is_response and self.question.user == user:
-##                 return True
-
-##         if self.status == 'public':
-##             return True
-
-##         return False
-
-##     def switch(self, status, save=True):
-##         self.status = status
-##         if save:
-##             self.save()
-##     switch.alters_data = True
-
-##     def public(self, save=True):
-##         self.switch('public', save)
-##     public.alters_data = True
-
-##     def private(self, save=True):
-##         self.switch('private', save)
-##     private.alters_data = True
-
-##     def inherit(self, save=True):
-##         self.switch('inherit', save)
-##     inherit.alters_data = True
-
-##     def internal(self, save=True):
-##         self.switch('internal', save)
-##     internal.alters_data = True
 
 class QuestionQuerySet(QuerySet):
     def can_view(self, user):
@@ -292,45 +200,12 @@ class Question(KnowledgeBase):
         return self.get_absolute_url()
 
     def get_absolute_url(self):
-        return '/questions/%d/' % self.id
+        return '/faq/questions/%d/' % self.id
 
     def get_categories_display(self):
         if self.categories:
             return ', '.join([str(c) for c in self.categories])
         return ''
     
-class Response(Document):
-    is_response = True
-    body = StringField(
-        required=True,
-        verbose_name=_('Response'),
-        help_text=_('Please enter your response. Markdown enabled.'))
-    
-    status = StringField(
-        verbose_name=_('Status'),
-        max_length=32, choices=STATUSES_EXTENDED,
-        default='inherit')
-    
-    accepted = BooleanField(default=False)
 
-    meta = {
-        'ordering': ['added']
-    }
-
-    def __unicode__(self):
-        return self.body[0:100] + u'...'
-
-    def states(self):
-        """
-        Handy for checking for mod bar button state.
-        """
-        return [self.status, 'accept' if self.accepted else None]
-
-    def accept(self):
-        self.question.accept(self)
-    accept.alters_data = True
-
-
-# cannot attach on abstract = True... derp
 signals.post_save.connect(knowledge_post_save, sender=Question)
-#models.signals.post_save.connect(knowledge_post_save, sender=Response)

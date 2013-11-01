@@ -6,9 +6,8 @@
 		<h1>{% trans "Welcome to our Support Center." %}</h1>
 		<h2>{% trans "Search for answers to your questions below, or ask your own." %}</h2>
 		<div id="live-search">
-		    <form method="get" daction="/questions/" autocomplete="off">
-		        <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="s" id="s" autocomplete="off">
-		        <input type="hidden" name="post_type[]" value="st_kb">
+		    <form method="get" action="/faq/" autocomplete="off">
+		        <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="title" id="s" autocomplete="off">
 		    </form>
 		</div>
 	</div>
