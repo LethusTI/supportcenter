@@ -1,0 +1,42 @@
+{% extends "faq/inner.html" %}
+{% load i18n %}
+{% block welcome %}
+<div id="page-header">
+	<div class="container">
+		<h1>{% trans "Welcome to our Support Center." %}</h1>
+		<h2>{% trans "Search for answers to your questions below, or ask your own." %}</h2>
+		<div id="live-search">
+		    <form method="get" action="/faq/" autocomplete="off">
+		        <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="title" id="s" autocomplete="off">
+		    </form>
+		</div>
+	</div>
+</div>
+<div id="features-list">
+	<div class="container">
+		<div class="row">
+			<div class="column">
+				<div class="feature-icon">
+					<img alt="" src="{{STATIC_URL }}faq/img/kb-large.png">
+				</div>
+				<h3>Base de conhecimento</h3>
+				<p>Na nossa Base de Conhecimento você encontrar diversos artigos explicando como usar o sistema.</p>
+			</div>
+			<div class="column">
+				<div class="feature-icon">
+					<img alt="" src="{{STATIC_URL }}faq/img/forum-large.png">
+				</div>
+				<h3>Fórum</h3>
+				<p>Utilize nosso fórum envie sua dúvida ou sugestão, veja e participe.</p>
+			</div>
+			<div class="column">
+				<div class="feature-icon">
+					<img alt="" src="{{STATIC_URL }}faq/img/contact-large1.png">
+				</div>
+				<h3>Contate-nos</h3>
+				<p>Não encontrou o que precisa? Fale diretamente com o nosso suporte, <a href="/contact/">fale conosco →</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock welcome %}

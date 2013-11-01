@@ -8,18 +8,18 @@ from supportcenter.faq.views import (
     FaqIndexView, ListQuestionView, AddQuestionView,
     DetailQuestionView)
 
+from .views import IndexView
+
 urlpatterns = patterns(
     '',
     url(r'^auth/', include('supportcenter.accounts.urls')),
     
-    url(r'^$', FaqIndexView.as_view(), name="knowledge_index"),
+    url(r'^$', IndexView.as_view(), name="index"),
     url(r'^questions/$', ListQuestionView.as_view(), name='knowledge_list'),
     
-    url(r'^questions/(?P<pk>\d+)/$',
-        DetailQuestionView.as_view(), name='knowledge_thread_no_slug'),
+    
         
-    url(r'^questions/(?P<category_slug>[a-z0-9-_]+)/$', ListQuestionView.as_view(),
-        name='knowledge_list_category'),
+    
         
     url(r'^ask/$', AddQuestionView.as_view(), name='knowledge_ask'),
     
@@ -29,4 +29,7 @@ urlpatterns = patterns(
 
     #Admin
     url(r'^admin/', include('supportcenter.admin.urls')),
+
+    #FAQ
+    url(r'^faq/', include('supportcenter.faq.urls')),
 )

@@ -44,9 +44,10 @@ class ListQuestionView(IncludeCategoriesTemplate, ListView):
         
         ctx['search'] = search
         ctx['category'] = self.get_category()
-        
-        ctx['form'] = AddQuestionForm(
-            user=self.request.user, initial={'title': search})
+
+        if not self.get_queryset().count():
+            ctx['form'] = AddQuestionForm(
+                user=self.request.user, initial={'title': search})
         
         return ctx
 
