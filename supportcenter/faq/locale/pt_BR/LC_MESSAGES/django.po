@@ -150,7 +150,7 @@ msgstr "%(count)s Questões mais acessadas."
 
 #: templates/faq/inner.html:14
 msgid "Start typing your question here."
-msgstr "Inicie digitando sua questão aqui."
+msgstr "Pesquise em nossa base de conhecimento"
 
 #: templates/faq/inner.html:14
 msgid "Search"
@@ -236,12 +236,12 @@ msgstr "Por favor faça login para responder"
 
 #: templates/faq/welcome.html:5
 msgid "Welcome to our Support Center."
-msgstr "Bem vindo ao Centro de suporte."
+msgstr "Bem vindo ao Centro de suporte"
 
 #: templates/faq/welcome.html:6
 msgid "Search for answers to your questions below, or ask your own."
 msgstr ""
-"Procure respostas para suas questões primeiro, ou perguente você mesmo."
+"Procure respostas para suas questões primeiro, ou perguente você mesmo"
 
 #: templates/faq/emails/message.html:7 templates/faq/emails/message.txt:4
 #, python-format

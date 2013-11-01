@@ -1,37 +1,31 @@
 {% load i18n %}
 {% load url from future %}
+<div id="sidebar">
+  {% if my_questions %}
+    <div class="widget">
+      <h4 class="widget-title">{% trans "My Questions" %}</h4>
+      <ul>
+        {% for question in my_questions %}
+          <li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>      
+  {% endif %}
 
-{% if my_questions %}
+  <div class="widget boxed">
+    <h4 class="widget-title">{% trans "Categories" %}</h4>
+    <ul>
+      {% for category in categories %}
+        <li><a href="{% url "knowledge_list_category" category.slug %}">{{ category.title }}</a></li>
+      {% endfor %}
+    </ul>
 
-  <h4>{% trans "My Questions" %}</h4>
-  <hr />
-
-  <ul>
-    {% for question in my_questions %}
-      <li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></li>
-    {% endfor %}
-  </ul>
-
-  <br />
-    
-{% endif %}
-
-<h4>{% trans "Categories" %}</h4>
-<hr />
-
-<ul>
-  {% for category in categories %}
-    <li><a href="{% url "knowledge_list_category" category.slug %}">{{ category.title }}</a></li>
-  {% endfor %}
-</ul>
-
-<br />
-
-<h4>{% trans "Navigate" %}</h4>
-<hr />
-
-<ul>
-  <li><a href="{% url "knowledge_ask" %}">{% trans "Ask a question or give suggestion." %}</a></li>
-  <li><a href="{% url "knowledge_index" %}">{% trans "Return to homepage." %}</a></li>
-  <li><a href="/admin/">{% trans "Admin dashboard" %}</a></li>
-</ul>
+  </div>
+  <div class="widget">
+    <h4 class="widget-title">{% trans "Navigate" %}</h4>
+    <ul>
+      <li><a href="{% url "knowledge_ask" %}">{% trans "Ask a question or give suggestion." %}</a></li>
+      <li><a href="{% url "knowledge_index" %}">{% trans "Return to homepage." %}</a></li>
+    </ul>
+  </div>
+</div>
