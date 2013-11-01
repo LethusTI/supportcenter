@@ -11,7 +11,12 @@ from mongoengine import *
 from mongoengine.queryset import QuerySet, Q
 from mongoengine import signals
 
-class Forum(Document):
+
+class ForumBase(Document):
+	id = SequenceField(
+        verbose_name="Identification",
+        primary_key=True)
+	
 	user = ReferenceField(
         'User',
         verbose_name=_('Create by user'),
@@ -22,7 +27,7 @@ class Forum(Document):
         required=True,
         verbose_name=_('Name'),
         help_text=_('Enter your first and last name.'))
-    
+
     email = EmailField(
         required=True,
         verbose_name=_('Email'),
@@ -32,13 +37,22 @@ class Forum(Document):
     	verbose_name=_('Phone'),
     	required=True,
     	help_text=_('Enter a valid phone number.'))
-    	)
+
+	date = DateTimeField(
+        required=False,
+        verbose_name =_('creation date')
+        )
+
+class Forum(ForumBase):
 	comment = StringField(
 		verbose_name=_('Comment'),
-		required=False,
-		)
+		required=False)
+
 	title = StringField(
 		verbose_name=_('Post Title'),
-		required=True,
-		)
-	
+		required=True)
+
+class Reply(ForumBase):
+	reply = StringField(
+		verbose_name=_('Reply'),
+		required=False)
