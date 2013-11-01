@@ -13,10 +13,6 @@ from mongoengine import signals
 
 
 class ForumBase(Document):
-	id = SequenceField(
-        verbose_name="Identification",
-        primary_key=True)
-	
 	user = ReferenceField(
         'User',
         verbose_name=_('Create by user'),
@@ -44,6 +40,9 @@ class ForumBase(Document):
         )
 
 class Forum(ForumBase):
+	id = SequenceField(
+        primary_key=True)
+	
 	comment = StringField(
 		verbose_name=_('Comment'),
 		required=False)
