@@ -2,9 +2,17 @@
 
 import os
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+PRODUCTION = True
+# Indica se estamos rodando a versão de produção ou desenvolvimento
+value = os.environ.get('PRODUCTION')
+if value:
+    PRODUCTION = value == 'true'
+    
+DEBUG = not PRODUCTION
+TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Lethus', 'suporte@lethus.com.br'),
@@ -21,7 +29,11 @@ EMAIL_PORT = 587
 
 MANAGERS = ADMINS
 
-MONGODB_DATABASE = 'supportcenterdev'
+if PRODUCTION:
+    MONGODB_DATABASE = 'supportcenter'
+else:
+    MONGODB_DATABASE = 'supportcenterdev'
+    
 MONGODB_HOST = 'localhost'
 MONGODB_USERNAME = None
 MONGODB_PASSWORD = None
@@ -51,7 +63,11 @@ DATETIME_FORMAT = 'd/m/Y - H:i:s'
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+
+if PRODUCTION:
+    STATIC_URL = 'http://static.lethussaude.com.br/cs/'
+else:
+    STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/admin/'
 LOGIN_URL = '/auth/login/'
