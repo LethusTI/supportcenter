@@ -65,7 +65,7 @@ MEDIA_URL = ''
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 if PRODUCTION:
-    STATIC_URL = 'http://static.lethussaude.com.br/cs/'
+    STATIC_URL = 'http://static.lethussaude.com.br/cp/'
 else:
     STATIC_URL = '/static/'
 
