@@ -26,4 +26,4 @@ if [ -e "lock/uwsgi.pid" ]; then
 
 fi
 
-uwsgi -s 127.0.0.1:$PORT -M 4 -t 30 -A 4 -p 4 -d log/uwsgi.log --pythonpath $CURRENT_PATH --module saude.wsgi --pidfile lock/uwsgi.pid --harakiri 120
+uwsgi -s 127.0.0.1:$PORT -M 4 -t 30 -A 4 -p 4 -d log/uwsgi.log --pythonpath $CURRENT_PATH --module supportcenter.wsgi --pidfile lock/uwsgi.pid --harakiri 120
