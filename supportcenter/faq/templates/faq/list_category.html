@@ -20,51 +20,27 @@
     </div>
   </div>
 </div>
-<div id="primary" class="sidebar-off">
+<div id="primary" class="sidebar-right">
   <div class="container">
     <section id="content">
       <div class="row category-list">
-        <!-- nao faz loop na row so nas columns -->
-        <div class="column articles widget col-half">
-          <h3>
-            <span class="count">7 Artigos</span>
-            <a href="link/categoria/todos-os-posts" title="Veja todos os artigos">Primeiros passos <span>→</span></a>
-          </h3>
-          <ul>
-            <!-- limita a 5 ultimos artigos -->
-            <li><a href="#">Artigo 1</a></li>
-            <li><a href="#">Artigo 2</a></li>
-            <li><a href="#">Artigo 3</a></li>
-            <li><a href="#">Artigo 4</a></li>
-            <li><a href="#">Artigo 5</a></li>
-          </ul>
+        <h3 = "category-title">Nome da categoria</h3>
+        <!-- loopar daqui para a listagem do forum voce faz igual aqui só que no class fica forum ao inves de article-->
+        <div class="article">
+          <h2 class="entry-title"><a href="#">Nome artigo</a></h2>
+          <span>
+            Criado em 12/10/2013 as 12:12
+          </span>
         </div>
-        <div class="column articles widget col-half">
-          <h3>
-            <span class="count">4 Artigos</span>
-            <a href="link/categoria/todos-os-posts" title="Veja todos os artigos">Categoria 1 <span>→</span></a>
-          </h3>
-          <ul>
-            <!-- limita a 5 ultimos artigos -->
-            <li><a href="#">Artigo 1</a></li>
-            <li><a href="#">Artigo 2</a></li>
-            <li><a href="#">Artigo 3</a></li>
-          </ul>
-        </div>
-        <div class="column articles widget col-half">
-          <h3>
-            <span class="count">2 Artigos</span>
-            <a href="link/categoria/todos-os-posts" title="Veja todos os artigos">Categoria 2 <span>→</span></a>
-          </h3>
-          <ul>
-            <!-- limita a 5 ultimos artigos -->
-            <li><a href="#">Artigo 1</a></li>
-            <li><a href="#">Artigo 2</a></li>
-            <li><a href="#">Artigo 3</a></li>
-          </ul>
+        <div class="article">
+          <h2 class="entry-title"><a href="#">Nome artigo 2</a></h2>
+          <span>
+            Criado em 13/10/2013 as 12:12
+          </span>
         </div>
       </div>
     </section>
+    {% include 'faq/sidebar.html' %}
   </div>
 </div>
 

@@ -1,7 +1,7 @@
 {% extends "faq/inner.html" %}
 {% load i18n %}
 {% block welcome %}
-<div id="page-header">
+<div id="page-header" class="home">
 	<div class="container">
 		<h1>{% trans "Welcome to our Support Center." %}</h1>
 		<h2>{% trans "Search for answers to your questions below, or ask your own." %}</h2>
@@ -15,28 +15,88 @@
 <div id="features-list">
 	<div class="container">
 		<div class="row">
-			<div class="column">
+			<div class="column col-third">
 				<div class="feature-icon">
-					<img alt="" src="{{STATIC_URL }}faq/img/kb-large.png">
+					<a href="/faq/"><img alt="" src="{{STATIC_URL }}faq/img/kb-large.png"></a>
 				</div>
-				<h3>Base de conhecimento</h3>
+				<h3><a href="/faq/">Base de conhecimento</a></h3>
 				<p>Na nossa Base de Conhecimento você encontrar diversos artigos explicando como usar o sistema.</p>
 			</div>
-			<div class="column">
+			<div class="column col-third">
 				<div class="feature-icon">
-					<img alt="" src="{{STATIC_URL }}faq/img/forum-large.png">
+					<a href="/forum/"><img alt="" src="{{STATIC_URL }}faq/img/forum-large.png"></a>
 				</div>
-				<h3>Fórum</h3>
-				<p>Utilize nosso fórum envie sua dúvida ou sugestão, veja e participe.</p>
+				<h3><a href="/forum/">Fórum</a></h3>
+				<p>Participe da comunidade utilize nosso fórum envie sua dúvida, sugestão e troque idéias com outros usuários.</p>
 			</div>
-			<div class="column">
+			<div class="column col-third">
 				<div class="feature-icon">
-					<img alt="" src="{{STATIC_URL }}faq/img/contact-large1.png">
+					<a href="/contact/"><img alt="" src="{{STATIC_URL }}faq/img/contact-large1.png"></a>
 				</div>
-				<h3>Contate-nos</h3>
+				<h3><a href="/contact/">Contate-nos</a></h3>
 				<p>Não encontrou o que precisa? Fale diretamente com o nosso suporte, <a href="/contact/">fale conosco →</a></p>
 			</div>
 		</div>
 	</div>
 </div>
+
+<!-- ESSA PARTE VCS COLOCAM PARA PEGAR OS DADOS DO BANCO -->
+
+<div id="primary">
+	<div class="container">
+		<section id="content">
+			<div id="homepage-widgets" class="row">
+				<div class="column articles home-col-half widget">
+					<h4 class="widget-title"><span>Últimos artigos</span></h4>
+					<ul>
+						<li><a href="#">Como cadastrar um usuário</a></li>
+						<li><a href="#">Realizando um atendimento</a></li>
+						<li><a href="#">Configurando agenda médica</a></li>
+						<li><a href="#">Cadastrar um novo médico</a></li>
+					</ul>
+				</div>
+				<div class="column forum home-col-half widget">
+					<h4 class="widget-title"><span>Atividade recente no fórum</span></h4>
+					<ul>
+						<li><a href="#">Onde posso inserir a minha licença ?</a></li>
+						<li><a href="#">Como compartilho minha agenda ?</a></li>
+						<li><a href="#">Como altero minha foto ?</a></li>
+						<li><a href="#">Sugestão sobre como fazer o atendimento</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<!-- isso pode deixar statico que eu mudo nos codigos html mas aqui a ideia seria montar lugar para colocarmos uma noticia ou aletta-->
+		<aside id="sidebar">
+			<div id="text-2" class="boxed-orange widget">
+				<h4 class="widget-title">Novidades</h4>			
+				<div class="textwidget">
+					<p>
+						Confira em que trabalhamos nessa nova versão do sistema.
+						<br><a href="#"> Saiba mais →</a>
+					</p>
+				</div>
+			</div>	
+		</aside>
+	</div>
+</div>
+
+<!-- FOOT PODE DEIXAR FIXAO EM TODAS AS PAGINAS -->
+<footer id="footer">
+	<div id="footer-bottom">
+		<div class="container">
+			<small id="copyright">Copyright © Lethus TI Ltda.</small>
+			<nav id="footer-nav">
+				<ul>
+					<li><a href="/">{% trans "Home" %}</a></li>
+	  				<li><a href="/faq/">{% trans "Knowledge Base" %}</a></li>
+	  				<li><a href="/forum/">{% trans "Forum" %}</a></li>
+	  				<li><a href="https://app.lethussaude.com.br">{% trans "Return to site" %}</a></li>
+	  				<li><a href="/contact/">{% trans "Contact" %}</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</footer>
+
 {% endblock welcome %}

@@ -9,6 +9,58 @@
 
 {% block knowledge_widgets %}
 
+<div id="page-header">
+  <div class="container">
+    <h1>Base de conhecimento</h1>
+    <div id="live-search">
+        <form method="get" action="/faq/" autocomplete="off">
+            <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="title" id="s" autocomplete="off">
+        </form>
+    </div>
+  </div>
+</div>
+<div id="primary" class="sidebar-right">
+  <div class="container">
+    <section id="content">
+      <div class="row category-list">
+        <div class="article">
+          <h2 class="entry-title"><a href="#">Nome artigo</a></h2>
+          <span>
+            Criado em 12/10/2013 as 12:12
+          </span>
+        </div>
+        <div class="entry-content">
+          <!-- coloca o conteudo do artigo -->
+          Conteudo aqui... em formatação de markdown
+        </div>
+      </div>
+    </section>
+    {% include 'faq/sidebar.html' %}
+  </div>
+</div>
+
+<!-- o footer entra na base mas como aqui não tinha como colocar por que tinha codigo do knowledge django -->
+<!-- FOOT PODE DEIXAR FIXAO EM TODAS AS PAGINAS -->
+<footer id="footer">
+  <div id="footer-bottom">
+    <div class="container">
+      <small id="copyright">Copyright © Lethus TI Ltda.</small>
+      <nav id="footer-nav">
+        <ul>
+          <li><a href="/">{% trans "Home" %}</a></li>
+            <li><a href="/faq/">{% trans "Knowledge Base" %}</a></li>
+            <li><a href="/forum/">{% trans "Forum" %}</a></li>
+            <li><a href="https://app.lethussaude.com.br">{% trans "Return to site" %}</a></li>
+            <li><a href="/contact/">{% trans "Contact" %}</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+<!-- fim footer daqui pra baixo vc adapta no html acima -->
+
+
+
 <div class="dk-widget">
 
   <div class="dk-dialog">
