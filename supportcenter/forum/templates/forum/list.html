@@ -8,39 +8,39 @@
 {% block title %}{% trans "Topic" %}{% endblock title %}
 
 {% block knowledge_widgets %}
-
-<div class="dk-widget">
-  {# dunno how to do translation on this nasty block... #}
-  <h3>{% trans "Topics" %}</h3>
-  <hr />
-           <button><a id="add-btn" href="/forum/add/">
-            {% trans "Add" %}
-            </a>
-            </button>
-            <button type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}
-            </button>
-  <hr/>
-<ol class="topic-list">
-  {% for topic in object_list %}
-    <li>
-    <a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a>
-    &nbsp; {% if not topic.get_responses %}
-    <span class="dk-label dk-label-important">{% trans "no responses" %}</span>
-    {% else %}
-    <span class="dk-label">{{ topic.get_responses|length }}&nbsp;responses</span>
-    {% endif %}
-    &nbsp; 
-    {% if topic.accepted %}
-    <span class="dk-label dk-label-warning">{% trans "accepted" %}</span>
-    &nbsp;
-    {% endif %} 
-    {% if topic.user.is_staff %}
-    <span class="dk-label dk-label-success">{% trans "staff" %}</span>
-    &nbsp;
-    {% endif %} 
-    <small class="quiet">{% trans "by" %} {{ topic.get_name }}</small>
-    </li>
-  {% endfor %}
-</ol>
+{% if not search %}
+{% include "forum/search_widget.html" %}
+{% endif %}
+<div id="primary" class="sidebar-off">
+	<div class="container">
+		<section id="content">
+			<div class="dk-widget">
+				{# dunno how to do translation on this nasty block... #}
+				{% if search %}
+				<h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} for <em>{{ search }}</em>{% endif %}:</h3>
+				{% else %}
+				<h3>{% trans "Topics" %}</h3>
+				{% endif %}
+				
+				<hr />
+				<button><a id="add-btn" href="/forum/add/">
+						{% trans "Add" %}
+					</a>
+				</button>
+				<button type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}
+				</button>
+				<hr/>
+				<ol class="topic-list">
+					{% for topic in object_list %}
+					<li>
+						<a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a>
+						<small class="quiet">{% trans "by" %} {{ topic.get_name }}</small>
+					</li>
+					{% endfor %}
+				</ol>
+			</div>
+		</section>
+	</div>
 </div>
+
 {% endblock knowledge_widgets %}

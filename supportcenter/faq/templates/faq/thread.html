@@ -24,64 +24,19 @@
     <section id="content">
       <div class="row category-list">
         <div class="article">
-          <h2 class="entry-title"><a href="#">Nome artigo</a></h2>
+          <h2 class="entry-title"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
           <span>
-            Criado em 12/10/2013 as 12:12
+            Criado em {{ object.added }}
           </span>
         </div>
         <div class="entry-content">
           <!-- coloca o conteudo do artigo -->
-          Conteudo aqui... em formatação de markdown
+         {{ object.body|striptags|lethusmarkdown }}
         </div>
       </div>
     </section>
     {% include 'faq/sidebar.html' %}
   </div>
-</div>
-
-<!-- o footer entra na base mas como aqui não tinha como colocar por que tinha codigo do knowledge django -->
-<!-- FOOT PODE DEIXAR FIXAO EM TODAS AS PAGINAS -->
-<footer id="footer">
-  <div id="footer-bottom">
-    <div class="container">
-      <small id="copyright">Copyright © Lethus TI Ltda.</small>
-      <nav id="footer-nav">
-        <ul>
-          <li><a href="/">{% trans "Home" %}</a></li>
-            <li><a href="/faq/">{% trans "Knowledge Base" %}</a></li>
-            <li><a href="/forum/">{% trans "Forum" %}</a></li>
-            <li><a href="https://app.lethussaude.com.br">{% trans "Return to site" %}</a></li>
-            <li><a href="/contact/">{% trans "Contact" %}</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</footer>
-<!-- fim footer daqui pra baixo vc adapta no html acima -->
-
-
-
-<div class="dk-widget">
-
-  <div class="dk-dialog">
-    <div class="the-author gravatar"><img src="{% get_gravatar object.get_email %}" alt="{{ object.get_name }} gravatar"></div>
-    <div class="the-content gravatar">
-      <h2>{{ object.title }}</h2>
-      <h5>{{ object.get_name }} <span class="quiet">
-        {% if object.user %}
-          {% if object.user.is_staff %}&nbsp;<span class="dk-label dk-label-success">{% trans "staff" %}</span>
-          {% else %}&nbsp;<span class="dk-label">{% trans "user" %}</span>{% endif %}
-        {% endif %}
-        &nbsp;{{ object.added }}
-      </span></h5>
-
-      {{ object.body|striptags|lethusmarkdown }}
-
-      {% include "faq/mod_bar.html" with allowed_mods=allowed_mods.object type="object" node=object %}
-    </div>
-  </div> <!-- .dk-dialog -->
-
-
 </div>
 
 {% endblock knowledge_widgets %}

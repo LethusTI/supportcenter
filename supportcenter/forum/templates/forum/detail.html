@@ -8,58 +8,28 @@
 {% block title %}{% trans "Topic" %}{% endblock title %}
 
 {% block knowledge_widgets %}
+{% include "forum/search_widget.html" %}
 
-<div class="dk-widget">
-  {# dunno how to do translation on this nasty block... #}
-  <h3>{% trans "Topic" %}</h3>
-            
-            <button><a  type="button" id="edit-btn" class="btn alone-action dblclick" href="/forum/reply/%d/">{% trans "Reply" %}
-            </a>
-            </button>
-            <button type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}
-            </button>
-  <hr/>
-<ol class="topic-list">
-    
-    
-    <span>
-        {{ object.title }}
-    </span>
-    <br />
-    <hr/>
+<div id="primary" class="sidebar-right">
+	<div class="container">
+		<section id="content">
+			<div class="row category-list">
+				<div class="article">
+					<h2 class="entry-title"><a href="{{ object.get_absolute_url }}">{% trans "Topic" %}: {{ object.title }}</a></h2>
+					<span>
+						Criado em {{ object.date }} por {{ object.get_name }}
+					</span>
+				</div>
+				<div class="entry-content">
+					<!-- coloca o conteudo do artigo -->
+					{{ object.comment|striptags|lethusmarkdown }}
+				</div>
+			</div>
 
-    <span>
-        {{ object.comment }}
-    </span>
-    <br />
-    <hr/>
-
-    <span>
-        {% if object.user %}
-        {% trans "User" %}
-            {{ object.user }}
-        <br />
-        {% endif %}
-    </span>
-
-    <span>
-       {% trans "Name" %} - {{ object.name }}
-    </span>&nbsp;
-        
-    <span>
-        {% trans "email" %} - {{ object.email }}
-    </span>&nbsp;
-    
-    <span>
-        {% trans "phone" %} - {{ object.phone }}
-    </span>
-    <br />
-    
-    <span>
-        {% trans "Date" %} - {{ object.date }}
-    </span>
-    <br />
-
-</ol>
+			Responder
+		</section>
+		{% include 'faq/sidebar.html' %}
+	</div>
 </div>
+
 {% endblock knowledge_widgets %}

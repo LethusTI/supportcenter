@@ -1,0 +1,11 @@
+{% load i18n %}
+<div id="page-header">
+	<div class="container">
+		<h1>{% trans "Forum" %}</h1>
+		<div id="live-search">
+			<form method="get" action="/forum/" autocomplete="off">
+				<input type="text" onfocus="if (this.value == 'Pesquise tópicos ...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise tópicos ...';}" value="Pesquise tópicos ..." name="title" id="s" autocomplete="off">
+			</form>
+		</div>
+	</div>
+</div>

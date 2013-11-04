@@ -20,9 +20,27 @@ class ListForumView(ListView):
     document = Forum
     template_name = 'forum/list.html'
     paginate_by = 20
-    allow_empty = True
-    json_object_list_fields = ['id', 'title', 'name']
-    filter_fields = ['title']
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super(ListForumView, self).get_context_data(*args, **kwargs)
+
+        search = self.request.GET.get('title', None)
+        
+        ctx['search'] = search
+        
+        return ctx
+
+    def get_queryset(self):
+        search = self.request.GET.get('title', None)
+        queryset = self.document.objects
+
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) | Q(comment__icontains=search)
+            )
+        
+        return queryset
+    
 
 class ForumViewMixIn(object):
     document = Forum
