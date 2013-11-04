@@ -20,6 +20,13 @@
 		  				<li><a href="/forum/">{% trans "Forum" %}</a></li>
 		  				<li><a href="https://app.lethussaude.com.br">{% trans "Return to site" %}</a></li>
 		  				<li><a href="/contact/">{% trans "Contact" %}</a></li>
+
+						{% if user.is_superuser %}
+		  				<li><a href="/admin/categories/">{% trans "Categories" %}</a></li>
+		  				<li><a href="/admin/superusers/">{% trans "Super users" %}</a></li>
+		  				<li><a href="/auth/logout/">{% trans "Logout" %}</a></li>
+						{% endif %}
+						
 		  			</ul>
 		  		</nav>
 			</div>

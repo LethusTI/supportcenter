@@ -69,7 +69,7 @@ if PRODUCTION:
 else:
     STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/admin/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/auth/login/'
 LOGOUT_URL = '/auth/logout/'
 

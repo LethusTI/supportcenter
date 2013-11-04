@@ -27,6 +27,11 @@
           <h2 class="entry-title"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
           <span>
             Criado em {{ object.added }}
+			{% if user.is_superuser %}
+			<a href="/admin/{{ object.id }}/">
+				Editar questão
+			</a>
+			{% endif %}
           </span>
         </div>
         <div class="entry-content">
