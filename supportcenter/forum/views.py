@@ -62,7 +62,6 @@ class AddForumView(ForumViewMixIn, CreateView):
 class DetailForumView(CreateView):
     template_name = 'forum/detail.html'
     form_class = AddReplyForm 
-    success_url = '/forum/update/%d/'
     success_message = _("Your reply has been added")
 
     def get_success_url(self):
@@ -77,21 +76,16 @@ class DetailForumView(CreateView):
         )
         return object
 
-    def get_reply(self, *args, **kwargs):
-        object = get_document_or_404(
-            Reply,
-        )
-        return object
 
     def get_context_data(self, *args, **kwargs):
         ctx = super(DetailForumView, self).get_context_data(*args, **kwargs)
         ctx['object'] = self.get_forum()
-        ctx['replys'] = self.get_reply()
         return ctx
 
     def get_form_kwargs(self, *args, **kwargs):
         fw = super(DetailForumView, self).get_form_kwargs(*args, **kwargs)
         fw['user'] = self.request.user
+        fw['forum'] = self.get_forum()
         
         return fw
 

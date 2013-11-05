@@ -78,6 +78,10 @@ class Forum(ForumBase):
             {'fields': ['title']}
         ]
     }
+    @property
+    def replies(self):
+        queryset = Reply.objects(forum=self).order_by('date')
+        return queryset
 
     def get_absolute_url(self):
         return '/forum/update/%d/' % self.id

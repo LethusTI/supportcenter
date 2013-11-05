@@ -57,19 +57,24 @@ class AddReplyForm(MongoForm):
         required=Reply.reply.required,
         widget=forms.Textarea(attrs={'class': 'input-xxlarge'}))
     
-    def __init__(self, user, *args, **kwargs):
+    forum = forms.ChoiceField(
+        label=Reply.forum.verbose_name,
+        required=Reply.forum.required,
+        )
+    def __init__(self, user, forum, *args, **kwargs):
         super(AddReplyForm, self).__init__(*args, **kwargs)
         self.user = user
+        self.forum = forum
 
     def save(self, commit=True):
         obj = super(AddReplyForm, self).save(commit=False)
-        
         if not obj.user and not self.user.is_anonymous():
             obj.user = self.user
-    
+        
+        obj.forum = self.forum
         if commit:
             obj.save()
-    
+
         return obj
 
     class Meta:
