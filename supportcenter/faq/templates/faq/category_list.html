@@ -14,30 +14,37 @@
 {% endblock %}
 
 {% block knowledge_widgets %}
-<div class="page-header">
-  <h3>{% trans "Manage categories" %}</h3>
-</div>
+<div id="primary" class="sidebar-off">
+  <div class="container">
+    <section id="content">
 
-<div id="toolbar" class="btn-group">
-  <a id="add-btn" class="btn" href="/admin/categories/add/">
-    <i class="icon-plus"></i> {% trans "Add" %}
-  </a>
-  <a id="edit-btn" class="btn alone-action dblclick" href="/admin/categories/%d/">
-    <i class="icon-pencil"></i> {% trans "Update" %}
-  </a>
-</div>
+      <div class="page-header">
+        <h3>{% trans "Manage categories" %}</h3>
+      </div>
+
+      <div id="toolbar" class="btn-group">
+        <a id="add-btn" class="btn" href="/admin/categories/add/">
+          <i class="icon-plus"></i> {% trans "Add" %}
+        </a>
+        <a id="edit-btn" class="btn alone-action dblclick" href="/admin/categories/%d/">
+          <i class="icon-pencil"></i> {% trans "Update" %}
+        </a>
+      </div>
 
 
-<div id="list">
-  <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
-    <thead>
-      <tr>
-		  <th scope="col">ID</th>
-	      <th scope="col">{% trans "Title" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+      <div id="list">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+      		  <th scope="col">ID</th>
+      	      <th scope="col">{% trans "Title" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
 </div>
 {% endblock %}

@@ -21,65 +21,66 @@
   </div>
 </div>
 
-{% if user.is_superuser %}
-<a href="/admin/add/">
-	Adicionar questão
-</a>
-{% endif %}
+
 
 <div id="primary" class="sidebar-off">
-	<div class="container">
-		<section id="content">
-			{% if not search and not category %}
-			<div class="row category-list">
-				{% for category in categories %}
-				<div class="column articles widget col-half">
-					<h3>
-						<span class="count">{{ category.faq_count }} Artigo{{ category.faq_count|pluralize }}</span>
-						<a href="{% url "knowledge_list_category" category.slug %}" title="Veja todos os artigos">{{ category.title }} <span>→</span></a>
-					</h3>
-					<ul>
-						{% for question in category.last_by_date %}
-						<li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-				{% endfor %}
-			</div>
-			{% else %}
+  <div class="container">
+    <section id="content">
+      {% if user.is_superuser %}
+      <a href="/admin/add/" class="btn" style="margin-bottom: 10px;">
+        Adicionar questão
+      </a>
+      {% endif %}
+      {% if not search and not category %}
+      <div class="row category-list">
+        {% for category in categories %}
+        <div class="column articles widget col-half">
+          <h3>
+            <span class="count">{{ category.faq_count }} Artigo{{ category.faq_count|pluralize }}</span>
+            <a href="{% url "knowledge_list_category" category.slug %}" title="Veja todos os artigos">{{ category.title }} <span>→</span></a>
+          </h3>
+          <ul>
+            {% for question in category.last_by_date %}
+            <li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
 
 
-			<div class="dk-widget">
-				{# dunno how to do translation on this nasty block... #}
-				<h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} for <em>{{ search }}</em>{% endif %}{% if category %} in <em>{{ category.title }}</em> category{% endif %}:</h3>
-				<hr />
+      <div class="dk-widget">
+        {# dunno how to do translation on this nasty block... #}
+        <h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} for <em>{{ search }}</em>{% endif %}{% if category %} in <em>{{ category.title }}</em> category{% endif %}:</h3>
+        <hr />
 
-				{% include 'faq/question_list.html' with questions=object_list %}
+        {% include 'faq/question_list.html' with questions=object_list %}
 
 
-				{% if not paginator.count %}
-				<p class="center"><em>{% trans "No results found." %}</em></p>
-				{% endif %}
-				
-				<hr class="light"/>
+        {% if not paginator.count %}
+        <p class="center"><em>{% trans "No results found." %}</em></p>
+        {% endif %}
+        
+        <hr class="light"/>
 
-				<div class="center">
-					<strong>
-						{% if object_list.has_previous %}
-						<a href="?{% page_query request object_list.previous_page_number %}">&larr; {% trans "previous" %}</a>
-						{% endif %}
+        <div class="center">
+          <strong>
+            {% if object_list.has_previous %}
+            <a href="?{% page_query request object_list.previous_page_number %}">&larr; {% trans "previous" %}</a>
+            {% endif %}
 
-						&nbsp; {% blocktrans with number=page_obj.number pages=paginator.num_pages %}page {{ number }} of {{ pages }}{% endblocktrans %} &nbsp;
+            &nbsp; {% blocktrans with number=page_obj.number pages=paginator.num_pages %}page {{ number }} of {{ pages }}{% endblocktrans %} &nbsp;
 
-						{% if object_list.has_next %}
-						<a href="?{% page_query request object_list.next_page_number %}">{% trans "next" %} &rarr;</a>
-						{% endif %}
-					</strong>
-				</div>
-			</div>
-			{% endif %}
-		</section>
-	</div>
+            {% if object_list.has_next %}
+            <a href="?{% page_query request object_list.next_page_number %}">{% trans "next" %} &rarr;</a>
+            {% endif %}
+          </strong>
+        </div>
+      </div>
+      {% endif %}
+    </section>
+  </div>
 </div>
 
 {% endblock knowledge_widgets %}
