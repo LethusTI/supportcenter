@@ -9,52 +9,6 @@
 
 {% block knowledge_widgets %}
 
-<div class="dk-widget">
-  {# dunno how to do translation on this nasty block... #}
-  <h3>{% trans "Topic" %}</h3>
-            
-            <button><a  type="button" id="edit-btn" class="btn alone-action dblclick" href="/forum/reply/%d/">{% trans "Reply" %}
-            </a>
-            </button>
-            <button type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}
-            </button>
-  <hr/>
-<ol class="topic-list">
-    <span>
-        {{ object.title }}
-    </span>
-    <br />
-    <hr/>
-
-    <span>
-        {{ object.comment }}
-    </span>
-    <br />
-    <hr/>
-
-    <span>
-        {% if object.user %}
-        {% trans "User" %}
-            {{ object.user }}
-        <br />
-        {% endif %}
-    </span>
-
-    <span>
-       {{ object.name }} em {{ object.date }}
-    </span>&nbsp;
-    <br />
-    <span>
-        {% trans "Email" %} - {{ object.email }}
-    </span>&nbsp;
-    <br />
-    <span>
-        {% trans "Phone" %} - {{ object.phone }}
-    </span>
-
-</ol>
-{% csrf_token %}
-
 {% include "forum/search_widget.html" %}
 
 <div id="primary" class="sidebar-right">
@@ -64,7 +18,7 @@
 				<div class="article">
 					<h2 class="entry-title"><a href="{{ object.get_absolute_url }}">{% trans "Topic" %}: {{ object.title }}</a></h2>
 					<span>
-						Criado em {{ object.date }} por {{ object.get_name }}
+						Criado em {{ object.date }} por {{ object.name }}
 					</span>
 				</div>
 				<div class="entry-content">
@@ -72,8 +26,34 @@
 					{{ object.comment|striptags|lethusmarkdown }}
 				</div>
 			</div>
-
-			Responder
+            <form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST">
+                Responder
+                {% csrf_token %}
+                <br />
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                <br />
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                <br />
+                {{ form.phone.label_tag }}
+                {{ form.phone }}
+                <br />
+                {{ form.reply.label_tag }}
+                {{ form.reply }}
+                <br />
+              
+              <p class="btn-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="icon-ok icon-white"></i> {% trans "Reply" %}
+                </button>
+                <button type="button" onclick="history.go(-1)" class="btn">
+                  <i class="icon-arrow-left"></i> {% trans "Back" %}
+                </button>
+              </p>
+    			
+            </form>
+        
 		</section>
 		{% include 'faq/sidebar.html' %}
 	</div>

@@ -10,8 +10,5 @@ urlpatterns = patterns('',
     url(r'^add/',AddForumView.as_view(), name='add_forum'),
     url(r'^update/(?P<id>\d+)/', DetailForumView.as_view(),
         name='update_forum'),
-    url(r'^admin/$', ListForumView.as_view(), name="forum_admin"),
-    url(r'^admin/update/(?P<id>\d+)/', DetailAdminForumView.as_view(), name="update_forum_admin"),
-    url(r'^admin/delete/(?P<id>\d+)/', DeleteAdminForumView.as_view(), name="delete_forum_admin"),
 
 )

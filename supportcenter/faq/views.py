@@ -88,7 +88,6 @@ class AddQuestionView(IncludeCategoriesTemplate, CreateView):
     def get_form_kwargs(self, *args, **kwargs):
         fw = super(AddQuestionView, self).get_form_kwargs(*args, **kwargs)
         fw['user'] = self.request.user
-        
         return fw
 
 class DetailQuestionView(IncludeCategoriesTemplate, DetailView):

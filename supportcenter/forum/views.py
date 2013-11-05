@@ -59,12 +59,14 @@ class AddForumView(ForumViewMixIn, CreateView):
     template_name = 'forum/form.html'
     success_message = _("Your question has been added")
 
-class DetailForumView(ForumViewMixIn, CreateView):
+class DetailForumView(CreateView):
     template_name = 'forum/detail.html'
     form_class = AddReplyForm 
+    success_url = '/'
+    success_message = _("Your reply has been added")
 
 
-    def get_object(self, *args, **kwargs):
+    def get_forum(self, *args, **kwargs):
         id = self.kwargs.get('id')
         object = get_document_or_404(
             Forum,
@@ -74,9 +76,15 @@ class DetailForumView(ForumViewMixIn, CreateView):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super(DetailForumView, self).get_context_data(*args, **kwargs)
-        ctx['object'] = self.get_object()
+        ctx['object'] = self.get_forum()
 
         return ctx
+
+    def get_form_kwargs(self, *args, **kwargs):
+        fw = super(DetailForumView, self).get_form_kwargs(*args, **kwargs)
+        fw['user'] = self.request.user
+        
+        return fw
 
 
 class ListAdminForumView(HybridListView):
