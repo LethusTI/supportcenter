@@ -46,24 +46,28 @@
 	<div class="container">
 		<section id="content">
 			<div id="homepage-widgets" class="row">
+
+				{% if last_questions %}
 				<div class="column articles home-col-half widget">
 					<h4 class="widget-title"><span>Últimos artigos</span></h4>
 					<ul>
-						<li><a href="#">Como cadastrar um usuário</a></li>
-						<li><a href="#">Realizando um atendimento</a></li>
-						<li><a href="#">Configurando agenda médica</a></li>
-						<li><a href="#">Cadastrar um novo médico</a></li>
+						{% for question in last_questions %}
+						<li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></li>
+						{% endfor %}
 					</ul>
 				</div>
+				{% endif %}
+
+				{% if last_forum %}
 				<div class="column forum home-col-half widget">
 					<h4 class="widget-title"><span>Atividade recente no fórum</span></h4>
 					<ul>
-						<li><a href="#">Onde posso inserir a minha licença ?</a></li>
-						<li><a href="#">Como compartilho minha agenda ?</a></li>
-						<li><a href="#">Como altero minha foto ?</a></li>
-						<li><a href="#">Sugestão sobre como fazer o atendimento</a></li>
+						{% for forum in last_forum %}
+						<li><a href="{{ forum.get_absolute_url }}">{{ forum.title }}</a></li>
+						{% endfor %}
 					</ul>
 				</div>
+				{% endif %}
 			</div>
 		</section>
 		<!-- isso pode deixar statico que eu mudo nos codigos html mas aqui a ideia seria montar lugar para colocarmos uma noticia ou aletta-->
