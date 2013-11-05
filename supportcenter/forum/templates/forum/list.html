@@ -23,10 +23,12 @@
 				{% endif %}
 				
 				<hr />
-				<button type="button" class="btn" id="add-btn" href="/forum/add/">
+				<button><a type="button" class="btn" id="add-btn"  href="/forum/add/">
 						{% trans "Add" %}
+						</a>
 				</button>
-				<button type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}
+				<button><a type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}>
+				</a>
 				</button>
 				<hr/>
 				<ol class="topic-list">
