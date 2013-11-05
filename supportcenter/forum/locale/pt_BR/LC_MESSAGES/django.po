@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-05 11:40-0200\n"
-"PO-Revision-Date: 2013-11-05 11:41-0200\n"
+"POT-Creation-Date: 2013-11-05 16:54-0200\n"
+"PO-Revision-Date: 2013-11-05 16:53-0200\n"
 "Last-Translator: Wilson Júnior <wilsonpjunior@gmail.com>\n"
 "Language-Team: Português <>\n"
 "Language: \n"
@@ -20,85 +20,97 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
-#: models.py:20
+#: models.py:22
 msgid "Create by user"
 msgstr "Criado por usuário"
 
-#: models.py:26
+#: models.py:28
 msgid "Name"
 msgstr "Nome"
 
-#: models.py:27
+#: models.py:29
 msgid "Enter your first and last name."
 msgstr "Digite seu nome completo."
 
-#: models.py:31
+#: models.py:33
 msgid "Email"
 msgstr "Email"
 
-#: models.py:32
+#: models.py:34
 msgid "Enter a valid email address."
 msgstr "Informe um endereço de email válido."
 
-#: models.py:35
+#: models.py:37
 msgid "Phone"
 msgstr "Telefone"
 
-#: models.py:37
+#: models.py:41
 msgid "Enter a valid phone number."
 msgstr "Informe um número de telefone válido."
 
-#: models.py:41
+#: models.py:45
 msgid "creation date"
 msgstr "Data de criação"
 
-#: models.py:57
-msgid "Anonymous"
-msgstr "Anônimo"
-
-#: models.py:69
+#: models.py:73
 msgid "Post Title"
 msgstr "Título"
 
-#: models.py:73
+#: models.py:77
 msgid "Comment"
 msgstr "Comentário"
 
-#: models.py:87 templates/forum/detail.html:48
+#: models.py:102 templates/forum/detail.html:76
 msgid "Reply"
 msgstr "Responder"
 
-#: views.py:60
+#: views.py:59
 msgid "Your question has been added"
 msgstr "Sua questão foi adicionada com sucesso"
 
-#: views.py:66
+#: views.py:67
 msgid "Your reply has been added"
 msgstr "Sua resposta foi adicionada"
+
+#: views.py:98
+msgid "The topic has been destroyed"
+msgstr "O tópico foi apagado com sucesso"
+
+#: templates/forum/confirm_delete.html:11 templates/forum/detail.html:25
+msgid "Delete topic"
+msgstr "Remover tópico"
+
+#: templates/forum/confirm_delete.html:17
+msgid "Title"
+msgstr "Título"
+
+#: templates/forum/confirm_delete.html:21
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: templates/forum/confirm_delete.html:24 templates/forum/detail.html:79
+#: templates/forum/form.html:28 templates/forum/list.html:29
+msgid "Back"
+msgstr "Voltar"
 
 #: templates/forum/detail.html:8 templates/forum/detail.html.py:19
 #: templates/forum/form.html:8 templates/forum/list.html:8
 msgid "Topic"
 msgstr "Tópico"
 
-#: templates/forum/detail.html:51 templates/forum/form.html:27
-#: templates/forum/list.html:29
-msgid "Back"
-msgstr "Voltar"
-
-#: templates/forum/form.html:15
+#: templates/forum/form.html:17
 msgid "Update"
 msgstr "Editar"
 
-#: templates/forum/form.html:15 templates/forum/list.html:27
+#: templates/forum/form.html:17 templates/forum/list.html:27
 msgid "Add"
 msgstr "Adicionar"
 
-#: templates/forum/form.html:15
+#: templates/forum/form.html:17
 msgid "topic"
 msgstr "tópico"
 
-#: templates/forum/form.html:24
+#: templates/forum/form.html:25
 msgid "Save"
 msgstr "Salvar"
 
@@ -125,14 +137,100 @@ msgstr "Fórum"
 
 #: templates/forum/search_widget.html:7
 msgid "Look for topics..."
-msgstr "Busque por tópicos"
+msgstr "Busque por tópicos..."
 
-#: templates/forum/search_widget.html:7
-msgid "Look for topics"
-msgstr "Busque por tópicos"
+#: templates/forum/emails/new_reply_message.html:6
+#: templates/forum/emails/new_reply_message.txt:4
+#: templates/forum/emails/new_topic_message.html:6
+#: templates/forum/emails/new_topic_message.txt:4
+#, python-format
+msgid "Hello %(name)s,"
+msgstr "Olá %(name)s,"
 
-#~ msgid "Title"
-#~ msgstr "Título"
+#: templates/forum/emails/new_reply_message.html:9
+#, python-format
+msgid ""
+"\n"
+"\n"
+"\t We just wanted to let you know that a new reply for the topic has been "
+"added: \"%(title)s\". You can visit it here: <a href=\"%(domain)s%(url)s\">"
+"%(domain)s%(url)s</a>\n"
+"    "
+msgstr ""
+"\n"
+"\n"
+"\tNós estamos avisando que uma resposta foi adicionada ao tópico: \"%(title)s"
+"\". Você pode visualiza-la aqui: <a href=\"%(domain)s%(url)s\">%(domain)s"
+"%(url)s</a>"
+
+#: templates/forum/emails/new_reply_message.html:19
+#: templates/forum/emails/new_topic_message.html:18
+msgid "You are receiving these messages because you are a staff member."
+msgstr "."
+
+#: templates/forum/emails/new_reply_message.txt:6
+#, python-format
+msgid ""
+"\n"
+" We just wanted to let you know that a new reply for the topic has been "
+"added: \"%(title)s\". You can visit it here: %(domain)s%(url \")s\"\n"
+"%(reply.reply)s\n"
+msgstr ""
+"\n"
+"Nós estamos avisando que uma nova reposta para o tópico foi adicionada: "
+"\"%(title)s\". Você pode visitá-lo aqui: %(domain)s%(url \")s\"\n"
+"%(reply.reply)s\n"
+
+#: templates/forum/emails/new_reply_subject.txt:2
+#, python-format
+msgid ""
+"\n"
+"Lethus support center - new reply for the topic: %(title)s\n"
+msgstr ""
+"\n"
+"Lethus central de supporte - nova resposta para o tópico: %(title)s\n"
+
+#: templates/forum/emails/new_topic_message.html:9
+#, python-format
+msgid ""
+"\n"
+"\tWe just wanted to let you know that a new topic has been added: \"%(title)s"
+"\". You can visit it here: <a href=\"%(domain)s%(url)s\">%(domain)s%(url)s</"
+"a>\n"
+"    "
+msgstr ""
+"\n"
+"\tNós estamos avisando que um novo tópico foi criado: \"%(title)s\". Você "
+"pode visualiza-lo clicando aqui: <a href=\"%(domain)s%(url)s\">%(domain)s"
+"%(url)s</a>"
+
+#: templates/forum/emails/new_topic_message.txt:6
+#, python-format
+msgid ""
+"\n"
+" We just wanted to let you know that a new topic has been added: \"%(title)s"
+"\". You can visit it here: %(domain)s%(url \")s\"\n"
+"%(topic.comment)s\n"
+msgstr ""
+"\n"
+"Nós estamos avisando que um novo tópico foi criado: \"%(title)s\". Você pode "
+"visualiza-lo clicando aqui: %(domain)s%(url \")s\"\n"
+"%(topic.comment)s\n"
+
+#: templates/forum/emails/new_topic_subject.txt:2
+#, python-format
+msgid ""
+"\n"
+"Lethus support center - new topic: %(topic.title)s\n"
+msgstr ""
+"\n"
+"Lethus central de suporte - novo tópico: %(topic.title)s\n"
+
+#~ msgid "Anonymous"
+#~ msgstr "Anônimo"
+
+#~ msgid "Look for topics"
+#~ msgstr "Busque por tópicos"
 
 #~ msgid "User"
 #~ msgstr "Usuário"

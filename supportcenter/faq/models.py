@@ -13,7 +13,6 @@ from mongoengine.queryset import QuerySet, Q
 from mongoengine import signals
 
 #from knowledge.managers import QuestionManager, ResponseManager
-from .signals import knowledge_post_save
 
 class Category(Document):
     added = DateTimeField(default=datetime.datetime.now)
@@ -185,5 +184,3 @@ class Question(KnowledgeBase):
             return ', '.join([str(c) for c in self.categories])
         return ''
     
-
-signals.post_save.connect(knowledge_post_save, sender=Question)

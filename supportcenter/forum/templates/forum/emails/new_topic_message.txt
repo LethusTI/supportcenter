@@ -1,0 +1,9 @@
+{% load i18n %}
+{% load markup %}
+
+{% blocktrans with name=name %}Hello {{ name }},{% endblocktrans %}
+
+{% blocktrans with url=topic.url title=topic.title domain=site.domain %}
+ We just wanted to let you know that a new topic has been added: "{{ title }}". You can visit it here: {{ domain }}{{ url "}}"
+{{ topic.comment }}
+{% endblocktrans %}

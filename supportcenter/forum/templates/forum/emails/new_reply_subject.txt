@@ -1,0 +1,4 @@
+{% load i18n %}
+{% blocktrans with title=reply.forum.title %}
+Lethus support center - new reply for the topic: {{ title }}
+{% endblocktrans %}

@@ -11,6 +11,8 @@ from mongoengine import *
 from mongoengine.queryset import QuerySet, Q
 from mongoengine import signals
 
+from .signals import *
+
 class ForumBase(Document):
     id = SequenceField(
         primary_key=True)
@@ -33,7 +35,9 @@ class ForumBase(Document):
 
     phone = StringField(
         verbose_name=_('Phone'),
-        required=True,
+        # falso apenas para o banco de dados
+        # caso o admin responda nao alocar o phone
+        required=False,
         help_text=_('Enter a valid phone number.'))
 
     date = DateTimeField(
@@ -54,7 +58,7 @@ class ForumBase(Document):
         if name:
             return name.strip()
         else:
-            return _("Anonymous")
+            return self.name
 
     meta = {
         'abstract': True,
@@ -84,7 +88,14 @@ class Forum(ForumBase):
         return queryset
 
     def get_absolute_url(self):
-        return '/forum/update/%d/' % self.id
+        return '/forum/%d/' % self.id
+
+    def get_delete_url(self):
+        return '/forum/delete/%d/' % self.id
+
+    @property
+    def url(self):
+        return self.get_absolute_url()
 
 class Reply(ForumBase):
     reply = StringField(
@@ -101,3 +112,14 @@ class Reply(ForumBase):
             {'fields': ['forum']}
         ]
     }
+
+    def get_absolute_url(self):
+        return '/forum/%d/#reply-%d' % (
+            self.forum.id, self.id)
+
+    @property
+    def url(self):
+        return self.get_absolute_url()
+        
+signals.post_save.connect(forum_post_save, sender=Forum)
+signals.post_save.connect(reply_post_save, sender=Reply)

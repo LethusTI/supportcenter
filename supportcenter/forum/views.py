@@ -2,8 +2,7 @@
 
 __all__ = (
     'ListForumView', 'AddForumView',
-    'DetailForumView', 'ListAdminForumView',
-    'DetailAdminForumView', 'DeleteAdminForumView')
+    'DetailForumView', 'DeleteForumView')
 
 from mongotools.views import (
     ListView, CreateView, UpdateView, 
@@ -32,7 +31,8 @@ class ListForumView(ListView):
 
     def get_queryset(self):
         search = self.request.GET.get('title', None)
-        queryset = self.document.objects
+        queryset = self.document.objects.order_by(
+            '-date')
 
         if search:
             queryset = queryset.filter(
@@ -44,7 +44,6 @@ class ListForumView(ListView):
 
 class ForumViewMixIn(object):
     document = Forum
-    form_class = AddForumForm
     success_url = '/forum/'
 
     def get_form_class(self, *args, **kwargs):
@@ -59,14 +58,16 @@ class AddForumView(ForumViewMixIn, CreateView):
     template_name = 'forum/form.html'
     success_message = _("Your question has been added")
 
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+        
 class DetailForumView(CreateView):
     template_name = 'forum/detail.html'
     form_class = AddReplyForm 
     success_message = _("Your reply has been added")
 
     def get_success_url(self):
-        forum = self.get_forum()
-        return "/forum/update/%d/" % forum.id
+        return self.object.get_absolute_url()
 
     def get_forum(self, *args, **kwargs):
         id = self.kwargs.get('id')
@@ -90,18 +91,14 @@ class DetailForumView(CreateView):
         return fw
 
 
-class ListAdminForumView(HybridListView):
+class DeleteForumView(DeleteView):
     document = Forum
-    template_name = 'forum/list_admin.html'
-    paginate_by = 20
-    allow_empty = True
-    json_object_list_fields = ['id', 'title', 'name']
-    filter_fields = ['title']
-
-class DetailAdminForumView(UpdateView):
-    document = Forum
-    template_name = 'forum/detail_admin.html'
-
-class DeleteAdminForumView(DeleteView):
-    document = Forum
-    template_name = 'forum/delete_admin.html'
+    template_name = 'forum/confirm_delete.html'
+    success_url = '/forum/'
+    success_message = _(u"The topic has been destroyed")
+    
+    def get_object(self, *args, **kwargs):
+        return get_document_or_404(
+            Forum,
+            id=int(self.kwargs['id'])
+        )

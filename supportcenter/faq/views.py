@@ -5,10 +5,11 @@ __all__ = (
     'AddQuestionAdminView',
     'UpdateQuestionAdminView',
     'ListCategoryView', 'AddCategoryView',
-    'UpdateCategoryView', 'DetailQuestionView')
+    'UpdateCategoryView', 'DetailQuestionView',
+    'DeleteQuestionAdminView')
 
 from mongotools.views import (
-    ListView, CreateView, UpdateView, DetailView)
+    ListView, CreateView, UpdateView, DeleteView, DetailView)
 from mongoengine.queryset import Q
 from mongoengine.django.shortcuts import get_document_or_404
 from django.utils.translation import ugettext_lazy as _
@@ -103,7 +104,9 @@ class ListQuestionAdminView(HybridListView):
     template_name = 'faq/admin_list.html'
     paginate_by = 20
     allow_empty = True
-    json_object_list_fields = ['id', 'title', 'get_status_display', 'get_categories_display']
+    json_object_list_fields = [
+        'id', 'title', 'get_status_display',
+        'get_categories_display']
     filter_fields = ['title']
 
 
@@ -111,7 +114,7 @@ class QuestionAdminViewMixIn(object):
     document = Question
     form_class = AdminQuestionForm
     template_name = 'faq/admin_form.html'
-    success_url = '/admin/'
+    success_url = '/faq/'
 
     def get_form_kwargs(self, *args, **kwargs):
         fw = super(QuestionAdminViewMixIn, self).get_form_kwargs(*args, **kwargs)
@@ -120,12 +123,19 @@ class QuestionAdminViewMixIn(object):
         return fw
     
 class AddQuestionAdminView(QuestionAdminViewMixIn, CreateView):
-    success_message = u"A questão foi adicionada com sucesso"
-    success_url = '/admin/'
+    success_message = _(u"The question was added successfully")
     
 class UpdateQuestionAdminView(QuestionAdminViewMixIn, UpdateView):
-    success_message = u"A questão foi atualizada com sucesso"
-    success_url = '/admin/'
+    success_message = _(u"The question was updated successfully")
+    
+    def get_object(self):
+        return get_document_or_404(
+            self.document,
+            pk=int(self.kwargs['pk']))
+
+class DeleteQuestionAdminView(QuestionAdminViewMixIn, DeleteView):
+    success_message = _(u"The question was destroyed successfully")
+    template_name = 'faq/admin_confirm_delete.html'
     
     def get_object(self):
         return get_document_or_404(

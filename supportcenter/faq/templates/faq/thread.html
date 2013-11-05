@@ -29,7 +29,10 @@
             Criado em {{ object.added }}
 			{% if user.is_superuser %}
 			<a href="/admin/{{ object.id }}/">
-				Editar questão
+				{% trans "Update question" %}
+			</a>&nbsp
+			<a href="/admin/delete/{{ object.id }}/">
+				{% trans "Delete question" %}
 			</a>
 			{% endif %}
           </span>

@@ -11,12 +11,13 @@ from .views import AdminSettingsView, SuperMainView
 from supportcenter.faq.views import (
     ListCategoryView, AddCategoryView, UpdateCategoryView,
     ListQuestionAdminView, AddQuestionAdminView,
-    UpdateQuestionAdminView)
+    UpdateQuestionAdminView, DeleteQuestionAdminView)
 
 urlpatterns = patterns(
     '',
     url(r'^add/$', superuser_only(AddQuestionAdminView.as_view())),
     url(r'^(?P<pk>\d+)/$', superuser_only(UpdateQuestionAdminView.as_view())),
+    url(r'^delete/(?P<pk>\d+)/$', superuser_only(DeleteQuestionAdminView.as_view())),
 
     url(r'^categories/$', superuser_only(ListCategoryView.as_view())),
     url(r'^categories/add/$', superuser_only(AddCategoryView.as_view())),

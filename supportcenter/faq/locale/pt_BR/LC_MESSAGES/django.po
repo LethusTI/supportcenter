@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Support Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-05 11:38-0200\n"
-"PO-Revision-Date: 2013-11-05 11:39-0200\n"
+"POT-Creation-Date: 2013-11-05 16:36-0200\n"
+"PO-Revision-Date: 2013-11-05 16:45-0200\n"
 "Last-Translator: Wilson Júnior <wilsonpjunior@gmail.com>\n"
 "Language-Team: Português <>\n"
 "Language: Português\n"
@@ -20,55 +20,80 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
-#: models.py:22 templates/faq/admin_list.html:36
-#: templates/faq/category_list.html:40
+#: models.py:21 templates/faq/admin_confirm_delete.html:17
+#: templates/faq/admin_list.html:36 templates/faq/category_list.html:40
 msgid "Title"
 msgstr "Título"
 
-#: models.py:52
+#: models.py:51
 msgid "Name"
 msgstr "Nome"
 
-#: models.py:53
+#: models.py:52
 msgid "Enter your first and last name."
 msgstr "Digite seu nome completo"
 
-#: models.py:57
+#: models.py:56
 msgid "Email"
 msgstr "E-Mail"
 
-#: models.py:58
+#: models.py:57
 msgid "Enter a valid email address."
 msgstr "Digite um endereço de e-mail válido"
 
-#: models.py:79
+#: models.py:78
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: models.py:96
+#: models.py:95
 msgid "Question"
 msgstr "Questão"
 
-#: models.py:98
+#: models.py:97
 msgid "Enter your question or suggestion."
 msgstr "Entre com sua questão ou sugestão."
 
-#: models.py:102
+#: models.py:101
 msgid "Description"
 msgstr "Descrição"
 
-#: models.py:103
+#: models.py:102
 msgid "Please offer details. Markdown enabled."
 msgstr "Por favor utilize detalhes. Marcação ativada."
 
-#: models.py:109 templates/faq/admin_list.html:38 templates/faq/inner.html:25
+#: models.py:108 templates/faq/admin_list.html:38 templates/faq/inner.html:25
 #: templates/faq/sidebar.html:18
 msgid "Categories"
 msgstr "Categorias"
 
-#: views.py:83
+#: views.py:84
 msgid "Your question has been added"
 msgstr "Sua questão foi adicionada com sucesso"
+
+#: views.py:126
+msgid "The question was added successfully"
+msgstr "A questão foi adicionada com sucesso"
+
+#: views.py:129
+msgid "The question was updated successfully"
+msgstr "A questão foi atualizada com sucesso"
+
+#: views.py:137
+msgid "The question was destroyed successfully"
+msgstr "A questão foi removida com sucesso"
+
+#: templates/faq/admin_confirm_delete.html:11 templates/faq/thread.html:35
+msgid "Delete question"
+msgstr "Deletar questão"
+
+#: templates/faq/admin_confirm_delete.html:21
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: templates/faq/admin_confirm_delete.html:24 templates/faq/admin_form.html:58
+#: templates/faq/category_form.html:22
+msgid "Back"
+msgstr "Voltar"
 
 #: templates/faq/admin_form.html:40 templates/faq/category_form.html:10
 #: templates/faq/category_list.html:30
@@ -87,10 +112,6 @@ msgstr "questão"
 #: templates/faq/admin_form.html:55 templates/faq/category_form.html:19
 msgid "Save"
 msgstr "Salvar"
-
-#: templates/faq/admin_form.html:58 templates/faq/category_form.html:22
-msgid "Back"
-msgstr "Voltar"
 
 #: templates/faq/admin_list.html:3 templates/faq/admin_list.html.py:18
 msgid "Manage questions"
@@ -232,6 +253,10 @@ msgstr "Faça sua pergunta ou sugestão."
 #: templates/faq/sidebar.html:31
 msgid "Return to homepage."
 msgstr "Retorne a página inicial."
+
+#: templates/faq/thread.html:32
+msgid "Update question"
+msgstr "Atualizar questão"
 
 #: templates/faq/emails/message.html:7 templates/faq/emails/message.txt:4
 #, python-format
