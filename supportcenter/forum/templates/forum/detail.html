@@ -60,5 +60,29 @@
 
 </ol>
 {% csrf_token %}
+
+{% include "forum/search_widget.html" %}
+
+<div id="primary" class="sidebar-right">
+	<div class="container">
+		<section id="content">
+			<div class="row category-list">
+				<div class="article">
+					<h2 class="entry-title"><a href="{{ object.get_absolute_url }}">{% trans "Topic" %}: {{ object.title }}</a></h2>
+					<span>
+						Criado em {{ object.date }} por {{ object.get_name }}
+					</span>
+				</div>
+				<div class="entry-content">
+					<!-- coloca o conteudo do artigo -->
+					{{ object.comment|striptags|lethusmarkdown }}
+				</div>
+			</div>
+
+			Responder
+		</section>
+		{% include 'faq/sidebar.html' %}
+	</div>
 </div>
+
 {% endblock knowledge_widgets %}

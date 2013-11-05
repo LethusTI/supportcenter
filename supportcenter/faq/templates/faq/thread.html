@@ -9,27 +9,39 @@
 
 {% block knowledge_widgets %}
 
-<div class="dk-widget">
-
-  <div class="dk-dialog">
-    <div class="the-author gravatar"><img src="{% get_gravatar object.get_email %}" alt="{{ object.get_name }} gravatar"></div>
-    <div class="the-content gravatar">
-      <h2>{{ object.title }}</h2>
-      <h5>{{ object.get_name }} <span class="quiet">
-        {% if object.user %}
-          {% if object.user.is_staff %}&nbsp;<span class="dk-label dk-label-success">{% trans "staff" %}</span>
-          {% else %}&nbsp;<span class="dk-label">{% trans "user" %}</span>{% endif %}
-        {% endif %}
-        &nbsp;{{ object.added }}
-      </span></h5>
-
-      {{ object.body|striptags|lethusmarkdown }}
-
-      {% include "faq/mod_bar.html" with allowed_mods=allowed_mods.object type="object" node=object %}
+<div id="page-header">
+  <div class="container">
+    <h1>Base de conhecimento</h1>
+    <div id="live-search">
+        <form method="get" action="/faq/" autocomplete="off">
+            <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="title" id="s" autocomplete="off">
+        </form>
     </div>
-  </div> <!-- .dk-dialog -->
-
-
+  </div>
+</div>
+<div id="primary" class="sidebar-right">
+  <div class="container">
+    <section id="content">
+      <div class="row category-list">
+        <div class="article">
+          <h2 class="entry-title"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
+          <span>
+            Criado em {{ object.added }}
+			{% if user.is_superuser %}
+			<a href="/admin/{{ object.id }}/">
+				Editar questão
+			</a>
+			{% endif %}
+          </span>
+        </div>
+        <div class="entry-content">
+          <!-- coloca o conteudo do artigo -->
+         {{ object.body|striptags|lethusmarkdown }}
+        </div>
+      </div>
+    </section>
+    {% include 'faq/sidebar.html' %}
+  </div>
 </div>
 
 {% endblock knowledge_widgets %}

@@ -5,7 +5,6 @@
 
 {% block knowledge_inner %}
 
-<div class="dk-inner">
 	<header id="header">
 		<div class="container">
 			<div id="header-inner">
@@ -21,6 +20,13 @@
 		  				<li><a href="/forum/">{% trans "Forum" %}</a></li>
 		  				<li><a href="https://app.lethussaude.com.br">{% trans "Return to site" %}</a></li>
 		  				<li><a href="/contact/">{% trans "Contact" %}</a></li>
+
+						{% if user.is_superuser %}
+		  				<li><a href="/admin/categories/">{% trans "Categories" %}</a></li>
+		  				<li><a href="/admin/superusers/">{% trans "Super users" %}</a></li>
+		  				<li><a href="/auth/logout/">{% trans "Logout" %}</a></li>
+						{% endif %}
+						
 		  			</ul>
 		  		</nav>
 			</div>
@@ -37,16 +43,6 @@
 	{% endfor %}
 	{% endif %}
 	
-
-	<!---
-		<div class="dk-search">
-			<form action="{% if category %}{% url "knowledge_list_category" category.slug %}{% else %}{% url "knowledge_list" %}{% endif %}" method="get">
-				<input class="question-search" {% if search %}value="{{ search|force_escape }}"{% else %}placeholder="{% trans "Start typing your question here." %}"{% endif %} type="text" name="title"/> <input value="{% trans "Search" %}" type="submit" class="submit-question-search" />
-			</form>
-			<div class="clear"></div>
-		</div>
-		-->
-
 	{% block welcome %}
 	{% endblock %}
 
@@ -56,13 +52,6 @@
 		{% endblock knowledge_widgets %}
 	</div>
 
-	<div class="dk-sidebar">
-		<div class="inner">
-			{% include "faq/sidebar.html" %}
-		</div>
-	</div>
-
 	<div class="clear"></div>
-</div>
 
 {% endblock knowledge_inner %}

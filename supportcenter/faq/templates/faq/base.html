@@ -1,3 +1,4 @@
+{% load i18n %}
 <!doctype html>
 <html lang="en">
 	<head>
@@ -17,6 +18,8 @@
 		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.validate.ptbr.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.maskedinput-1.3.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}js/custom.js"></script>
+
+		{% block header %}{% endblock %}
 	</head>
 
 	<body class="home">
@@ -25,6 +28,23 @@
 	  {% block knowledge_inner %}
 	  {% endblock knowledge_inner %}
 
-  
+
+	  <footer id="footer">
+		  <div id="footer-bottom">
+			  <div class="container">
+				  <small id="copyright">Copyright © Lethus TI Ltda.</small>
+				  <nav id="footer-nav">
+					  <ul>
+						  <li><a href="/">{% trans "Home" %}</a></li>
+	  					  <li><a href="/faq/">{% trans "Knowledge Base" %}</a></li>
+	  					  <li><a href="/forum/">{% trans "Forum" %}</a></li>
+	  					  <li><a href="https://app.lethussaude.com.br">{% trans "Return to site" %}</a></li>
+	  					  <li><a href="/contact/">{% trans "Contact" %}</a></li>
+	  					  <li><a href="/auth/login/">{% trans "Administration" %}</a></li>
+					  </ul>
+				  </nav>
+			  </div>
+		  </div>
+	  </footer>
 	</body>
 </html>

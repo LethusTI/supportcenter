@@ -1,24 +1,66 @@
-{% extends "master/base.html" %}
+{% extends "faq/inner.html" %}
 {% load i18n %}
-{% block content %}
-<div class="page-header">
-	<h3>
-		{% if object %}{% trans "Update" %}{% else %}{% trans "Add" %}{% endif %} question
-		<small>* {% trans "is required" %}</small>
-	</h3>
+
+{% block header %}
+<style type="text/css">
+#id_name,
+#id_email,
+#id_title {
+  width: 600px;
+}
+#id_body {
+  display: none;
+}
+</style>
+
+<script src="{{ STATIC_URL }}js/epiceditor.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function (e) {
+      var opts = {
+        textarea: 'id_body',
+        basePath: '',
+        theme: {
+          base: '{{ STATIC_URL }}css/epiceditor/base/epiceditor.css',
+          preview: '{{ STATIC_URL }}css/epiceditor/preview/preview-dark.css',
+          editor: '{{ STATIC_URL }}css/epiceditor/editor/epic-dark.css'
+        }
+      }
+      var editor = new EpicEditor(opts).load();
+});
+</script>
+{% endblock %}
+
+{% block knowledge_widgets %}
+<div id="primary" class="sidebar-off">
+  <div class="container">
+    <section id="content">
+
+      <div class="page-header">
+        <h3>
+          {% if object %}{% trans "Update" %}{% else %}{% trans "Add" %}{% endif %} question
+        </h3>
+      </div>
+      <form id="form" action="." method="POST">
+        {% include "master/message.error.html" %}
+        {% csrf_token %}
+        {% include "master/form_snippet.html" %}
+
+        <div id="epiceditor" style="height: 353px;">
+        
+      </div>
+
+
+        <p class="btn-group" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-primary">
+              <i class="icon-ok icon-white"></i> {% trans "Save" %}
+          </button>
+          <button type="button" onclick="history.go(-1)" class="btn">
+            <i class="icon-arrow-left"></i> {% trans "Back" %}
+          </button>
+        </p>
+        
+      </form>
+    </section>
+  </div>
 </div>
-<form id="form" action="." method="POST">
-	{% include "master/message.error.html" %}
-	{% csrf_token %}
-	
-	<p class="btn-group">
-		<button type="submit" class="btn btn-primary">
-    		<i class="icon-ok icon-white"></i> {% trans "Save" %}
-		</button>
-		<button type="button" onclick="history.go(-1)" class="btn">
-			<i class="icon-arrow-left"></i> {% trans "Back" %}
-		</button>
-	</p>
-	{% include "master/form_snippet.html" %}
-</form>
 {% endblock %}

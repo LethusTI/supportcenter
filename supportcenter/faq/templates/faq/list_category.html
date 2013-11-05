@@ -1,0 +1,107 @@
+{% extends 'faq/inner.html' %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% load knowledge_tags %}
+
+{% block title %}Showing {{ paginator.count }} results{% if search %} for {{ search }}{% endif %}{% if category %} in {{ category.title }} category{% endif %}{% endblock title %}
+
+{% block knowledge_widgets %}
+
+<!-- essa barra é fixa em todas as telas da base de conhecimento e forum -->
+<div id="page-header">
+  <div class="container">
+    <h1>Base de conhecimento</h1>
+    <div id="live-search">
+        <form method="get" action="/faq/" autocomplete="off">
+            <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="title" id="s" autocomplete="off">
+        </form>
+    </div>
+  </div>
+</div>
+<div id="primary" class="sidebar-right">
+  <div class="container">
+    <section id="content">
+      <div class="row category-list">
+        <h3 = "category-title">Nome da categoria</h3>
+        <!-- loopar daqui para a listagem do forum voce faz igual aqui só que no class fica forum ao inves de article-->
+        <div class="article">
+          <h2 class="entry-title"><a href="#">Nome artigo</a></h2>
+          <span>
+            Criado em 12/10/2013 as 12:12
+          </span>
+        </div>
+        <div class="article">
+          <h2 class="entry-title"><a href="#">Nome artigo 2</a></h2>
+          <span>
+            Criado em 13/10/2013 as 12:12
+          </span>
+        </div>
+      </div>
+    </section>
+    {% include 'faq/sidebar.html' %}
+  </div>
+</div>
+
+<!-- o footer entra na base mas como aqui não tinha como colocar por que tinha codigo do knowledge django -->
+<!-- FOOT PODE DEIXAR FIXAO EM TODAS AS PAGINAS -->
+<footer id="footer">
+  <div id="footer-bottom">
+    <div class="container">
+      <small id="copyright">Copyright © Lethus TI Ltda.</small>
+      <nav id="footer-nav">
+        <ul>
+          <li><a href="/">{% trans "Home" %}</a></li>
+            <li><a href="/faq/">{% trans "Knowledge Base" %}</a></li>
+            <li><a href="/forum/">{% trans "Forum" %}</a></li>
+            <li><a href="https://app.lethussaude.com.br">{% trans "Return to site" %}</a></li>
+            <li><a href="/contact/">{% trans "Contact" %}</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+<!-- fim footer daqui pra baixo vc adapta no html acima -->
+
+<div class="dk-widget">
+  {# dunno how to do translation on this nasty block... #}
+  <h3>Showing {{ counter }} results{% if search %} for <em>{{ search }}</em>{% endif %}{% if category %} in <em>{{ category.title }}</em> category{% endif %}:</h3>
+  <hr />
+
+  {% include 'faq/question_list.html' with questions=object_list %}
+
+
+  {% if not paginator.count %}
+    <p class="center"><em>{% trans "No results found." %}</em></p>
+  {% endif %}
+  
+  <hr class="light"/>
+
+  <div class="center">
+    <strong>
+    {% if object_list.has_previous %}
+      <a href="?{% page_query request object_list.previous_page_number %}">&larr; {% trans "previous" %}</a>
+    {% endif %}
+
+    &nbsp; {% blocktrans with number=page_obj.number pages=paginator.num_pages %}page {{ number }} of {{ pages }}{% endblocktrans %} &nbsp;
+
+    {% if object_list.has_next %}
+      <a href="?{% page_query request object_list.next_page_number %}">{% trans "next" %} &rarr;</a>
+    {% endif %}
+    </strong>
+  </div>
+</div>
+
+{% if form and paginator.count < 5 %}
+  <div class="dk-widget">
+    <h3>{% trans "Ask a Question" %}</h3>
+    <hr />
+
+    {% url "knowledge_ask" as form_url %}
+
+    {% include "faq/form.html" with submit_value="Submit this support request" submit_and="and we'll get back to you as soon as possible." submit_url=form_url %}
+  </div>
+{% endif %}
+
+{% endblock knowledge_widgets %}

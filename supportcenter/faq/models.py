@@ -15,18 +15,6 @@ from mongoengine import signals
 #from knowledge.managers import QuestionManager, ResponseManager
 from .signals import knowledge_post_save
 
-STATUSES = (
-    ('public', _('Public')),
-    ('private', _('Private')),
-    ('internal', _('Internal')),
-)
-
-
-STATUSES_EXTENDED = STATUSES + (
-    ('inherit', _('Inherit')),
-)
-
-
 class Category(Document):
     added = DateTimeField(default=datetime.datetime.now)
     lastchanged = DateTimeField(default=datetime.datetime.now)
@@ -40,6 +28,12 @@ class Category(Document):
     def __unicode__(self):
         return self.title
 
+    def faq_count(self):
+        return Question.objects(categories=self).count()
+
+    def last_by_date(self):
+        return Question.objects(categories=self).order_by('added')[0:5]
+    
     meta = {
         'ordering': ['title']
     }
@@ -64,6 +58,8 @@ class KnowledgeBase(Document):
         help_text=_('Enter a valid email address.'))
     
     get_email = lambda s: s.email or (s.user and s.user.email)
+
+    
     
     def clean(self):
         self.lastchanged = datetime.datetime.now()
@@ -88,15 +84,7 @@ class KnowledgeBase(Document):
 
 class QuestionQuerySet(QuerySet):
     def can_view(self, user):
-        if user.is_staff or user.is_superuser:
-            return self
-
-        if user.is_anonymous():
-            return self.filter(status='public')
-
-        return self.filter(
-            Q(status='public') | Q(status='private', user=user)
-        )
+        return self
 
 class Question(KnowledgeBase):
     id = SequenceField(
@@ -113,11 +101,6 @@ class Question(KnowledgeBase):
         required=True,
         verbose_name=_('Description'),
         help_text=_('Please offer details. Markdown enabled.'))
-
-    status = StringField(
-        verbose_name=_('Status'),
-        max_length=32, choices=STATUSES,
-        default='private')
 
     locked = BooleanField(default=False)
 
@@ -188,12 +171,6 @@ class Question(KnowledgeBase):
         else:
             return False
     accept.alters_data = True
-
-    def states(self):
-        """
-        Handy for checking for mod bar button state.
-        """
-        return [self.status, 'lock' if self.locked else None]
 
     @property
     def url(self):
