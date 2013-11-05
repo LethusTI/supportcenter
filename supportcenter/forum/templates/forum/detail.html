@@ -20,8 +20,6 @@
             </button>
   <hr/>
 <ol class="topic-list">
-    
-    
     <span>
         {{ object.title }}
     </span>
@@ -45,11 +43,11 @@
     <span>
        {% trans "Name" %} - {{ object.name }}
     </span>&nbsp;
-        
+    <br />
     <span>
         {% trans "email" %} - {{ object.email }}
     </span>&nbsp;
-    
+    <br />
     <span>
         {% trans "phone" %} - {{ object.phone }}
     </span>
@@ -61,5 +59,6 @@
     <br />
 
 </ol>
+{% csrf_token %}
 </div>
 {% endblock knowledge_widgets %}

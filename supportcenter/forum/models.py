@@ -37,8 +37,9 @@ class ForumBase(Document):
         help_text=_('Enter a valid phone number.'))
 
     date = DateTimeField(
-        required=False,
-        verbose_name =_('creation date')
+        required=True,
+        verbose_name =_('creation date'),
+        default=datetime.datetime.now
         )
     
     def get_name(self):
