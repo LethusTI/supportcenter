@@ -17,7 +17,7 @@
 			<div class="dk-widget">
 				{# dunno how to do translation on this nasty block... #}
 				{% if search %}
-				<h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} for <em>{{ search }}</em>{% endif %}:</h3>
+				<h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} {% trans "for" %} <em>{{ search }}</em>{% endif %}:</h3>
 				{% else %}
 				<h3>{% trans "Topics" %}</h3>
 				{% endif %}

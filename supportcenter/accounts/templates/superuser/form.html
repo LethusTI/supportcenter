@@ -1,50 +1,54 @@
 {% extends "faq/inner.html" %}
-
+{% load i18n %}
 {% block knowledge_widgets %}
-
-<div class="row">
-  <div class="span6">
-    <div class="page-header">
-      <h3>
-        {% if object %}Editando{% else %}Adicionando{% endif %} administrador
-        <small>* são obrigatórios</small>
-      </h3>
-    </div>    
-    
-    <form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST" class="well pull-left">
-      <section id="main">
-        {% include "master/form_snippet.html" %}
-        <p class="btn-group">
-    <button type="submit" class="btn btn-primary">
-    	<i class="icon-ok icon-white"></i> Salvar
-    </button>
-    <button type="button" onclick="history.go(-1)" class="btn">
-	<i class="icon-arrow-left"></i> Voltar
-    </button>
-  </p>
-    </form>
-  </div>
-  {% if object %}
-  <div class="span6">
-    <div class="page-header">
-      <h3>
-        Alterar senha
-        <small>* são obrigatórios</small>
-      </h3>
-    </div> 
-    
-    <form id="form2" action="{{ object.get_absolute_url }}password/" method="POST" class="well pull-left">
-      {% csrf_token %}
-      {% with form=form2 %}
-      {% include "master/form_snippet.html" %}
-      {% endwith %}
-      <p>
-        <input type="submit" value="Alterar" class="btn btn-primary" />
-      </p>
-    </form>
-    
-  </div>
-  {% endif %}
+<div id="primary" class="sidebar-off">
+	<div class="container">
+		<section id="content">
+			<div class="row">
+				<div class="span6">
+					<div class="page-header">
+						<h3>
+							{% if object %}{% trans "Update" %}{% else %}{% trans "Add" %}{% endif %} {% trans "Superuser" %}
+							<small>{% trans "* is required" %}</small>
+						</h3>
+					</div>    
+					
+					<form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST" class="well pull-left">
+						<section id="main">
+							{% include "master/form_snippet.html" %}
+							<p class="btn-group">
+								<button type="submit" class="btn btn-primary">
+    								<i class="icon-ok icon-white"></i> {% trans "Save" %}
+								</button>
+								<button type="button" onclick="history.go(-1)" class="btn">
+									<i class="icon-arrow-left"></i> {% trans "Back" %}
+								</button>
+							</p>
+					</form>
+				</div>
+				{% if object %}
+				<div class="span6">
+					<div class="page-header">
+						<h3>
+							{% trans "Change password" %}
+							<small>{% trans "* is required" %}</small>
+						</h3>
+					</div> 
+					
+					<form id="form2" action="{{ object.get_absolute_url }}password/" method="POST" class="well pull-left">
+						{% csrf_token %}
+						{% with form=form2 %}
+						{% include "master/form_snippet.html" %}
+						{% endwith %}
+						<p>
+							<input type="submit" value="{% trans "Change" %}" class="btn btn-primary" />
+						</p>
+					</form>
+					
+				</div>
+				{% endif %}
+			</div>
+		</section>
+	</div>
 </div>
-
 {% endblock %}

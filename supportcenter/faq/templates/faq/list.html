@@ -12,10 +12,12 @@
 <!-- essa barra é fixa em todas as telas da base de conhecimento e forum -->
 <div id="page-header">
   <div class="container">
-    <h1>Base de conhecimento</h1>
+    <h1>{% trans "Knowledge base" %}</h1>
     <div id="live-search">
         <form method="get" action="/faq/" autocomplete="off">
-            <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="title" id="s" autocomplete="off">
+			<input type="text" onfocus="if (this.value == '{% trans "Search our knowledge base ..." %}') {this.value = '';}" onblur="if (this.value == '')  {this.value = '{% trans "Search our knowledge base ..."%}';}" value="{% trans "Search our knowledge base ..."%}" name="title" id="s" autocomplete="off">
+
+
         </form>
     </div>
   </div>
@@ -28,7 +30,7 @@
     <section id="content">
       {% if user.is_superuser %}
       <a href="/admin/add/" class="btn" style="margin-bottom: 10px;">
-        Adicionar questão
+        {% trans "Add arcicle" %}
       </a>
       {% endif %}
       {% if not search and not category %}
@@ -36,8 +38,8 @@
         {% for category in categories %}
         <div class="column articles widget col-half">
           <h3>
-            <span class="count">{{ category.faq_count }} Artigo{{ category.faq_count|pluralize }}</span>
-            <a href="{% url "knowledge_list_category" category.slug %}" title="Veja todos os artigos">{{ category.title }} <span>→</span></a>
+            <span class="count">{{ category.faq_count }} {% trans "Arcicle" %}{{ category.faq_count|pluralize }}</span>
+            <a href="{% url "knowledge_list_category" category.slug %}" title="{% trans "View all arcicles" %}">{{ category.title }} <span>→</span></a>
           </h3>
           <ul>
             {% for question in category.last_by_date %}
@@ -52,7 +54,7 @@
 
       <div class="dk-widget">
         {# dunno how to do translation on this nasty block... #}
-        <h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} for <em>{{ search }}</em>{% endif %}{% if category %} in <em>{{ category.title }}</em> category{% endif %}:</h3>
+        <h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} {% trans "for" %} <em>{{ search }}</em>{% endif %}{% if category %} in <em>{{ category.title }}</em> {% trans "category" %}{% endif %}:</h3>
         <hr />
 
         {% include 'faq/question_list.html' with questions=object_list %}

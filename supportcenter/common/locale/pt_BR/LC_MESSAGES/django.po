@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-30 16:33-0200\n"
-"PO-Revision-Date: 2013-10-30 16:16-0200\n"
+"POT-Creation-Date: 2013-11-05 11:26-0200\n"
+"PO-Revision-Date: 2013-11-05 11:27-0200\n"
 "Last-Translator: Wilson Júnior <wilsonpjunior@gmail.com>\n"
 "Language-Team: Português <>\n"
 "Language: \n"
@@ -18,6 +18,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.6\n"
+
+#: templates/index.html:6
+msgid "Welcome to our Support Center."
+msgstr "Bem vindo a sua central de suporte"
+
+#: templates/index.html:7
+msgid "Search for answers to your questions below, or ask your own."
+msgstr "Procure por respostas primeiro, ou pergunte você mesmo"
+
+#: templates/index.html:10
+msgid "Search our knowledge base ..."
+msgstr "Procure em nossa base de conhecimento"
+
+#: templates/index.html:22
+msgid "Knowledge base"
+msgstr "Base de conhecimento"
+
+#: templates/index.html:29
+msgid "Forum"
+msgstr "Fórum"
+
+#: templates/index.html:36
+msgid "Contact us"
+msgstr "Contate-nos"
+
+#: templates/index.html:52
+msgid "Last arcicles"
+msgstr "Últimos artigos"
+
+#: templates/index.html:63
+msgid "Activity recent in the forum"
+msgstr "Atividade recente no fórum"
+
+#: templates/index.html:76
+msgid "News"
+msgstr "Novidades"
 
 #: templates/master/base.html:37
 msgid "Support Center"

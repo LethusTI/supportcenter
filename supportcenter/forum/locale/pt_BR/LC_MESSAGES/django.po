@@ -3,28 +3,28 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>, 2013.
+# Wilson Júnior <wilsonpjunior@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-01 15:20-0200\n"
-"PO-Revision-Date: 2013-11-01 15:33-0200\n"
-"Last-Translator: Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>\n"
-"Language-Team: Português <paolla.ocoutinho@gmail.com>\n"
+"POT-Creation-Date: 2013-11-05 11:40-0200\n"
+"PO-Revision-Date: 2013-11-05 11:41-0200\n"
+"Last-Translator: Wilson Júnior <wilsonpjunior@gmail.com>\n"
+"Language-Team: Português <>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
 #: models.py:20
 msgid "Create by user"
 msgstr "Criado por usuário"
 
-#: models.py:26 templates/forum/detail.html:50
-#: templates/forum/list_admin.html:37
+#: models.py:26
 msgid "Name"
 msgstr "Nome"
 
@@ -52,97 +52,108 @@ msgstr "Informe um número de telefone válido."
 msgid "creation date"
 msgstr "Data de criação"
 
-#: models.py:56
+#: models.py:57
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: models.py:68
+#: models.py:69
 msgid "Post Title"
 msgstr "Título"
 
-#: models.py:72 templates/forum/detail.html:36
+#: models.py:73
 msgid "Comment"
 msgstr "Comentário"
 
-#: models.py:89 templates/forum/detail.html:20 templates/forum/list.html:18
-#: templates/forum/list_admin.html:26
+#: models.py:87 templates/forum/detail.html:48
 msgid "Reply"
 msgstr "Responder"
 
-#: views.py:42
+#: views.py:60
 msgid "Your question has been added"
 msgstr "Sua questão foi adicionada com sucesso"
 
-#: templates/forum/detail.html:8 templates/forum/list.html:8
+#: views.py:66
+msgid "Your reply has been added"
+msgstr "Sua resposta foi adicionada"
+
+#: templates/forum/detail.html:8 templates/forum/detail.html.py:19
+#: templates/forum/form.html:8 templates/forum/list.html:8
 msgid "Topic"
 msgstr "Tópico"
 
-#: templates/forum/detail.html:14 templates/forum/list.html:14
-msgid "Topics"
-msgstr "Tópicos"
-
-#: templates/forum/detail.html:17 templates/forum/form.html:6
-#: templates/forum/list.html:16 templates/forum/list_admin.html:23
-msgid "Add"
-msgstr "Adicionar"
-
-#: templates/forum/detail.html:23 templates/forum/form.html:19
-#: templates/forum/list.html:20
+#: templates/forum/detail.html:51 templates/forum/form.html:27
+#: templates/forum/list.html:29
 msgid "Back"
 msgstr "Voltar"
 
-#: templates/forum/detail.html:30 templates/forum/list_admin.html:36
-msgid "Title"
-msgstr "Título"
-
-#: templates/forum/detail.html:43
-msgid "User"
-msgstr "Usuário"
-
-#: templates/forum/detail.html:54
-msgid "email"
-msgstr "email"
-
-#: templates/forum/detail.html:58
-msgid "phone"
-msgstr "telefone"
-
-#: templates/forum/detail.html:63
-msgid "Date"
-msgstr "Data"
-
-#: templates/forum/form.html:6
+#: templates/forum/form.html:15
 msgid "Update"
 msgstr "Editar"
 
-#: templates/forum/form.html:6
+#: templates/forum/form.html:15 templates/forum/list.html:27
+msgid "Add"
+msgstr "Adicionar"
+
+#: templates/forum/form.html:15
 msgid "topic"
 msgstr "tópico"
 
-#: templates/forum/form.html:7
-msgid "is required"
-msgstr "é obrigatório"
-
-#: templates/forum/form.html:16
+#: templates/forum/form.html:24
 msgid "Save"
 msgstr "Salvar"
 
-#: templates/forum/list.html:28
-msgid "no responses"
-msgstr "sem respostas"
+#: templates/forum/list.html:20
+#, python-format
+msgid "Showing %(counter)s results"
+msgstr "Mostrando %(counter)s resultados"
 
-#: templates/forum/list.html:34
-msgid "accepted"
-msgstr "aceito"
+#: templates/forum/list.html:20
+msgid "for"
+msgstr "para"
 
-#: templates/forum/list.html:38
-msgid "staff"
-msgstr "pessoal"
+#: templates/forum/list.html:22
+msgid "Topics"
+msgstr "Tópicos"
 
-#: templates/forum/list.html:41
+#: templates/forum/list.html:36
 msgid "by"
 msgstr "por"
 
-#: templates/forum/list_admin.html:3 templates/forum/list_admin.html.py:18
+#: templates/forum/search_widget.html:4
 msgid "Forum"
 msgstr "Fórum"
+
+#: templates/forum/search_widget.html:7
+msgid "Look for topics..."
+msgstr "Busque por tópicos"
+
+#: templates/forum/search_widget.html:7
+msgid "Look for topics"
+msgstr "Busque por tópicos"
+
+#~ msgid "Title"
+#~ msgstr "Título"
+
+#~ msgid "User"
+#~ msgstr "Usuário"
+
+#~ msgid "email"
+#~ msgstr "email"
+
+#~ msgid "phone"
+#~ msgstr "telefone"
+
+#~ msgid "Date"
+#~ msgstr "Data"
+
+#~ msgid "is required"
+#~ msgstr "é obrigatório"
+
+#~ msgid "no responses"
+#~ msgstr "sem respostas"
+
+#~ msgid "accepted"
+#~ msgstr "aceito"
+
+#~ msgid "staff"
+#~ msgstr "pessoal"

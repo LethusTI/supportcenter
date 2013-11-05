@@ -7,7 +7,7 @@
 		<h2>{% trans "Search for answers to your questions below, or ask your own." %}</h2>
 		<div id="live-search">
 		    <form method="get" action="/faq/" autocomplete="off">
-		        <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="title" id="s" autocomplete="off">
+		        <input type="text" onfocus="if (this.value == '{% trans "Search our knowledge base ..." %}') {this.value = '';}" onblur="if (this.value == '')  {this.value = '{% trans "Search our knowledge base ..."%}';}" value="{% trans "Search our knowledge base ..."%}" name="title" id="s" autocomplete="off">
 		    </form>
 		</div>
 	</div>
@@ -19,21 +19,21 @@
 				<div class="feature-icon">
 					<a href="/faq/"><img alt="" src="{{STATIC_URL }}faq/img/kb-large.png"></a>
 				</div>
-				<h3><a href="/faq/">Base de conhecimento</a></h3>
+				<h3><a href="/faq/">{% trans "Knowledge base" %}</a></h3>
 				<p>Na nossa Base de Conhecimento você encontrar diversos artigos explicando como usar o sistema.</p>
 			</div>
 			<div class="column col-third">
 				<div class="feature-icon">
 					<a href="/forum/"><img alt="" src="{{STATIC_URL }}faq/img/forum-large.png"></a>
 				</div>
-				<h3><a href="/forum/">Fórum</a></h3>
+				<h3><a href="/forum/">{% trans "Forum" %}</a></h3>
 				<p>Participe da comunidade utilize nosso fórum envie sua dúvida, sugestão e troque idéias com outros usuários.</p>
 			</div>
 			<div class="column col-third">
 				<div class="feature-icon">
 					<a href="/contact/"><img alt="" src="{{STATIC_URL }}faq/img/contact-large1.png"></a>
 				</div>
-				<h3><a href="/contact/">Contate-nos</a></h3>
+				<h3><a href="/contact/">{% trans "Contact us" %}</a></h3>
 				<p>Não encontrou o que precisa? Fale diretamente com o nosso suporte, <a href="/contact/">fale conosco →</a></p>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 
 				{% if last_questions %}
 				<div class="column articles home-col-half widget">
-					<h4 class="widget-title"><span>Últimos artigos</span></h4>
+					<h4 class="widget-title"><span>{% trans "Last arcicles" %}</span></h4>
 					<ul>
 						{% for question in last_questions %}
 						<li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></li>
@@ -60,7 +60,7 @@
 
 				{% if last_forum %}
 				<div class="column forum home-col-half widget">
-					<h4 class="widget-title"><span>Atividade recente no fórum</span></h4>
+					<h4 class="widget-title"><span>{% trans "Activity recent in the forum" %}</span></h4>
 					<ul>
 						{% for forum in last_forum %}
 						<li><a href="{{ forum.get_absolute_url }}">{{ forum.title }}</a></li>
@@ -73,7 +73,7 @@
 		<!-- isso pode deixar statico que eu mudo nos codigos html mas aqui a ideia seria montar lugar para colocarmos uma noticia ou aletta-->
 		<aside id="sidebar">
 			<div id="text-2" class="boxed-orange widget">
-				<h4 class="widget-title">Novidades</h4>			
+				<h4 class="widget-title">{% trans "News" %}</h4>			
 				<div class="textwidget">
 					<p>
 						Confira em que trabalhamos nessa nova versão do sistema.

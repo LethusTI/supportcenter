@@ -1,4 +1,5 @@
 {% extends "master/base_public.html" %}
+{% load i18n %}
 {% block head %}
 <style>
 h1.controlar {
@@ -24,13 +25,12 @@ h1.entrar {
 {% block content %}
 <div class="row">
 	<div class="span12">
-		<h1 class="entrar">entrar</h1>
 		<form id="form" method="post" enctype="multipart/form-data" action="." novalidate>
 			{% csrf_token %}
 			{% include "master/message.error.html" %}
 
 			<div class="control-group">
-				<label class="control-label" for="id_username">Usuário</label>
+				<label class="control-label" for="id_username">{% trans "Username" %}</label>
 				<div class="controls">
 					<div class="input-prepend">
 						<span class="add-on">
@@ -42,7 +42,7 @@ h1.entrar {
 			</div>
 			
 			<div class="control-group">
-				<label class="control-label" for="id_password">Senha</label>
+				<label class="control-label" for="id_password">{% trans "Password" %}</label>
 				<div class="controls">
 					<div class="input-prepend">
 						<span class="add-on">
@@ -53,8 +53,8 @@ h1.entrar {
 				</div>
 			</div>
 			
-			<input type="submit" value="Entrar" class="btn btn-success">
-			<a href="/auth/password_reset/" id="reset_pass" class="btn btn-warning btn-mini">Esqueceu sua senha?</a>
+			<input type="submit" value="{% trans "Sign In" %}" class="btn btn-success">
+			<a href="/auth/password_reset/" id="reset_pass" class="btn btn-warning btn-mini">{% trans "Forget your password ?" %}</a>
 		</form>
 	</div>
 </div>
