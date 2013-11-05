@@ -63,8 +63,10 @@ class AddForumView(ForumViewMixIn, CreateView):
         
 class DetailForumView(CreateView):
     template_name = 'forum/detail.html'
-    form_class = AddReplyForm 
     success_message = _("Your reply has been added")
+
+    def get_form_class(self):
+        return AddReplyForm
 
     def get_success_url(self):
         return self.object.get_absolute_url()

@@ -8,7 +8,6 @@ from lethusbox.django.fields import BRPhoneNumberField
 
 from .models import *
 
-@staticmethod
 def AddForumForm(user, *args, **kwargs):
     """
     Fabricamos o formulário em tempo de execução:
@@ -62,7 +61,6 @@ def AddForumForm(user, *args, **kwargs):
 
     return _AddForumForm(user, *args, **kwargs)
 
-@staticmethod
 def AddReplyForm(user, *args, **kwargs):
     """
     Fabricamos o formulário em tempo de execução:
