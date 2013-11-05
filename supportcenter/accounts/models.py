@@ -32,29 +32,44 @@ class User(Document):
     A User document that aims to mirror most of the API specified by Django
     at http://docs.djangoproject.com/en/dev/topics/auth/#users
     """
-    username = StringField(max_length=30, required=True, unique=True,
-                           verbose_name=u"Usuário",
-                           help_text=_("Required. 30 characters or fewer. Letters, numbers and @/./+/-/_ characters"))
-    first_name = StringField(max_length=30,
-                             verbose_name=u"Primeiro nome")
-    last_name = StringField(max_length=30,
-                            verbose_name=u"Último nome")
-    email = EmailField(unique=True,
-                       verbose_name=u"Endereço de e-mail")
+    username = StringField(
+        max_length=30, required=True, unique=True,
+        verbose_name=_(u"Username"),
+        help_text=_("Required. 30 characters or fewer. Letters, numbers and @/./+/-/_ characters"))
+    
+    first_name = StringField(
+        max_length=30,
+        verbose_name=_(u"First name"))
+    
+    last_name = StringField(
+        max_length=30,
+        verbose_name=_(u"Last name"))
+    
+    email = EmailField(
+        unique=True,
+        verbose_name=_(u"E-mail address"))
+    
     password = StringField(max_length=128)
     is_staff = BooleanField(default=False)
-    is_active = BooleanField(default=True,
-                             verbose_name="Ativo",
-                             help_text=_("Designates whether this user should be treated as active. Unselect this instead of deleting accounts."))
-    is_superuser = BooleanField(default=False,
-                                verbose_name=_('superuser status'),
-                                help_text=_("Designates that this user has all permissions without explicitly assigning them."))
+    is_active = BooleanField(
+        default=True,
+        verbose_name=_("Is active"),
+        help_text=_("Designates whether this user should be treated as active. Unselect this instead of deleting accounts."))
+    
+    is_superuser = BooleanField(
+        default=False,
+        verbose_name=_('superuser status'),
+        help_text=_("Designates that this user has all permissions without explicitly assigning them."))
 
-    editable = BooleanField(default=True,
-                            verbose_name="O usuário é editável")
+    editable = BooleanField(
+        default=True,
+        verbose_name=_('The user is editable'))
 
-    last_login = DateTimeField(default=datetime.datetime.now)
-    date_joined = DateTimeField(default=datetime.datetime.now)
+    last_login = DateTimeField(
+        default=datetime.datetime.now)
+    
+    date_joined = DateTimeField(
+        default=datetime.datetime.now)
 
     meta = {
         'allow_inheritance': True,

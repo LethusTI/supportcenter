@@ -4,10 +4,8 @@ from supportcenter.accounts.decorators import superuser_only
 
 from supportcenter.accounts.views import (
     ListSuperUserView, AddSuperUserView, UpdateSuperUserView,
-    SetPasswordSuperUserView, HistoricSuperUserView,
-    GeneralHistoricView,
-    AccountSettingView, AccountSetPasswordView,
-    ListUserGroupView, AddUserGroupView, UpdateUserGroupView)
+    SetPasswordSuperUserView,
+    AccountSettingView, AccountSetPasswordView)
 
 from .views import AdminSettingsView, SuperMainView
 from supportcenter.faq.views import (
@@ -28,9 +26,6 @@ urlpatterns = patterns(
     url(r'^superusers/add/$', superuser_only(AddSuperUserView.as_view())),
     url(r'^superusers/(?P<pk>\w{24})/$', superuser_only(UpdateSuperUserView.as_view())),
     url(r'^superusers/(?P<pk>\w{24})/password/$', superuser_only(SetPasswordSuperUserView.as_view())),
-    url(r'^superusers/logs/(?P<pk>\w{24})/$', superuser_only(HistoricSuperUserView.as_view())),
-
-    url(r'^logs/',superuser_only(GeneralHistoricView.as_view())),
     
     url('^settings/$', superuser_only(AdminSettingsView.as_view())), 
 )

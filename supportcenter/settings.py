@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.markup',
     'lethusbox',
+    
     'supportcenter.common',
     'supportcenter.accounts',
     'supportcenter.faq',

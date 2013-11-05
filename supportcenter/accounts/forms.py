@@ -271,7 +271,7 @@ class AccountForm(MongoForm):
         document = User
 
 class SuperUserForm(MongoForm):
-    full_name = forms.CharField(label="Nome completo", required=True)
+    full_name = forms.CharField(label=_("Full name"), required=True)
 
     def __init__(self, *args, **kwargs):
         super(SuperUserForm, self).__init__(*args, **kwargs)
@@ -330,16 +330,17 @@ class SuperUserForm(MongoForm):
         fields = ('username', 'email', 'is_active')
 
 class AddSuperUserForm(SuperUserForm):
-    password1 = forms.CharField(required=True, label="Senha",
+    password1 = forms.CharField(required=True, label=_("Password"),
         widget=forms.PasswordInput(render_value=True))
-    password2 = forms.CharField(required=True, label="Confirmar Senha",
+    password2 = forms.CharField(required=True, label=_("Confirm password"),
         widget=forms.PasswordInput(render_value=True))
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1", "")
         password2 = self.cleaned_data["password2"]
         if password1 != password2:
-            raise forms.ValidationError("A confirmação da senha não confere, verifique.")
+            raise forms.ValidationError(_("The two passwords aren't identical, please retype"))
+        
         return password2
 
     def save(self, *args, **kwargs):

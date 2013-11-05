@@ -105,7 +105,8 @@ class Question(KnowledgeBase):
     locked = BooleanField(default=False)
 
     categories = ListField(
-        ReferenceField(Category))
+        ReferenceField(Category),
+        verbose_name=_("Categories"))
 
 
     meta = {

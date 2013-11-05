@@ -1,11 +1,17 @@
 {% extends "faq/inner.html" %}
-
+{% load i18n %}
 {% block knowledge_widgets %}
-<div class="page-header">
-  <h1>Administrador não editável</h1>
+<div id="primary" class="sidebar-off">
+  <div class="container">
+      <section id="content">
+		  <div class="page-header">
+			  <h3>{% trans "Admin aren't editable" %}</h3>
+		  </div>
+		  <p>
+			  <b>{% trans "This admin is locked for changes" %}</b><br/>
+			  <input type="button" value="{% trans "Back" %}" onclick="history.go(-1)" class="btn" />
+		  </p>
+	  </section>
+  </div>
 </div>
-<p>
-  <b>Este administrador está protegido contra alterações</b><br/>
-  <input type="button" value="Voltar" onclick="history.go(-1)" class="btn" />
-</p>
 {% endblock %}
