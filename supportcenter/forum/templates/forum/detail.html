@@ -25,9 +25,19 @@
 					<!-- coloca o conteudo do artigo -->
 					{{ object.comment|striptags|lethusmarkdown }}
 				</div>
+                {% for reply in replys %}
+                    <div>
+                        {% if reply.reply %}
+
+                                {{reply.reply}}
+                            
+                        {% endif %} 
+                    </div>
+                {% endfor %}
 			</div>
             <form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST">
                 Responder
+                {% include "master/message.error.html" %}
                 {% csrf_token %}
                 <br />
                 {{ form.name.label_tag }}
