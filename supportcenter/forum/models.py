@@ -82,9 +82,6 @@ class Forum(ForumBase):
     def get_absolute_url(self):
         return '/forum/update/%d/' % self.id
 
-
-        
-
 class Reply(ForumBase):
     reply = StringField(
         verbose_name=_('Reply'),

@@ -46,6 +46,17 @@ class AddForumForm(MongoForm):
 
 
 class AddReplyForm(MongoForm):
+    phone = BRPhoneNumberField(
+        label = Reply.phone.verbose_name,
+        required = Reply.phone.required,
+        error_messages={'invalid' :u"Número de telefone inválido!"})
+
+ 
+    reply = forms.CharField(
+        label=Reply.reply.verbose_name,
+        required=Reply.reply.required,
+        widget=forms.Textarea(attrs={'class': 'input-xxlarge'}))
+    
     def __init__(self, user, *args, **kwargs):
         super(AddReplyForm, self).__init__(*args, **kwargs)
         self.user = user
@@ -63,4 +74,4 @@ class AddReplyForm(MongoForm):
 
     class Meta:
         document = Reply
-        exclude = ('user', 'date')
+        exclude = ('user', 'date', 'forum')
