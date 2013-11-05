@@ -41,22 +41,16 @@
     </span>
 
     <span>
-       {% trans "Name" %} - {{ object.name }}
+       {{ object.name }} em {{ object.date }}
     </span>&nbsp;
     <br />
     <span>
-        {% trans "email" %} - {{ object.email }}
+        {% trans "Email" %} - {{ object.email }}
     </span>&nbsp;
     <br />
     <span>
-        {% trans "phone" %} - {{ object.phone }}
+        {% trans "Phone" %} - {{ object.phone }}
     </span>
-    <br />
-    
-    <span>
-        {% trans "Date" %} - {{ object.date }}
-    </span>
-    <br />
 
 </ol>
 {% csrf_token %}
