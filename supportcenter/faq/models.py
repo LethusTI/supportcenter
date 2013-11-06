@@ -21,9 +21,13 @@ class Category(Document):
     title = StringField(max_length=255, required=True, verbose_name=_('Title'))
     slug = StringField(required=True)
 
+    position = IntField(
+        verbose_name=_("Position"),
+        required=False)
+    
     def clean(self):
         self.lastchanged = datetime.datetime.now()
-    
+
     def __unicode__(self):
         return self.title
 
@@ -40,25 +44,12 @@ class Category(Document):
 class KnowledgeBase(Document):
     added = DateTimeField(default=datetime.datetime.now)
     lastchanged = DateTimeField(default=datetime.datetime.now)
-    
     user = ReferenceField(
         'User',
         verbose_name=u"Criado por usuário",
         required=False)
-
-    name = StringField(
-        max_length=64, required=False,
-        verbose_name=_('Name'),
-        help_text=_('Enter your first and last name.'))
     
-    email = EmailField(
-        required=False,
-        verbose_name=_('Email'),
-        help_text=_('Enter a valid email address.'))
-    
-    get_email = lambda s: s.email or (s.user and s.user.email)
-
-    
+    get_email = lambda s: s.user.email
     
     def clean(self):
         self.lastchanged = datetime.datetime.now()
@@ -71,11 +62,9 @@ class KnowledgeBase(Document):
         name = self.user and (
              u'{0} {1}'.format(self.user.first_name, self.user.last_name or '').strip()\
              or self.user.username
-         )
+        )
         if name:
             return name.strip()
-        else:
-            return _("Anonymous")
         
     meta = {
         'abstract': True
@@ -101,7 +90,9 @@ class Question(KnowledgeBase):
         verbose_name=_('Description'),
         help_text=_('Please offer details. Markdown enabled.'))
 
-    locked = BooleanField(default=False)
+    locked = BooleanField(
+        default=False,
+        verbose_name=_("Locked for superusers only"))
 
     categories = ListField(
         ReferenceField(Category),
@@ -116,62 +107,6 @@ class Question(KnowledgeBase):
     def __unicode__(self):
         return self.title
 
-    def inherit(self):
-        pass
-
-    def internal(self):
-        pass
-
-    def lock(self, save=True):
-        self.locked = not self.locked
-        if save:
-            self.save()
-    lock.alters_data = True
-
-    ###################
-    #### RESPONSES ####
-    ###################
-
-    def get_responses(self, user=None):
-        return []
-        #user = user or self._requesting_user
-        if user:
-            return [r for r in self.responses.all().select_related('user') if r.can_view(user)]
-        else:
-            return self.responses.all().select_related('user')
-
-    def answered(self):
-        """
-        Returns a boolean indictating whether there any questions.
-        """
-        return bool(self.get_responses())
-
-    def accepted(self):
-        """
-        Returns a boolean indictating whether there is a accepted answer
-        or not.
-        """
-        return any([r.accepted for r in self.get_responses()])
-
-    def clear_accepted(self):
-        self.get_responses().update(accepted=False)
-    clear_accepted.alters_data = True
-
-    def accept(self, response=None):
-        """
-        Given a response, make that the one and only accepted answer.
-        Similar to StackOverflow.
-        """
-        self.clear_accepted()
-
-        if response and response.question == self:
-            response.accepted = True
-            response.save()
-            return True
-        else:
-            return False
-    accept.alters_data = True
-
     @property
     def url(self):
         return self.get_absolute_url()
@@ -182,5 +117,5 @@ class Question(KnowledgeBase):
     def get_categories_display(self):
         if self.categories:
             return ', '.join([str(c) for c in self.categories])
+        
         return ''
-    

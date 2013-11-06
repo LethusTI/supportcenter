@@ -23,7 +23,7 @@ class IncludeCategoriesTemplate(object):
         ctx  = super(IncludeCategoriesTemplate, self).get_context_data(
             *args, **kwargs)
 
-        ctx['categories'] = Category.objects
+        ctx['categories'] = Category.objects.order_by('position')
         
         return ctx
     
@@ -99,17 +99,6 @@ class DetailQuestionView(IncludeCategoriesTemplate, DetailView):
             self.document.objects.can_view(self.request.user),
             pk=int(self.kwargs['pk']))
     
-class ListQuestionAdminView(HybridListView):
-    document = Question
-    template_name = 'faq/admin_list.html'
-    paginate_by = 20
-    allow_empty = True
-    json_object_list_fields = [
-        'id', 'title', 'get_status_display',
-        'get_categories_display']
-    filter_fields = ['title']
-
-
 class QuestionAdminViewMixIn(object):
     document = Question
     form_class = AdminQuestionForm

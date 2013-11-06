@@ -10,7 +10,7 @@ from supportcenter.accounts.views import (
 from .views import AdminSettingsView, SuperMainView
 from supportcenter.faq.views import (
     ListCategoryView, AddCategoryView, UpdateCategoryView,
-    ListQuestionAdminView, AddQuestionAdminView,
+    AddQuestionAdminView,
     UpdateQuestionAdminView, DeleteQuestionAdminView)
 
 urlpatterns = patterns(

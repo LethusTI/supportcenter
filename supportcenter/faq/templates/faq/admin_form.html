@@ -16,6 +16,7 @@
 <script src="{{ STATIC_URL }}js/epiceditor.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function (e) {
+      $('<div id="epiceditor" style="height: 353px;"></div>').insertAfter($('#id_body'));
       var opts = {
         textarea: 'id_body',
         basePath: '',
@@ -44,11 +45,6 @@ $(document).ready(function (e) {
         {% include "master/message.error.html" %}
         {% csrf_token %}
         {% include "master/form_snippet.html" %}
-
-        <div id="epiceditor" style="height: 353px;">
-        
-      </div>
-
 
         <p class="btn-group" style="margin-top: 20px;">
           <button type="submit" class="btn btn-primary">
