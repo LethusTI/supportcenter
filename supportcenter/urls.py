@@ -35,4 +35,7 @@ urlpatterns = patterns(
 
     #Forum
     url(r'^forum/', include('supportcenter.forum.urls')),
+
+    #Contact
+    url(r'^contact/', include('supportcenter.contact.urls')),
 )

@@ -130,7 +130,8 @@ INSTALLED_APPS = (
     'supportcenter.common',
     'supportcenter.accounts',
     'supportcenter.faq',
-    'supportcenter.forum'
+    'supportcenter.forum',
+    'supportcenter.contact',
 )
 
 LOGGING = {

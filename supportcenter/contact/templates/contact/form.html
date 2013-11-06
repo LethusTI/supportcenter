@@ -1,0 +1,54 @@
+{% extends 'faq/inner.html' %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% load knowledge_tags %}
+
+{% block title %}{% trans "Contact" %}{% endblock title %}
+
+{% block header %}
+<style type="text/css">
+#id_name, #id_email, #id_title {
+	width: 500px;
+}
+#id_comment {
+	width: 100%;
+}
+#id_phone {
+	width: 130px;
+}
+</style>
+{% endblock %}
+
+{% block knowledge_widgets %}
+{% if not search %}
+{% endif %}
+<div id="primary" class="sidebar-off">
+	<div class="container">
+		<section id="content">
+			<div class="dk-widget">
+				<div class="page-header">
+					<h3>
+						{% trans "Contact" %}
+					</h3>
+				</div>
+				<form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST">
+					{% csrf_token %}
+					
+					<p class="btn-group">
+						<button type="submit" class="btn btn-primary">
+    						<i class="icon-ok icon-white"></i> {% trans "Sent" %}
+						</button>
+						<button type="button" onclick="history.go(-1)" class="btn">
+							<i class="icon-arrow-left"></i> {% trans "Back" %}
+						</button>
+					</p>
+					{% include "master/form_snippet.html" %}
+				</form>
+
+			</div>
+		</section>
+	</div>
+</div>
+{% endblock knowledge_widgets %}
