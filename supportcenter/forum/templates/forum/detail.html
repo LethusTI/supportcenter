@@ -44,9 +44,16 @@
                 <hr />
                 {% for reply in object.replies %}
                 <div id="reply-{{ reply.id }}">
-					{{reply.reply}}
+                    {{reply.reply}}
 					<br />
                     Respondida por {{ reply.name }} em {{ reply.date }}
+                    <br />
+                    {% if user.is_superuser %}
+                    <a href="{{ reply.get_delete_reply_url }}">
+                        {% trans "Delete reply" %}
+                    </a>
+                    {% endif %}
+
                 </div>
                 <hr />
                 <br />

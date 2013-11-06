@@ -2,7 +2,8 @@
 
 __all__ = (
     'ListForumView', 'AddForumView',
-    'DetailForumView', 'DeleteForumView')
+    'DetailForumView', 'DeleteForumView',
+    'DeleteReplyView')
 
 from mongotools.views import (
     ListView, CreateView, UpdateView, 
@@ -102,5 +103,17 @@ class DeleteForumView(DeleteView):
     def get_object(self, *args, **kwargs):
         return get_document_or_404(
             Forum,
+            id=int(self.kwargs['id'])
+        )
+
+class DeleteReplyView(DeleteView):
+    document = Reply
+    template_name = 'forum/confirm_delete_reply.html'
+    success_url = '/forum/'
+    success_message = _(u"The topic has been destroyed")
+    
+    def get_object(self, *args, **kwargs):
+        return get_document_or_404(
+            Reply,
             id=int(self.kwargs['id'])
         )

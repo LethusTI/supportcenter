@@ -120,6 +120,9 @@ class Reply(ForumBase):
     @property
     def url(self):
         return self.get_absolute_url()
-        
+
+    def get_delete_reply_url(self):
+        return '/forum/%d/delete/#reply-%d' % (self.forum.id, self.id)
+
 signals.post_save.connect(forum_post_save, sender=Forum)
 signals.post_save.connect(reply_post_save, sender=Reply)

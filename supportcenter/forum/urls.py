@@ -16,4 +16,7 @@ urlpatterns = patterns('',
     url(r'^delete/(?P<id>\d+)/', superuser_only(DeleteForumView.as_view()),
         name='detail_forum'),
 
+    url(r'^delete/reply/(?P<id>\d+)/', superuser_only(DeleteReplyView.as_view()),
+        name='detail_forum'),
+
 )
