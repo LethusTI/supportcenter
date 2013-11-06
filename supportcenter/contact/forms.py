@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 
-__all__ = ('AddContactForm',)
+__all__ = ('ContactForm',)
 
 from django import forms
 from lethusbox.django.fields import BRPhoneNumberField
 from django.utils.translation import ugettext_lazy as _
 
-class AddContactForm(forms.Form):
-    nome = forms.CharField(
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+
+from supportcenter.settings import DEPLOY_URL
+
+class ContactForm(forms.Form):
+    name = forms.CharField(
         label=_('Name'),
         required=True,
         max_length=64, 
@@ -36,5 +41,31 @@ class AddContactForm(forms.Form):
 
 
     def __init__(self, *args, **kwargs):
-        super(AddContactForm, self).__init__(*args, **kwargs)
+        super(ContactForm, self).__init__(*args, **kwargs)
             
+    def save(self):
+        context = {
+            'name': self.cleaned_data['name'],
+            'email':  self.cleaned_data['email'],
+            'message':  self.cleaned_data['message'],
+            'site': {
+                'domain': DEPLOY_URL,
+                'name': "Lethus support center"
+            }
+        }
+        
+        subject = "Contact SupportCenter"
+        subject_user = "Reply SupportCenter"
+        message = self.cleaned_data['message']
+        email = str(self.cleaned_data['email'])
+
+        
+        subject = u' '.join(line.strip() for line in subject.splitlines()).strip()
+        msg = EmailMultiAlternatives(subject, message, to=['suporte@lethus.com.br'], headers = {'Reply-To': email})
+        msg.attach_alternative(message, 'text/html')
+        msg.send()
+
+        subject_user = u' '.join(line.strip() for line in subject_user.splitlines()).strip()
+        msg_user = EmailMultiAlternatives(subject_user, message, to=[email], headers = {'Reply-To': 'suporte@lethus.com.br'})
+        msg_user.attach_alternative(message, 'text/html')
+        msg_user.send()

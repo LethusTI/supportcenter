@@ -9,5 +9,5 @@ from .views import *
 
 urlpatterns = patterns('',
     url(r'^$', AddContactView.as_view(), name="contact"),
-    url(r'^sent/',ContactView.as_view(), name='contact_sent'),
+    url(r'^send/',ContactView.as_view(), name='contact_send'),
 )
