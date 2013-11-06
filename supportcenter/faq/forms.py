@@ -42,4 +42,4 @@ class CategoryForm(MongoForm):
     
     class Meta:
         document = Category
-        fields = ('title',)
+        fields = ('title', 'position')

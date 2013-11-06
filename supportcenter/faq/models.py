@@ -21,9 +21,13 @@ class Category(Document):
     title = StringField(max_length=255, required=True, verbose_name=_('Title'))
     slug = StringField(required=True)
 
+    position = IntField(
+        verbose_name=_("Position"),
+        required=False)
+    
     def clean(self):
         self.lastchanged = datetime.datetime.now()
-    
+
     def __unicode__(self):
         return self.title
 
