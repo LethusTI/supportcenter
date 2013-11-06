@@ -49,9 +49,9 @@
                     Respondida por {{ reply.name }} em {{ reply.date }}
                     <br />
                     {% if user.is_superuser %}
-                    <a href="{{ reply.get_delete_reply_url }}">
-                        {% trans "Delete reply" %}
-                    </a>
+                        <a href="{{ reply.get_delete_reply_url }}">
+                            {% trans "Delete reply" %}
+                        </a>
                     {% endif %}
 
                 </div>

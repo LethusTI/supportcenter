@@ -1,0 +1,32 @@
+{% extends "faq/inner.html" %}
+{% load i18n %}
+
+{% block knowledge_widgets %}
+<div id="primary" class="sidebar-off">
+  <div class="container">
+    <section id="content">
+
+      <div class="page-header">
+        <h3>
+          {% trans "Delete reply" %}
+        </h3>
+      </div>
+      <form id="form" action="." method="POST">
+        {% csrf_token %}
+
+		{% trans "Answer" %}: {{ object.reply }} 
+
+        <p class="btn-group" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-primary">
+              <i class="icon-ok icon-white"></i> {% trans "Confirm" %}
+          </button>
+          <button type="button" onclick="history.go(-1)" class="btn">
+            <i class="icon-arrow-left"></i> {% trans "Back" %}
+          </button>
+        </p>
+        
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}
