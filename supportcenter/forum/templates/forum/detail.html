@@ -5,7 +5,18 @@
 
 {% load knowledge_tags %}
 
-{% block title %}{% trans "Topic" %}{% endblock title %}
+{% block title %}{% trans "Question" %}{% endblock title %}
+
+{% block header %}
+<style type="text/css">
+#id_name, #id_email {
+	width: 600px;
+}
+#id_reply {
+	width: 100%;
+}
+</style>
+{% endblock %}
 
 {% block knowledge_widgets %}
 
@@ -15,8 +26,8 @@
 	<div class="container">
 		<section id="content">
 			<div class="row category-list">
-				<div class="article">
-					<h2 class="entry-title"><a href="{{ object.get_absolute_url }}">{% trans "Topic" %}: {{ object.title }}</a></h2>
+				<div class="forum">
+					<h2 class="entry-title"><a href="{{ object.get_absolute_url }}">{% trans "Question" %}: {{ object.title }}</a></h2>
 					<span>
 						Criado em {{ object.date }} por {{ object.name }}
 					</span>
@@ -43,31 +54,25 @@
 			</div>
             <form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST">
                 <h4>Responder</h4>
+                
                 {% include "master/message.error.html" %}
                 {% csrf_token %}
-				{% if form.name %}
-                <br />
-                {{ form.name.label_tag }}
-                {{ form.name }}
-				{% endif %}
 
-				{% if form.email %}
-                <br />
-                {{ form.email.label_tag }}
-                {{ form.email }}
-				{% endif %}
+                {% with field=form.name %}
+				{% include "master/field_snippet.html" %}
+				{% endwith %}
 
-				{% if form.phone %}
-                <br />
-                {{ form.phone.label_tag }}
-                {{ form.phone }}
-				{% endif %}
+				{% with field=form.email %}
+				{% include "master/field_snippet.html" %}
+				{% endwith %}
 
-				{% if form.reply %}
-                <br />
-                {{ form.reply.label_tag }}
-                {{ form.reply }}
-				{% endif %}
+				{% with field=form.phone %}
+				{% include "master/field_snippet.html" %}
+				{% endwith %}
+
+				{% with field=form.reply %}
+				{% include "master/field_snippet.html" %}
+				{% endwith %}
 
                 <br />
 				

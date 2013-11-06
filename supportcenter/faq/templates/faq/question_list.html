@@ -1,8 +1,8 @@
 {% load i18n %}
 {% load url from future %}
 
-<ol class="question-list">
-  {% for question in object_list %}
-    <li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></li>
-  {% endfor %}
-</ol>
+{% for question in object_list %}
+	<div class="article">
+  <h2 class="entry-title"><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></h2>
+</div>
+{% endfor %}

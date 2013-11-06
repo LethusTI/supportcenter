@@ -7,14 +7,31 @@
 
 {% block title %}{% trans "Topic" %}{% endblock title %}
 
+{% block header %}
+<style type="text/css">
+#id_name, #id_email, #id_title {
+	width: 500px;
+}
+#id_comment {
+	width: 100%;
+}
+#id_phone {
+	width: 130px;
+}
+</style>
+{% endblock %}
+
 {% block knowledge_widgets %}
+{% if not search %}
+{% include "forum/search_widget.html" %}
+{% endif %}
 <div id="primary" class="sidebar-off">
 	<div class="container">
 		<section id="content">
 			<div class="dk-widget">
 				<div class="page-header">
 					<h3>
-						{% if object %}{% trans "Update" %}{% else %}{% trans "Add" %}{% endif %} {% trans "topic" %}
+						{% if object %}{% trans "Update" %}{% else %}{% trans "Add" %}{% endif %} {% trans "question" %}
 					</h3>
 				</div>
 				<form id="form" novalidate action="{% if object %}{{ object.get_absolute_url }}{% else %}.{% endif %}" method="POST">

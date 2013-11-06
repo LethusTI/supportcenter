@@ -95,20 +95,20 @@ msgstr "Voltar"
 
 #: templates/forum/detail.html:8 templates/forum/detail.html.py:19
 #: templates/forum/form.html:8 templates/forum/list.html:8
-msgid "Topic"
-msgstr "Tópico"
+msgid "Question"
+msgstr "Questão"
 
 #: templates/forum/form.html:17
 msgid "Update"
 msgstr "Editar"
 
 #: templates/forum/form.html:17 templates/forum/list.html:27
-msgid "Add"
-msgstr "Adicionar"
+msgid "Add question"
+msgstr "Adicionar questão"
 
 #: templates/forum/form.html:17
-msgid "topic"
-msgstr "tópico"
+msgid "question"
+msgstr "questão"
 
 #: templates/forum/form.html:25
 msgid "Save"
@@ -136,8 +136,8 @@ msgid "Forum"
 msgstr "Fórum"
 
 #: templates/forum/search_widget.html:7
-msgid "Look for topics..."
-msgstr "Busque por tópicos..."
+msgid "Look for questions..."
+msgstr "Busque por questões..."
 
 #: templates/forum/emails/new_reply_message.html:6
 #: templates/forum/emails/new_reply_message.txt:4

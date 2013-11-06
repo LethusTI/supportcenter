@@ -25,7 +25,7 @@
 
 
 
-<div id="primary" class="sidebar-off">
+<div id="primary" class="sidebar-right">
   <div class="container">
     <section id="content">
       {% if user.is_superuser %}
@@ -54,7 +54,7 @@
 
       <div class="dk-widget">
         {# dunno how to do translation on this nasty block... #}
-        <h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} {% trans "for" %} <em>{{ search }}</em>{% endif %}{% if category %} in <em>{{ category.title }}</em> {% trans "category" %}{% endif %}:</h3>
+        <h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} {% trans "for" %} <em>{{ search }}</em>{% endif %}{% if category %} na {% trans "category" %} <em>{{ category.title }}</em>{% endif %}:</h3>
         <hr />
 
         {% include 'faq/question_list.html' with questions=object_list %}
@@ -82,6 +82,7 @@
       </div>
       {% endif %}
     </section>
+    {% include 'faq/sidebar.html' %}
   </div>
 </div>
 

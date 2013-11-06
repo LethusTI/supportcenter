@@ -131,7 +131,8 @@ input[type="button"].btn {
 	color:#484019;
 	-webkit-border-radius: 1px;	-moz-border-radius: 1px;border-radius: 1px;
 }
-.alert > button.close {
+.alert > button.close,
+.alert > a.close {
 	display: none;
 }
 .alert > p {
@@ -460,13 +461,14 @@ input[type="button"].btn {
 	background: url("../img/kb-med.png") no-repeat 0 0;
 	margin:0 0 26px;
 	padding:0 0 30px 65px;	
-	border-bottom:1px solid #E0E0E0;
 }
 .forum {
-	background: url("../img/kb-forum.png") no-repeat 0 0;
+	background: url("../img/forum-med.png") no-repeat 0 0;
 	margin:0 0 26px;
 	padding:0 0 30px 65px;	
-	border-bottom:1px solid #E0E0E0;
+}
+.forum.home-col-half {
+	background: none;
 }
 .entry-title {
 	margin:0 0 13px;

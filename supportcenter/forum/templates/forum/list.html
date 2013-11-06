@@ -8,37 +8,34 @@
 {% block title %}{% trans "Topic" %}{% endblock title %}
 
 {% block knowledge_widgets %}
-{% if not search %}
 {% include "forum/search_widget.html" %}
-{% endif %}
-<div id="primary" class="sidebar-off">
+<div id="primary" class="sidebar-right">
 	<div class="container">
 		<section id="content">
 			<div class="dk-widget">
+				<a type="button" class="btn" id="add-btn"  href="/forum/add/">
+					{% trans "Add question" %}
+				</a>
+				<a type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}
+				</a>
+				<br><br>
+
 				{# dunno how to do translation on this nasty block... #}
 				{% if search %}
 				<h3>{% blocktrans %}Showing {{ counter }} results{% endblocktrans %}{% if search %} {% trans "for" %} <em>{{ search }}</em>{% endif %}:</h3>
-				{% else %}
-				<h3>{% trans "Topics" %}</h3>
 				{% endif %}
 				
-				<hr />
-				<a type="button" class="btn" id="add-btn"  href="/forum/add/">
-						{% trans "Add" %}
-						</a>
-				<a type="button" onclick="history.go(-1)" class="btn">{% trans "Back" %}
-				</a>
-				<hr/>
-				<ol class="topic-list">
-					{% for topic in object_list %}
-					<li>
-						<a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a>
-						<small class="quiet">{% trans "by" %} {{ topic.get_name }}</small>
-					</li>
-					{% endfor %}
-				</ol>
+				{% for topic in object_list %}
+					<div class="forum">
+			          <h2 class="entry-title"><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></h2>
+			          <span>
+			            {% trans "by" %} {{ topic.get_name }}
+			          </span>
+			        </div>
+				{% endfor %}
 			</div>
 		</section>
+		{% include 'faq/sidebar.html' %}
 	</div>
 </div>
 
