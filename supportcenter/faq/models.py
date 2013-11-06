@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__all__ = ('Category', 'Question')
+__all__ = ('Category', 'CategoryProxy', 'Question')
 
 #from knowledge import settings
 import datetime
@@ -14,6 +14,19 @@ from mongoengine import signals
 
 #from knowledge.managers import QuestionManager, ResponseManager
 
+class CategoryProxy(object):
+    """
+    Proxy de acesso a categorias e filtrar por categoria
+    """
+    def __init__(self, queryset, user):
+        self.queryset = queryset
+        self.user = user
+
+    def __iter__(self):
+        for category in self.queryset:
+            category._access_user = self.user
+            yield category
+        
 class Category(Document):
     added = DateTimeField(default=datetime.datetime.now)
     lastchanged = DateTimeField(default=datetime.datetime.now)
@@ -31,14 +44,23 @@ class Category(Document):
     def __unicode__(self):
         return self.title
 
+    def get_faq_queryset(self):
+        filter_kwargs = {'categories': self}
+        
+        if hasattr(self, '_access_user'):
+            if self._access_user.is_anonymous():
+                filter_kwargs['locked'] = False
+
+        return Question.objects(**filter_kwargs)
+    
     def faq_count(self):
-        return Question.objects(categories=self).count()
+        return self.get_faq_queryset().count()
 
     def last_by_date(self):
-        return Question.objects(categories=self).order_by('added')[0:5]
+        return self.get_faq_queryset().order_by('added')[0:5]
     
     meta = {
-        'ordering': ['title']
+        'ordering': ['title'],
     }
 
 class KnowledgeBase(Document):
@@ -72,6 +94,9 @@ class KnowledgeBase(Document):
 
 class QuestionQuerySet(QuerySet):
     def can_view(self, user):
+        if user.is_anonymous():
+            return self.filter(locked=False)
+        
         return self
 
 class Question(KnowledgeBase):

@@ -23,7 +23,9 @@ class IncludeCategoriesTemplate(object):
         ctx  = super(IncludeCategoriesTemplate, self).get_context_data(
             *args, **kwargs)
 
-        ctx['categories'] = Category.objects.order_by('position')
+        ctx['categories'] = CategoryProxy(
+            queryset=Category.objects.order_by('position'),
+            user=self.request.user)
         
         return ctx
     
@@ -46,10 +48,6 @@ class ListQuestionView(IncludeCategoriesTemplate, ListView):
         ctx['search'] = search
         ctx['category'] = self.get_category()
 
-        if not self.get_queryset().count():
-            ctx['form'] = AddQuestionForm(
-                user=self.request.user, initial={'title': search})
-        
         return ctx
 
     def get_category(self):
