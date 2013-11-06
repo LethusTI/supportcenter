@@ -10,45 +10,47 @@
 {% block header %}
 <style type="text/css">
 #id_name, #id_email, #id_title {
-	width: 500px;
+  width: 500px;
 }
 #id_comment {
-	width: 100%;
+  width: 100%;
 }
 #id_phone {
-	width: 130px;
+  width: 130px;
 }
 </style>
 {% endblock %}
 
 {% block knowledge_widgets %}
-{% if not search %}
-{% endif %}
+<div id="page-header">
+  <div class="container">
+    <h1>{% trans "Contact" %}</h1>
+    <div id="live-search">
+        <form method="get" action="/faq/" autocomplete="off">
+            <input type="text" onfocus="if (this.value == 'Pesquise em nossa base de conhecimento...') {this.value = '';}" onblur="if (this.value == '')  {this.value = 'Pesquise em nossa base de conhecimento...';}" value="Pesquise em nossa base de conhecimento..." name="title" id="s" autocomplete="off">
+        </form>
+    </div>
+  </div>
+</div>
 <div id="primary" class="sidebar-off">
-	<div class="container">
-		<section id="content">
-			<div class="dk-widget">
-				<div class="page-header">
-					<h3>
-						{% trans "Contact" %}
-					</h3>
-				</div>
-				<form id="form" novalidate action="." method="POST">
-					{% csrf_token %}
-					
-					<p class="btn-group">
-						<button type="submit" class="btn btn-primary">
-    						<i class="icon-ok icon-white"></i> {% trans "Send" %}
-						</button>
-						<button type="button" onclick="history.go(-1)" class="btn">
-							<i class="icon-arrow-left"></i> {% trans "Back" %}
-						</button>
-					</p>
-					{% include "master/form_snippet.html" %}
-				</form>
+  <div class="container">
+    <section id="content">
+      <form id="form" novalidate action="." method="POST">
+        {% csrf_token %}
+        {% include "master/form_snippet.html" %}
 
-			</div>
-		</section>
-	</div>
+        <br>
+        <p class="btn-group">
+          <button type="submit" class="btn btn-primary">
+            <i class="icon-ok icon-white"></i> {% trans "Send" %}
+          </button>
+          <button type="button" onclick="history.go(-1)" class="btn">
+            <i class="icon-arrow-left"></i> {% trans "Back" %}
+          </button>
+        </p>
+        
+      </form>
+    </section>
+  </div>
 </div>
 {% endblock knowledge_widgets %}

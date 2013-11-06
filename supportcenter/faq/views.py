@@ -134,7 +134,7 @@ class ListCategoryView(HybridListView):
     template_name = 'faq/category_list.html'
     paginate_by = 20
     allow_empty = True
-    json_object_list_fields = ['id', 'title']
+    json_object_list_fields = ['id', 'title', 'position']
     filter_fields = ['title']
 
 class CategoryMixIn(object):
