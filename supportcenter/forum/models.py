@@ -105,6 +105,7 @@ class Reply(ForumBase):
     forum = ReferenceField(
         Forum,
         dbref=False,
+        reverse_delete_rule=CASCADE
         )
 
     meta = {
