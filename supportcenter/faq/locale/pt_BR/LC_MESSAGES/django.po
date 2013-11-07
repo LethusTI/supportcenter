@@ -147,6 +147,10 @@ msgstr "Retornar ao sistema"
 msgid "Contact"
 msgstr "Contato"
 
+#: templates/contact/form.html:45
+msgid "Send"
+msgstr "Enviar"
+
 #: templates/faq/base.html:43
 msgid "Administration"
 msgstr "Administração"
