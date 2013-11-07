@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 11:05-0200\n"
-"PO-Revision-Date: 2013-11-07 11:16-0200\n"
+"POT-Creation-Date: 2013-11-07 12:06-0200\n"
+"PO-Revision-Date: 2013-11-07 12:07-0200\n"
 "Last-Translator: Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>\n"
 "Language-Team: Português <paolla.ocoutinho@gmail.com>\n"
 "Language: \n"
@@ -394,17 +394,19 @@ msgid "Hello %(name)s,"
 msgstr "Olá %(name)s,"
 
 #: contact/templates/contact/emails/new_email_message.html:9
-#, python-format
 msgid ""
 "\n"
-"\tWe just wanted to let you know that a new message has been added: "
-"\"%(subject)s\".\n"
+"\tWe just wanted to let you know that a new message has been added.\n"
 "    "
 msgstr ""
 "\n"
-"Você está sendo notificado pois uma nova mensagem foi enviada : "
-"\"%(subject)s\n"
+"Você está sendo notificado pois uma nova mensagem foi enviada.\n"
 "    "
+
+#: contact/templates/contact/emails/new_email_message.html:15
+#: contact/templates/contact/emails/new_email_message_admin.html:20
+msgid "Subject: "
+msgstr "Assunto: "
 
 #: contact/templates/contact/emails/new_email_message.txt:6
 #, python-format
@@ -415,8 +417,8 @@ msgid ""
 "%(message)s\n"
 msgstr ""
 "\n"
-"Você está sendo notificado pois uma nova mensagem foi enviada : "
-"\"%(subject)s\n"
+"Você está sendo notificado pois uma nova mensagem foi enviada : \"%(subject)s"
+"\".\n"
 "%(message)s\n"
 
 #: contact/templates/contact/emails/new_email_message_admin.html:6
@@ -434,10 +436,6 @@ msgstr "Email: "
 #: contact/templates/contact/emails/new_email_message_admin.html:17
 msgid "Phone: "
 msgstr "Telefone: "
-
-#: contact/templates/contact/emails/new_email_message_admin.html:20
-msgid "Subject: "
-msgstr "Assunto: "
 
 #: contact/templates/contact/emails/new_email_message_admin.txt:4
 msgid "Hello Lethus"
@@ -460,7 +458,8 @@ msgid ""
 "\n"
 "Lethus support center - %(subject)s\n"
 msgstr ""
-"\n" "Lethus Centro de Suporte - %(subject)s\n"
+"\n"
+"Lethus Centro de Suporte - %(subject)s\n"
 
 #: contact/templates/contact/emails/new_email_subject_admin.txt:2
 #, python-format
