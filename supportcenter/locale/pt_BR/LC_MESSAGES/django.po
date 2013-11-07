@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 09:54-0200\n"
-"PO-Revision-Date: 2013-11-07 10:44-0200\n"
+"POT-Creation-Date: 2013-11-07 11:05-0200\n"
+"PO-Revision-Date: 2013-11-07 11:16-0200\n"
 "Last-Translator: Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>\n"
 "Language-Team: Português <paolla.ocoutinho@gmail.com>\n"
 "Language: \n"
@@ -496,10 +496,9 @@ msgstr "Descrição"
 msgid "Please offer details. Markdown enabled."
 msgstr "Por favor utilize detalhes. Marcação ativada."
 
-# Locked for superusers only - Ver com o Wilson se os administradores não podem acessar, pois a frase passa isso.
 #: faq/models.py:120
-msgid "Locked for superusers only"
-msgstr "Trancado para apenas administradores"
+msgid "View access only for superusers"
+msgstr "Acesso somente para administradores"
 
 #: faq/views.py:82 forum/views.py:60
 msgid "Your question has been added"
@@ -880,3 +879,7 @@ msgid ""
 msgstr ""
 "\n"
 "Lethus central de suporte - novo tópico: %(topic.title)s\n"
+
+# Locked for superusers only - Ver com o Wilson se os administradores não podem acessar, pois a frase passa isso.
+#~ msgid "Locked for superusers only"
+#~ msgstr "Trancado para apenas administradores"

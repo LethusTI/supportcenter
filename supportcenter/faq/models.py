@@ -117,7 +117,7 @@ class Question(KnowledgeBase):
 
     locked = BooleanField(
         default=False,
-        verbose_name=_("Locked for superusers only"))
+        verbose_name=_("View access only for superusers"))
 
     categories = ListField(
         ReferenceField(Category),
