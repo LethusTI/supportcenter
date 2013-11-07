@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load markup %}
 
-{% blocktrans with name=name %}Hello {{ name }},{% endblocktrans %}
+{% blocktrans %}Hello Lethus{% endblocktrans %}
 
 {% blocktrans with url=message.url subject=subject domain=site.domain %}
  We just wanted to let you know that a new message has been added: "{{ subject }}". You can visit it here: {{ domain }}{{ url "}}"

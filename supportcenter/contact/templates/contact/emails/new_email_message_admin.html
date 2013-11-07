@@ -3,7 +3,7 @@
 {% load markup %}
 
 {% block content %}
-<p>{% blocktrans with name=name %}Hello {{ name }},{% endblocktrans %}</p>
+<p>{% blocktrans %}Hello {% endblocktrans %}Lethus</p>
 
 <p>
 	{% blocktrans with url=message.url subject=subject domain=site.domain %}
@@ -12,8 +12,16 @@
 </p>
 
 <div style="background:#f3f3f3;margin:8px 0;padding:12px 18px">
+	{% blocktrans %}Name: {% endblocktrans %}{{ name }}
+	<br />
+	{% blocktrans %}Email: {% endblocktrans %}{{ email }}
+	<br />
+	{% blocktrans %}Phone: {% endblocktrans %}{{ phone }}
+	<br />
+	<br />
+	{% blocktrans %}Subject: {% endblocktrans %}{{ subject }}
+	<br />
     {{ message|striptags|markdown }}
 </div>
-
 
 {% endblock content %}
