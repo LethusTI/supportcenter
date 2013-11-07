@@ -1,4 +1,4 @@
 {% load i18n %}
 {% blocktrans %}
-Contact SupportCente - {{ subject }}
+Contact SupportCenter - {{ subject }}
 {% endblocktrans %}

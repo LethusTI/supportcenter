@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Support Center\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-06 08:41-0200\n"
+"POT-Creation-Date: 2013-11-07 09:48-0200\n"
 "PO-Revision-Date: 2013-11-06 08:42-0200\n"
 "Last-Translator: Wilson Júnior <wilsonpjunior@gmail.com>\n"
 "Language-Team: Português <>\n"
@@ -20,53 +20,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
-#: models.py:21 templates/faq/admin_confirm_delete.html:17
+#: models.py:34 templates/faq/admin_confirm_delete.html:17
 #: templates/faq/admin_list.html:36 templates/faq/category_list.html:40
 msgid "Title"
 msgstr "Título"
 
-#: models.py:25
+#: models.py:38 templates/faq/category_list.html:41
 msgid "Position"
 msgstr "Posição"
 
-#: models.py:84
+#: models.py:109
 msgid "Question"
 msgstr "Questão"
 
-#: models.py:86
+#: models.py:111
 msgid "Enter your question or suggestion."
 msgstr "Entre com sua questão ou sugestão."
 
-#: models.py:90
+#: models.py:115
 msgid "Description"
 msgstr "Descrição"
 
-#: models.py:91
+#: models.py:116
 msgid "Please offer details. Markdown enabled."
 msgstr "Por favor utilize detalhes. Marcação ativada."
 
-#: models.py:95
+#: models.py:120
 msgid "Locked for superusers only"
 msgstr "Trancado para apenas administradores"
 
-#: models.py:99 templates/faq/admin_list.html:38 templates/faq/inner.html:24
+#: models.py:124 templates/faq/admin_list.html:38 templates/faq/inner.html:24
 #: templates/faq/sidebar.html:18
 msgid "Categories"
 msgstr "Categorias"
 
-#: views.py:84
+#: views.py:82
 msgid "Your question has been added"
 msgstr "Sua questão foi adicionada com sucesso"
 
-#: views.py:126
+#: views.py:113
 msgid "The question was added successfully"
 msgstr "A questão foi adicionada com sucesso"
 
-#: views.py:129
+#: views.py:116
 msgid "The question was updated successfully"
 msgstr "A questão foi atualizada com sucesso"
 
-#: views.py:137
+#: views.py:124
 msgid "The question was destroyed successfully"
 msgstr "A questão foi removida com sucesso"
 
@@ -146,10 +146,6 @@ msgstr "Retornar ao sistema"
 #: templates/faq/list_category.html:59
 msgid "Contact"
 msgstr "Contato"
-
-#: templates/contact/form.html:45
-msgid "Send"
-msgstr "Enviar"
 
 #: templates/faq/base.html:43
 msgid "Administration"
@@ -346,6 +342,9 @@ msgstr "New response on \"%(title)s\" on %(name)s."
 #, python-format
 msgid "New question \"%(title)s\" on %(name)s."
 msgstr "Nova questão \"%(title)s\" em %(name)s."
+
+#~ msgid "Send"
+#~ msgstr "Enviar"
 
 #~ msgid "Name"
 #~ msgstr "Nome"

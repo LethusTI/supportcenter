@@ -5,5 +5,5 @@
 
 {% blocktrans with url=message.url subject=subject domain=site.domain %}
  We just wanted to let you know that a new message has been added: "{{ subject }}". 
-{{ message }}
 {% endblocktrans %}
+{{ message }}

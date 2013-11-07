@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 09:36-0200\n"
-"PO-Revision-Date: 2013-11-07 09:37-0200\n"
+"PO-Revision-Date: 2013-11-07 09:47-0200\n"
 "Last-Translator: Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>\n"
 "Language-Team: Português <paolla.ocoutinho@gmail.com>\n"
 "Language: \n"
@@ -98,23 +98,23 @@ msgstr ""
 
 #: templates/contact/emails/new_email_message_admin.html:6
 msgid "Hello "
-msgstr "Olá"
+msgstr "Olá "
 
 #: templates/contact/emails/new_email_message_admin.html:13
 msgid "Name: "
-msgstr "Nome:"
+msgstr "Nome: "
 
 #: templates/contact/emails/new_email_message_admin.html:15
 msgid "Email: "
-msgstr "Email:"
+msgstr "Email: "
 
 #: templates/contact/emails/new_email_message_admin.html:17
 msgid "Phone: "
-msgstr "Telefone:"
+msgstr "Telefone: "
 
 #: templates/contact/emails/new_email_message_admin.html:20
 msgid "Subject: "
-msgstr "Assunto:"
+msgstr "Assunto: "
 
 #: templates/contact/emails/new_email_message_admin.txt:4
 msgid "Hello Lethus"
@@ -128,17 +128,20 @@ msgid ""
 "\"%(subject)s\". \n"
 "%(message)s\n"
 msgstr ""
+"Você está sendo notificado pois uma nova mensagem foi enviada : \"%(subject)s"
+"\".\n"
+"%(message)s\n"
 
 #: templates/contact/emails/new_email_subject.txt:2
 #, python-format
 msgid ""
 "\n"
 "Lethus support center - %(subject)s\n"
-msgstr ""
+msgstr "Contato Support Center - %(subject)s\n"
 
 #: templates/contact/emails/new_email_subject_admin.txt:2
 #, python-format
 msgid ""
 "\n"
 "Contact SupportCente - %(subject)s\n"
-msgstr ""
+msgstr "Contato Support Center - %(subject)s"
