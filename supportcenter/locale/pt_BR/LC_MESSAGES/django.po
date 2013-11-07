@@ -417,7 +417,7 @@ msgstr ""
 "\n"
 "Você está sendo notificado pois uma nova mensagem foi enviada : "
 "\"%(subject)s\n"
-"%(message)s"
+"%(message)s\n"
 
 #: contact/templates/contact/emails/new_email_message_admin.html:6
 msgid "Hello "
@@ -459,14 +459,17 @@ msgstr ""
 msgid ""
 "\n"
 "Lethus support center - %(subject)s\n"
-msgstr "Lethus - Centro de Suporte "
+msgstr ""
+"\n" "Lethus Centro de Suporte - %(subject)s\n"
 
 #: contact/templates/contact/emails/new_email_subject_admin.txt:2
 #, python-format
 msgid ""
 "\n"
 "Contact SupportCenter - %(subject)s\n"
-msgstr "Contato Centro de Suporte"
+msgstr ""
+"\n"
+"Contato Centro de Suporte - %(subject)s\n"
 
 #: faq/models.py:34 faq/templates/faq/admin_confirm_delete.html:17
 #: faq/templates/faq/admin_list.html:36
