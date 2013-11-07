@@ -59,10 +59,18 @@ class ContactForm(forms.Form):
         message = self.cleaned_data['message']
         email = str(self.cleaned_data['email'])
 
-        
+        subject = render_to_string(
+            'contact/emails/new_email_subject.txt', context)
+
+        message = render_to_string(
+            'contact/emails/new_email_message.txt', context)
+
+        message_html = render_to_string(
+            'contact/emails/new_email_message.html', context)
+
         subject = u' '.join(line.strip() for line in subject.splitlines()).strip()
         msg = EmailMultiAlternatives(subject, message, to=['suporte@lethus.com.br'], headers = {'Reply-To': email, 'From': email})
-        msg.attach_alternative(message, 'text/html')
+        msg.attach_alternative(message_html, 'text/html')
         msg.send()
 
         subject_user = u' '.join(line.strip() for line in subject_user.splitlines()).strip()

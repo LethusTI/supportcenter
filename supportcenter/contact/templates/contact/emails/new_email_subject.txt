@@ -1,0 +1,4 @@
+{% load i18n %}
+{% blocktrans %}
+Lethus support center - new message: {{ message.subject }}
+{% endblocktrans %}
