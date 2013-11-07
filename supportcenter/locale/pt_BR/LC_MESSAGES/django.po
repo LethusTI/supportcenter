@@ -1,0 +1,882 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 09:54-0200\n"
+"PO-Revision-Date: 2013-11-07 10:44-0200\n"
+"Last-Translator: Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>\n"
+"Language-Team: Português <paolla.ocoutinho@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
+
+#: accounts/forms.py:39 accounts/forms.py:87 accounts/forms.py:104
+#: accounts/models.py:37 accounts/templates/registration/login.html:33
+#: accounts/templates/superuser/list.html:39
+msgid "Username"
+msgstr "Usuário"
+
+#: accounts/forms.py:40 accounts/forms.py:88
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+"Obrigatório. 30 caracteres ou menos. Somente letras, dígitos e @/./+/-/_."
+
+#: accounts/forms.py:41 accounts/forms.py:89
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
+msgstr ""
+"Este valor deve conter apenas letras, números e os caracteres @/./+/-/_."
+
+#: accounts/forms.py:43 accounts/forms.py:105 accounts/forms.py:235
+#: accounts/forms.py:333 accounts/templates/registration/login.html:45
+msgid "Password"
+msgstr "Senha"
+
+#: accounts/forms.py:44
+msgid "Password confirmation"
+msgstr "Confirmação da senha"
+
+#: accounts/forms.py:55
+msgid "A user with that username already exists."
+msgstr "Um usuário com este nome de usuário já existe."
+
+#: accounts/forms.py:64 accounts/forms.py:205 accounts/forms.py:250
+msgid "The two password fields didn't match."
+msgstr "Os dois campos de senha não combinam."
+
+#: accounts/forms.py:125
+msgid ""
+"Please enter a correct username and password. Note that both fields are case-"
+"sensitive."
+msgstr ""
+"Por favor, entre com um usuário e senha corretos. Note que ambos os campos "
+"diferenciam maiúsculas e minúsculas."
+
+#: accounts/forms.py:127
+msgid "This account is inactive."
+msgstr "Esta conta está inativa."
+
+#: accounts/forms.py:134
+msgid ""
+"Your Web browser doesn't appear to have cookies enabled. Cookies are "
+"required for logging in."
+msgstr ""
+"Seu navegador Web não parece estar com os cookies habilitados. Cookies são "
+"requeridos para acessar."
+
+#: accounts/forms.py:146 contact/forms.py:28
+msgid "E-mail"
+msgstr "Email"
+
+#: accounts/forms.py:158
+msgid ""
+"That e-mail address doesn't have an associated user account. Are you sure "
+"you've registered?"
+msgstr ""
+"Este endereço de e-mail não está associado com uma conta de usuário. Você "
+"tem certeza que está registrado?"
+
+#: accounts/forms.py:185
+#, python-format
+msgid "Password reset on %s"
+msgstr "Recuperar senha em %s"
+
+#: accounts/forms.py:193
+msgid "New password"
+msgstr "Nova senha"
+
+#: accounts/forms.py:194
+msgid "New password confirmation"
+msgstr "Confirmação da nova senha"
+
+#: accounts/forms.py:218
+msgid "Old password"
+msgstr "Senha antiga"
+
+#: accounts/forms.py:226
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr ""
+"A senha antiga foi digitada incorretamente. Por favor, digite a senha "
+"novamente."
+
+#: accounts/forms.py:236
+msgid "Password (again)"
+msgstr "Senha (novamente)"
+
+#: accounts/forms.py:274 accounts/templates/superuser/list.html:40
+msgid "Full name"
+msgstr "Nome completo"
+
+#: accounts/forms.py:335
+msgid "Confirm password"
+msgstr "Confirme a senha"
+
+#: accounts/forms.py:342
+msgid "The two passwords aren't identical, please retype"
+msgstr "As duas senhas não são identicas, por favor redigite-as"
+
+#: accounts/fviews.py:93
+msgid "Logged out"
+msgstr "Sessão encerrada"
+
+#: accounts/models.py:38
+msgid ""
+"Required. 30 characters or fewer. Letters, numbers and @/./+/-/_ characters"
+msgstr ""
+"Obrigatório. 30 caracteres ou menos. Letras, números e os caracteres @/./+/-/"
+"_"
+
+#: accounts/models.py:42
+msgid "First name"
+msgstr "Primeiro nome"
+
+#: accounts/models.py:46
+msgid "Last name"
+msgstr "Último nome"
+
+#: accounts/models.py:50
+msgid "E-mail address"
+msgstr "Endereço de email"
+
+#: accounts/models.py:56
+msgid "Is active"
+msgstr "Ativo"
+
+#: accounts/models.py:57
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"Indica que o usuário será tratado como ativo. Ao invés de excluir contas de "
+"usuário, desmarque isso."
+
+#: accounts/models.py:61
+msgid "superuser status"
+msgstr "status de administrador"
+
+#: accounts/models.py:62
+msgid ""
+"Designates that this user has all permissions without explicitly assigning "
+"them."
+msgstr ""
+"Indica que este usuário tem todas as permissões sem atribuí-las "
+"explicitamente."
+
+#: accounts/models.py:66
+msgid "The user is editable"
+msgstr "O usuário é editável"
+
+#: accounts/views.py:135
+#, python-format
+msgid "The \"%s\" admin was added successfully"
+msgstr "O administrador \"%s\" foi adicionado com sucesso"
+
+#: accounts/views.py:140
+#, python-format
+msgid "The \"%s\" admin was changed successfully"
+msgstr "O administrador \"%s\" foi alterado com sucesso"
+
+#: accounts/views.py:151
+#, python-format
+msgid "The \"%s\" admin password was changed successfully"
+msgstr "A senha do administrador \"%s\" foi alterada com sucesso"
+
+#: accounts/management/commands/createadmin.py:26
+msgid "Enter a valid e-mail address."
+msgstr "Informe um endereço de email válido."
+
+#: accounts/templates/registration/login.html:56
+msgid "Sign In"
+msgstr "Entrar"
+
+#: accounts/templates/registration/login.html:57
+msgid "Forget your password ?"
+msgstr "Esqueceu sua senha?"
+
+#: accounts/templates/superuser/form.html:11
+#: accounts/templates/superuser/list.html:29
+#: faq/templates/faq/admin_form.html:41
+#: faq/templates/faq/category_form.html:10
+#: faq/templates/faq/category_list.html:30 forum/templates/forum/form.html:34
+msgid "Update"
+msgstr "Atualizar"
+
+#: accounts/templates/superuser/form.html:11
+#: accounts/templates/superuser/list.html:26
+#: faq/templates/faq/admin_form.html:41 faq/templates/faq/admin_list.html:23
+#: faq/templates/faq/category_form.html:10
+#: faq/templates/faq/category_list.html:27 forum/templates/forum/form.html:34
+msgid "Add"
+msgstr "Adicionar"
+
+#: accounts/templates/superuser/form.html:11
+msgid "Superuser"
+msgstr "Administrador"
+
+#: accounts/templates/superuser/form.html:12
+#: accounts/templates/superuser/form.html:34
+msgid "* is required"
+msgstr "* é obrigatório"
+
+#: accounts/templates/superuser/form.html:21
+#: faq/templates/faq/admin_form.html:51
+#: faq/templates/faq/category_form.html:19 forum/templates/forum/form.html:44
+msgid "Save"
+msgstr "Salvar"
+
+#: accounts/templates/superuser/form.html:24
+#: accounts/templates/superuser/not_editable.html:12
+#: contact/templates/contact/form.html:48
+#: faq/templates/faq/admin_confirm_delete.html:24
+#: faq/templates/faq/admin_form.html:54
+#: faq/templates/faq/category_form.html:22
+#: forum/templates/forum/confirm_delete.html:24
+#: forum/templates/forum/confirm_delete_reply.html:24
+#: forum/templates/forum/detail.html:91 forum/templates/forum/form.html:47
+#: forum/templates/forum/list.html:19
+msgid "Back"
+msgstr "Voltar"
+
+#: accounts/templates/superuser/form.html:33
+msgid "Change password"
+msgstr "Alterar senha"
+
+#: accounts/templates/superuser/form.html:44
+msgid "Change"
+msgstr "Alterar"
+
+#: accounts/templates/superuser/list.html:3
+#: accounts/templates/superuser/list.html:21
+msgid "Manage super users"
+msgstr "Gerenciar administradores"
+
+#: accounts/templates/superuser/list.html:41
+msgid "E-Mail address"
+msgstr "Endereço de email"
+
+#: accounts/templates/superuser/list.html:42
+msgid "Active"
+msgstr "Ativo"
+
+#: accounts/templates/superuser/not_editable.html:8
+msgid "Admin aren't editable"
+msgstr "Administrador não editável"
+
+#: accounts/templates/superuser/not_editable.html:11
+msgid "This admin is locked for changes"
+msgstr "O administrador está trancado para mudanças"
+
+#: common/templates/index.html:6
+msgid "Welcome to our Support Center."
+msgstr "Bem vindo a sua central de suporte"
+
+#: common/templates/index.html:7
+msgid "Search for answers to your questions below, or ask your own."
+msgstr "Procure por respostas primeiro ou pergunte você mesmo"
+
+#: common/templates/index.html:10 faq/templates/faq/list.html:18
+msgid "Search our knowledge base ..."
+msgstr "Procure em nossa base de conhecimento ..."
+
+#: common/templates/index.html:22 faq/templates/faq/list.html:15
+msgid "Knowledge base"
+msgstr "Base de conhecimento"
+
+#: common/templates/index.html:29 faq/templates/faq/base.html:40
+#: faq/templates/faq/inner.html:20 faq/templates/faq/list_category.html:57
+#: forum/templates/forum/search_widget.html:4
+msgid "Forum"
+msgstr "Fórum"
+
+#: common/templates/index.html:36
+msgid "Contact us"
+msgstr "Contate-nos"
+
+#: common/templates/index.html:52
+msgid "Last arcicles"
+msgstr "Últimos artigos"
+
+#: common/templates/index.html:63
+msgid "Activity recent in the forum"
+msgstr "Atividade recente no fórum"
+
+#: common/templates/index.html:76
+msgid "News"
+msgstr "Novidades"
+
+#: common/templates/master/base.html:37
+msgid "Support Center"
+msgstr "Central de suporte"
+
+#: common/templates/master/base.html:37
+msgid "Dashboard"
+msgstr "Painel"
+
+#: common/templates/master/base.html:41 faq/templates/faq/base.html:38
+#: faq/templates/faq/inner.html:18 faq/templates/faq/list_category.html:55
+msgid "Home"
+msgstr "Início"
+
+#: common/templates/master/base.html:45 faq/templates/faq/base.html:43
+msgid "Administration"
+msgstr "Administração"
+
+#: common/templates/master/base.html:49 faq/models.py:124
+#: faq/templates/faq/admin_list.html:38 faq/templates/faq/inner.html:24
+#: faq/templates/faq/sidebar.html:18
+msgid "Categories"
+msgstr "Categorias"
+
+#: common/templates/master/base.html:50 faq/templates/faq/inner.html:25
+msgid "Super users"
+msgstr "Administradores"
+
+#: contact/forms.py:16 forum/models.py:28
+msgid "Name"
+msgstr "Nome"
+
+#: contact/forms.py:20 forum/models.py:29
+msgid "Enter your first and last name."
+msgstr "Digite seu nome completo."
+
+#: contact/forms.py:23 forum/models.py:37
+msgid "Phone"
+msgstr "Telefone"
+
+#: contact/forms.py:30 forum/models.py:34
+msgid "Enter a valid email address."
+msgstr "Informe um endereço de email válido."
+
+#: contact/forms.py:33
+msgid "Subject"
+msgstr "Assunto"
+
+#: contact/forms.py:38
+msgid "Message"
+msgstr "Mensagem"
+
+#: contact/views.py:19
+msgid "Your contact has been send"
+msgstr "Seu email foi enviado com sucesso."
+
+#: contact/views.py:33
+msgid "The email has been send"
+msgstr "O email foi enviado com sucesso."
+
+#: contact/templates/contact/form.html:8
+#: contact/templates/contact/form.html:27 faq/templates/faq/base.html:42
+#: faq/templates/faq/inner.html:29 faq/templates/faq/list_category.html:59
+msgid "Contact"
+msgstr "Contato"
+
+#: contact/templates/contact/form.html:45
+msgid "Send"
+msgstr "Enviar"
+
+#: contact/templates/contact/emails/new_email_message.html:6
+#: contact/templates/contact/emails/new_email_message.txt:4
+#: faq/templates/faq/emails/message.html:7
+#: faq/templates/faq/emails/message.txt:4
+#: forum/templates/forum/emails/new_reply_message.html:6
+#: forum/templates/forum/emails/new_reply_message.txt:4
+#: forum/templates/forum/emails/new_topic_message.html:6
+#: forum/templates/forum/emails/new_topic_message.txt:4
+#, python-format
+msgid "Hello %(name)s,"
+msgstr "Olá %(name)s,"
+
+#: contact/templates/contact/emails/new_email_message.html:9
+#, python-format
+msgid ""
+"\n"
+"\tWe just wanted to let you know that a new message has been added: "
+"\"%(subject)s\".\n"
+"    "
+msgstr ""
+"\n"
+"Você está sendo notificado pois uma nova mensagem foi enviada : "
+"\"%(subject)s\n"
+"    "
+
+#: contact/templates/contact/emails/new_email_message.txt:6
+#, python-format
+msgid ""
+"\n"
+" We just wanted to let you know that a new message has been added: "
+"\"%(subject)s\".\n"
+"%(message)s\n"
+msgstr ""
+"\n"
+"Você está sendo notificado pois uma nova mensagem foi enviada : "
+"\"%(subject)s\n"
+"%(message)s"
+
+#: contact/templates/contact/emails/new_email_message_admin.html:6
+msgid "Hello "
+msgstr "Olá "
+
+#: contact/templates/contact/emails/new_email_message_admin.html:13
+msgid "Name: "
+msgstr "Nome: "
+
+#: contact/templates/contact/emails/new_email_message_admin.html:15
+msgid "Email: "
+msgstr "Email: "
+
+#: contact/templates/contact/emails/new_email_message_admin.html:17
+msgid "Phone: "
+msgstr "Telefone: "
+
+#: contact/templates/contact/emails/new_email_message_admin.html:20
+msgid "Subject: "
+msgstr "Assunto: "
+
+#: contact/templates/contact/emails/new_email_message_admin.txt:4
+msgid "Hello Lethus"
+msgstr "Olá Lethus "
+
+#: contact/templates/contact/emails/new_email_message_admin.txt:6
+#, python-format
+msgid ""
+"\n"
+" We just wanted to let you know that a new message has been added: "
+"\"%(subject)s\". \n"
+msgstr ""
+"\n"
+" Você está sendo notificado pois uma nova mensagem foi enviada : "
+"\"%(subject)s\".\n"
+
+#: contact/templates/contact/emails/new_email_subject.txt:2
+#, python-format
+msgid ""
+"\n"
+"Lethus support center - %(subject)s\n"
+msgstr "Lethus - Centro de Suporte "
+
+#: contact/templates/contact/emails/new_email_subject_admin.txt:2
+#, python-format
+msgid ""
+"\n"
+"Contact SupportCenter - %(subject)s\n"
+msgstr "Contato Centro de Suporte"
+
+#: faq/models.py:34 faq/templates/faq/admin_confirm_delete.html:17
+#: faq/templates/faq/admin_list.html:36
+#: faq/templates/faq/category_list.html:40
+#: forum/templates/forum/confirm_delete.html:17
+msgid "Title"
+msgstr "Título"
+
+#: faq/models.py:38 faq/templates/faq/category_list.html:41
+msgid "Position"
+msgstr "Posição"
+
+#: faq/models.py:109 forum/templates/forum/detail.html:8
+#: forum/templates/forum/detail.html:30
+msgid "Question"
+msgstr "Questão"
+
+#: faq/models.py:111
+msgid "Enter your question or suggestion."
+msgstr "Entre com sua questão ou sugestão."
+
+#: faq/models.py:115
+msgid "Description"
+msgstr "Descrição"
+
+#: faq/models.py:116
+msgid "Please offer details. Markdown enabled."
+msgstr "Por favor utilize detalhes. Marcação ativada."
+
+# Locked for superusers only - Ver com o Wilson se os administradores não podem acessar, pois a frase passa isso.
+#: faq/models.py:120
+msgid "Locked for superusers only"
+msgstr "Trancado para apenas administradores"
+
+#: faq/views.py:82 forum/views.py:60
+msgid "Your question has been added"
+msgstr "Sua questão foi adicionada com sucesso"
+
+#: faq/views.py:113
+msgid "The question was added successfully"
+msgstr "A questão foi adicionada com sucesso"
+
+#: faq/views.py:116
+msgid "The question was updated successfully"
+msgstr "A questão foi atualizada com sucesso"
+
+#: faq/views.py:124
+msgid "The question was destroyed successfully"
+msgstr "A questão foi removida com sucesso"
+
+#: faq/templates/faq/admin_confirm_delete.html:11
+#: faq/templates/faq/thread.html:35
+msgid "Delete question"
+msgstr "Deletar questão"
+
+#: faq/templates/faq/admin_confirm_delete.html:21
+#: forum/templates/forum/confirm_delete.html:21
+#: forum/templates/forum/confirm_delete_reply.html:21
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: faq/templates/faq/admin_form.html:41 forum/templates/forum/form.html:34
+msgid "question"
+msgstr "questão"
+
+#: faq/templates/faq/admin_list.html:3 faq/templates/faq/admin_list.html:18
+msgid "Manage questions"
+msgstr "Gerenciar questões"
+
+#: faq/templates/faq/admin_list.html:26
+msgid "Edit"
+msgstr "Editar"
+
+#: faq/templates/faq/admin_list.html:37
+msgid "Status"
+msgstr "Estado"
+
+#: faq/templates/faq/ask.html:6 faq/templates/faq/ask.html.py:10
+#: faq/templates/faq/list_category.html:98
+msgid "Ask a Question"
+msgstr "Faça uma pergunta"
+
+#: faq/templates/faq/ask.html:17
+msgid "Please log in to ask a question."
+msgstr "Por favor faça login para fazer uma pergunta"
+
+#: faq/templates/faq/base.html:39 faq/templates/faq/inner.html:19
+#: faq/templates/faq/list_category.html:56
+msgid "Knowledge Base"
+msgstr "Base de Conhecimento"
+
+#: faq/templates/faq/base.html:41 faq/templates/faq/inner.html:28
+#: faq/templates/faq/list_category.html:58
+msgid "Return to site"
+msgstr "Retornar ao sistema"
+
+#: faq/templates/faq/category_form.html:10 faq/templates/faq/list.html:57
+msgid "category"
+msgstr "categoria"
+
+#: faq/templates/faq/category_list.html:3
+#: faq/templates/faq/category_list.html:22
+msgid "Manage categories"
+msgstr "Gerenciar categorias"
+
+#: faq/templates/faq/form.html:10
+msgid "required"
+msgstr "obrigatório"
+
+#: faq/templates/faq/index.html:6
+msgid "Support"
+msgstr "Suporte"
+
+#: faq/templates/faq/index.html:11
+#, python-format
+msgid "Top %(count)s Questions"
+msgstr "%(count)s Questões mais acessadas."
+
+#: faq/templates/faq/inner.html:26
+msgid "Logout"
+msgstr "Sair"
+
+#: faq/templates/faq/list.html:33
+msgid "Add arcicle"
+msgstr "Adicionar artigo"
+
+#: faq/templates/faq/list.html:41
+msgid "Arcicle"
+msgstr "Artigo"
+
+#: faq/templates/faq/list.html:42
+msgid "View all arcicles"
+msgstr "Visualizar todos os artigos"
+
+#: faq/templates/faq/list.html:57 forum/templates/forum/list.html:25
+#, python-format
+msgid "Showing %(counter)s results"
+msgstr "Mostrando %(counter)s resultados"
+
+#: faq/templates/faq/list.html:57 forum/templates/forum/list.html:25
+msgid "for"
+msgstr "para"
+
+#: faq/templates/faq/list.html:64 faq/templates/faq/list_category.html:76
+msgid "No results found."
+msgstr "Nenhum resultado encontrado."
+
+#: faq/templates/faq/list.html:72 faq/templates/faq/list_category.html:84
+msgid "previous"
+msgstr "anterior"
+
+#: faq/templates/faq/list.html:75 faq/templates/faq/list_category.html:87
+#, python-format
+msgid "page %(number)s of %(pages)s"
+msgstr "página %(number)s de %(pages)s"
+
+#: faq/templates/faq/list.html:78 faq/templates/faq/list_category.html:90
+msgid "next"
+msgstr "próxima"
+
+#: faq/templates/faq/sidebar.html:7
+msgid "My Questions"
+msgstr "Minhas questões"
+
+#: faq/templates/faq/sidebar.html:28
+msgid "Navigate"
+msgstr "Navegue"
+
+#: faq/templates/faq/sidebar.html:30
+msgid "Ask a question or give suggestion."
+msgstr "Faça sua pergunta ou sugestão."
+
+#: faq/templates/faq/sidebar.html:31
+msgid "Return to homepage."
+msgstr "Retorne a página inicial."
+
+#: faq/templates/faq/thread.html:32
+msgid "Update question"
+msgstr "Atualizar questão"
+
+#: faq/templates/faq/emails/message.html:10
+#, python-format
+msgid ""
+"\n"
+"        We just wanted to let you know that a new response has been added to "
+"the question \"%(title)s\". You can visit it here: <a href=\"%(domain)s"
+"%(url \")s\"\">%(domain)s%(url \")s</a\">.\n"
+"        "
+msgstr ""
+"\n"
+"        Você está notificado sobre uma nova resposta para a questão "
+"\"%(title)s\". Você pode visita-la aqui: <a href=\"%(domain)s%(url \")s\"\">"
+"%(domain)s%(url \")s</a\">."
+
+#: faq/templates/faq/emails/message.html:18
+#: faq/templates/faq/emails/message.txt:13
+msgid ""
+"You are receiving these messages because you checked the 'alert' box when "
+"you originally posted."
+msgstr ""
+"Você está recebendo está mensagem pois marcou a caixa de 'alerta' quando "
+"publicada originalmente."
+
+#: faq/templates/faq/emails/message.html:22
+#, python-format
+msgid ""
+"\n"
+"        We just wanted to let you know that a new question has been added: "
+"\"%(title)s\". You can visit it here: \n"
+"\t\t\t<a href=\"%(domain)s%(url)s\">%(domain)s%(url)s</a>\n"
+"        "
+msgstr ""
+"\n"
+"        Você está notificado pois uma nova questão com o título: \"%(title)s"
+"\" foi adicionada. Você pode acessa-la aqui: \n"
+"\t\t\t<a href=\"%(domain)s%(url)s\">%(domain)s%(url)s</a>\n"
+"        "
+
+#: faq/templates/faq/emails/message.html:31
+#: faq/templates/faq/emails/message.txt:23
+#: forum/templates/forum/emails/new_reply_message.html:19
+#: forum/templates/forum/emails/new_topic_message.html:18
+msgid "You are receiving these messages because you are a staff member."
+msgstr "Você está recebendo essa mensagem porque é um membro administrador."
+
+#: faq/templates/faq/emails/message.html:34
+#, python-format
+msgid ""
+"Thank you,\n"
+"    %(name)s team"
+msgstr "Obrigado %(name)s"
+
+#: faq/templates/faq/emails/message.txt:7
+#, python-format
+msgid ""
+"\n"
+"    We just wanted to let you know that a new response has been added to the "
+"question \"%(title)s\". You can visit it here: %(domain)s%(url \")s\"\n"
+"    "
+msgstr ""
+"\n"
+"    Você foi notificado por que uma nova resposta foi adicionada para a "
+"questão \"%(title)s\". Você pode visita-la aqui:  %(domain)s%(url \")s\""
+
+#: faq/templates/faq/emails/message.txt:17
+#, python-format
+msgid ""
+"\n"
+"    We just wanted to let you know that a new question has been added: "
+"\"%(title)s\". You can visit it here: %(domain)s%(url \")s\"\n"
+"    "
+msgstr ""
+"\n"
+"    Você foi notificado devido a uma nova resposta para a questão \"%(title)s"
+"\". Você pode visitá-la aqui: %(domain)s%(url \")s\"\n"
+"    "
+
+#: faq/templates/faq/emails/message.txt:26
+#, python-format
+msgid ""
+"Thank you,\n"
+"%(name)s team"
+msgstr "Obrigado, %(name)s"
+
+#: faq/templates/faq/emails/subject.txt:1
+#, python-format
+msgid "New response on \"%(title)s\" on %(name)s."
+msgstr "Nova resposta \"%(title)s\" em %(name)s."
+
+#: faq/templates/faq/emails/subject.txt:1
+#, python-format
+msgid "New question \"%(title)s\" on %(name)s."
+msgstr "Nova questão \"%(title)s\" em %(name)s."
+
+#: forum/models.py:22
+msgid "Create by user"
+msgstr "Criado por usuário"
+
+#: forum/models.py:33
+msgid "Email"
+msgstr "Email"
+
+#: forum/models.py:41
+msgid "Enter a valid phone number."
+msgstr "Informe um número de telefone válido."
+
+#: forum/models.py:45
+msgid "creation date"
+msgstr "data de criação"
+
+#: forum/models.py:73
+msgid "Post Title"
+msgstr "Título"
+
+#: forum/models.py:77
+msgid "Comment"
+msgstr "Comentário"
+
+#: forum/models.py:102 forum/templates/forum/detail.html:88
+msgid "Reply"
+msgstr "Responder"
+
+#: forum/views.py:67
+msgid "Your reply has been added"
+msgstr "Sua resposta foi adicionada com sucesso"
+
+#: forum/views.py:101 forum/views.py:113
+msgid "The topic has been destroyed"
+msgstr "O tópico foi apagado com sucesso"
+
+#: forum/templates/forum/confirm_delete.html:11
+#: forum/templates/forum/detail.html:36
+msgid "Delete topic"
+msgstr "Remover tópico"
+
+#: forum/templates/forum/confirm_delete_reply.html:11
+#: forum/templates/forum/detail.html:53
+msgid "Delete reply"
+msgstr "Remover resposta"
+
+#: forum/templates/forum/confirm_delete_reply.html:17
+msgid "Answer"
+msgstr "Resposta"
+
+#: forum/templates/forum/form.html:8 forum/templates/forum/list.html:8
+msgid "Topic"
+msgstr "Tópico"
+
+#: forum/templates/forum/list.html:17
+msgid "Add question"
+msgstr "Adicionar questão"
+
+#: forum/templates/forum/list.html:32
+msgid "by"
+msgstr "por"
+
+#: forum/templates/forum/search_widget.html:7
+msgid "Look for questions..."
+msgstr "Busque por questões..."
+
+#: forum/templates/forum/emails/new_reply_message.html:9
+#, python-format
+msgid ""
+"\n"
+"\n"
+"\t We just wanted to let you know that a new reply for the topic has been "
+"added: \"%(title)s\". You can visit it here: <a href=\"%(domain)s%(url)s\">"
+"%(domain)s%(url)s</a>\n"
+"    "
+msgstr ""
+"\n"
+"\n"
+"\tNós estamos avisando que uma resposta foi adicionada ao tópico: \"%(title)s"
+"\". Você pode visualiza-la aqui: <a href=\"%(domain)s%(url)s\">%(domain)s"
+"%(url)s</a>"
+
+#: forum/templates/forum/emails/new_reply_message.txt:6
+#, python-format
+msgid ""
+"\n"
+" We just wanted to let you know that a new reply for the topic has been "
+"added: \"%(title)s\". You can visit it here: %(domain)s%(url \")s\"\n"
+"%(reply.reply)s\n"
+msgstr ""
+"\n"
+"Nós estamos avisando que uma nova reposta para o tópico foi adicionada: "
+"\"%(title)s\". Você pode visitá-lo aqui: %(domain)s%(url \")s\"\n"
+"%(reply.reply)s\n"
+
+#: forum/templates/forum/emails/new_reply_subject.txt:2
+#, python-format
+msgid ""
+"\n"
+"Lethus support center - new reply for the topic: %(title)s\n"
+msgstr ""
+"\n"
+"Lethus central de supporte - nova resposta para o tópico: %(title)s\n"
+
+#: forum/templates/forum/emails/new_topic_message.html:9
+#, python-format
+msgid ""
+"\n"
+"\tWe just wanted to let you know that a new topic has been added: \"%(title)s"
+"\". You can visit it here: <a href=\"%(domain)s%(url)s\">%(domain)s%(url)s</"
+"a>\n"
+"    "
+msgstr ""
+"\n"
+"\tNós estamos avisando que um novo tópico foi criado: \"%(title)s\". Você "
+"pode visualiza-lo clicando aqui: <a href=\"%(domain)s%(url)s\">%(domain)s"
+"%(url)s</a>"
+
+#: forum/templates/forum/emails/new_topic_message.txt:6
+#, python-format
+msgid ""
+"\n"
+" We just wanted to let you know that a new topic has been added: \"%(title)s"
+"\". You can visit it here: %(domain)s%(url \")s\"\n"
+"%(topic.comment)s\n"
+msgstr ""
+"\n"
+"Nós estamos avisando que um novo tópico foi criado: \"%(title)s\". Você pode "
+"visualiza-lo clicando aqui: %(domain)s%(url \")s\"\n"
+"%(topic.comment)s\n"
+
+#: forum/templates/forum/emails/new_topic_subject.txt:2
+#, python-format
+msgid ""
+"\n"
+"Lethus support center - new topic: %(topic.title)s\n"
+msgstr ""
+"\n"
+"Lethus central de suporte - novo tópico: %(topic.title)s\n"
