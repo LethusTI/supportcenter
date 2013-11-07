@@ -81,8 +81,9 @@ msgid ""
 "\"%(subject)s\".\n"
 "    "
 msgstr ""
-"Você está sendo notificado pois uma nova mensagem foi enviada : \"%(subject)s"
-"\"."
+"\n"
+"Você está sendo notificado pois uma nova mensagem foi enviada : \"%(subject)s\n"
+"    "
 
 #: templates/contact/emails/new_email_message.txt:6
 #, python-format
@@ -92,8 +93,9 @@ msgid ""
 "\"%(subject)s\".\n"
 "%(message)s\n"
 msgstr ""
+"\n"
 "Você está sendo notificado pois uma nova mensagem foi enviada : \"%(subject)s"
-"\".\n"
+"\n"
 "%(message)s\n"
 
 #: templates/contact/emails/new_email_message_admin.html:6
