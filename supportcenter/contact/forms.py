@@ -61,7 +61,7 @@ class ContactForm(forms.Form):
 
         
         subject = u' '.join(line.strip() for line in subject.splitlines()).strip()
-        msg = EmailMultiAlternatives(subject, message, to=['suporte@lethus.com.br'], headers = {'Reply-To': email, 'From': email})
+        msg = EmailMultiAlternatives(subject, message, to=['suporte@lethus.com.br'], headers = {'Reply-To': email})
         msg.attach_alternative(message, 'text/html')
         msg.send()
 
