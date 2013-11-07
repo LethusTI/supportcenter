@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-VERSION = "0.9.0dev"
+VERSION = u"0.1"
 
 import sys
 import os

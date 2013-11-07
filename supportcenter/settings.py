@@ -5,7 +5,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-PRODUCTION = False
+PRODUCTION = True
 # Indica se estamos rodando a versão de produção ou desenvolvimento
 value = os.environ.get('PRODUCTION')
 if value:
