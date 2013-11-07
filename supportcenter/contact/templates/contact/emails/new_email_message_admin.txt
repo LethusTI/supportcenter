@@ -4,6 +4,6 @@
 {% blocktrans %}Hello Lethus{% endblocktrans %}
 
 {% blocktrans with url=message.url subject=subject domain=site.domain %}
- We just wanted to let you know that a new message has been added: "{{ subject }}". You can visit it here: {{ domain }}{{ url "}}"
+ We just wanted to let you know that a new message has been added: "{{ subject }}". 
 {{ message }}
 {% endblocktrans %}
