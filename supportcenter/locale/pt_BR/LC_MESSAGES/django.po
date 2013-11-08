@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 12:06-0200\n"
-"PO-Revision-Date: 2013-11-07 12:07-0200\n"
+"POT-Creation-Date: 2013-11-08 08:06-0200\n"
+"PO-Revision-Date: 2013-11-08 08:07-0200\n"
 "Last-Translator: Paolla de Oliveira Coutinho <paolla.ocoutinho@gmail.com>\n"
 "Language-Team: Português <paolla.ocoutinho@gmail.com>\n"
 "Language: \n"
@@ -280,7 +280,7 @@ msgstr "Bem vindo a sua central de suporte"
 
 #: common/templates/index.html:7
 msgid "Search for answers to your questions below, or ask your own."
-msgstr "Procure por respostas primeiro ou pergunte você mesmo"
+msgstr "Procure por respostas ou pergunte você mesmo"
 
 #: common/templates/index.html:10 faq/templates/faq/list.html:18
 msgid "Search our knowledge base ..."
