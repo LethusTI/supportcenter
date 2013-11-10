@@ -1,0 +1,21 @@
+{% extends "faq/emails/base.html" %}
+{% load i18n %}
+{% load markup %}
+
+{% block content %}
+<p>{% blocktrans with name=name %}Hello {{ name }},{% endblocktrans %}</p>
+
+<p>
+	{% blocktrans with url=message.url subject=subject domain=site.domain %}
+	We just wanted to let you know that a new message has been added.
+    {% endblocktrans %}
+</p>
+
+<div style="background:#f3f3f3;margin:8px 0;padding:12px 18px">
+    {% blocktrans %}Subject: {% endblocktrans %}{{ subject }}
+	<br />
+    {{ message|striptags|markdown }}
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends "faq/emails/base.html" %}
+{% load i18n %}
+{% load markup %}
+
+{% block content %}
+<p>{% blocktrans %}Hello {% endblocktrans %}Lethus</p>
+
+<p>
+	{{ name }} enviou uma mensagem.
+</p>
+
+<div style="background:#f3f3f3;margin:8px 0;padding:12px 18px">
+	{% blocktrans %}Name: {% endblocktrans %}{{ name }}
+	<br />
+	{% blocktrans %}Email: {% endblocktrans %}{{ email }}
+	<br />
+	{% blocktrans %}Phone: {% endblocktrans %}{{ phone }}
+	<br />
+	<br />
+	{% blocktrans %}Subject: {% endblocktrans %}{{ subject }}
+	<br />
+    {{ message|striptags|markdown }}
+</div>
+
+{% endblock content %}

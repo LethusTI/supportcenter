@@ -48,24 +48,41 @@ class ContactForm(forms.Form):
             'name': self.cleaned_data['name'],
             'email':  self.cleaned_data['email'],
             'message':  self.cleaned_data['message'],
+            'subject': self.cleaned_data['subject'],
+            'phone': self.cleaned_data['phone'],
             'site': {
                 'domain': DEPLOY_URL,
                 'name': "Lethus support center"
             }
         }
         
-        subject = "Contact SupportCenter"
-        subject_user = "Reply SupportCenter"
-        message = self.cleaned_data['message']
         email = str(self.cleaned_data['email'])
 
-        
-        subject = u' '.join(line.strip() for line in subject.splitlines()).strip()
-        msg = EmailMultiAlternatives(subject, message, to=['suporte@lethus.com.br'], headers = {'Reply-To': email, 'From': email})
-        msg.attach_alternative(message, 'text/html')
-        msg.send()
+        subject_user = render_to_string(
+            'contact/emails/new_email_subject.txt', context)
+
+        message_user = render_to_string(
+            'contact/emails/new_email_message.txt', context)
+
+        message_html_user = render_to_string(
+            'contact/emails/new_email_message.html', context)
+
+        subject = render_to_string(
+            'contact/emails/new_email_subject_admin.txt', context)
+
+        message = render_to_string(
+            'contact/emails/new_email_message_admin.txt', context)
+
+        message_html = render_to_string(
+            'contact/emails/new_email_message_admin.html', context)
+
 
         subject_user = u' '.join(line.strip() for line in subject_user.splitlines()).strip()
-        msg_user = EmailMultiAlternatives(subject_user, message, to=[email], headers = {'Reply-To': 'suporte@lethus.com.br'})
-        msg_user.attach_alternative(message, 'text/html')
+        msg_user = EmailMultiAlternatives(subject_user, message_user, to=[email], headers = {'Reply-To': 'suporte@lethus.com.br'} )
+        msg_user.attach_alternative(message_html_user, 'text/html')
         msg_user.send()
+
+        subject = u' '.join(line.strip() for line in subject.splitlines()).strip()
+        msg = EmailMultiAlternatives(subject, message, to=['suporte@lethus.com.br'], headers = {'Reply-To': email, 'From': email})
+        msg.attach_alternative(message_html, 'text/html')
+        msg.send()
