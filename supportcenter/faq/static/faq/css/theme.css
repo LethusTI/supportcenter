@@ -7,7 +7,6 @@ body {
 code, pre {
 	display: block;
 	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-	line-height: 0.8em;
 	word-break: break-all;
 	word-wrap: break-word;
 	white-space: pre;
